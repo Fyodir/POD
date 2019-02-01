@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Product Ordering Database (POD)</h1>
+  <p>Welcome to POD, a website developed by <em>Andrew Smith</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>POD has the following record counts:</p>
+  <ul>
+    <li><strong>Product Types:</strong> {{ num_prod }}</li>
+    <li><strong>Product Instances:</strong> {{ num_instances }}</li>
+    <li><strong>Suppliers:</strong> {{ num_suppliers }}</li>
+  </ul>
+  <ul>
+    <li><strong>Incomplete Requisitions:</strong> {{ num_req_incomplete }}</li>
+    <li><strong>Requisitions Awaiting Authorization:</strong> {{ num_req_awaiting }}</li>
+    <li><strong>Requisitions Awaiting Receipt:</strong> {{ num_req_sent }}</li>
+  </ul>
+
+{% endblock %}
