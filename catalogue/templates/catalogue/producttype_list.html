@@ -2,11 +2,11 @@
 
 {% block content %}
   <h1>Product Type List</h1>
-  {% if product_type_list %}
+  {% if producttype_list %}
   <ul>
-    {% for product_type in product_type_list %}
+    {% for producttype in producttype_list %}
       <li>
-        <a href="{{ product_type.get_absolute_url }}">{{ product_type.name }}</a> ({{product_type.supplier}})
+        <a href="{{ ProductType.get_absolute_url }}">{{ producttype.name }}</a> ({{producttype.supplier}})
       </li>
     {% endfor %}
   </ul>

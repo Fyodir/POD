@@ -30,3 +30,7 @@ def index(request):
 
 class ProductTypeView(generic.ListView):
     model = ProductType
+    # template_name = '/producttype.html'
+
+class ProductTypeDetailView(generic.DetailView):
+    model = ProductType
