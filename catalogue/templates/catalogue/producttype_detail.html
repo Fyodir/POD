@@ -5,7 +5,7 @@
 
   <!-- <p><strong>Supplier:</strong> <a href="">{{ supplier.name }}</a></p> <! author detail link not yet defined -->
   <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
-  <p><strong>Product Description:</strong> {{ producttype.description }}</p>
+  <p><strong>Phone Number:</strong> {{ supplier.phone }}</p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price:</strong> {{ producttype.price }}</p>
   <!-- <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>   -->

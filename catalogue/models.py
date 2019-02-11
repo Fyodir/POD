@@ -10,6 +10,10 @@ class Team(models.Model):
         """String for representing the Model object."""
         return self.name
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('team-detail', args=[str(self.id)])
+
 
 class Supplier(models.Model):
     """Model representing a product supplier."""
@@ -36,7 +40,7 @@ class ProductType(models.Model):
     supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=1000, null=True, help_text='Enter a brief description of the product_type')
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -98,7 +102,7 @@ class Order(models.Model):
 
 class Requisition(models.Model):
     """Model representing a collection of orders from a single supplier"""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this requisition')
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this requisition')
     supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
     req_ref = models.CharField('Requisition Reference EROS', max_length=20, help_text='Enter EROS reference number for requisition', null=True, blank=True)
@@ -128,6 +132,6 @@ class Requisition(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.supplier.name} - {self.requisition_status} ({self.req_ref})'
+        return f'{self.id} - {self.supplier.name} - ({self.requisition_status})'
 
     # Fields to add - user id, authorizer id, total price of req, attachments,

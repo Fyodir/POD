@@ -36,16 +36,22 @@ class ProductTypeView(generic.ListView):
 class ProductTypeDetailView(generic.DetailView):
     model = ProductType
 
-class SupplierView(generic.ListView):
+class SupplierListView(generic.ListView):
     model = Supplier
 
-# class SupplierDetailView(generic.DetailView):
-#     model = Supplier
+class SupplierDetailView(generic.DetailView):
+    model = Supplier
 
-def supplier_detail_view(request, primary_key):
-    try:
-        supplier = Supplier.objects.get(pk=primary_key)
-    except Supplier.DoesNotExist:
-        raise Http404('Book does not exist')
+# def supplier_detail_view(request, primary_key):
+#     try:
+#         supplier = Supplier.objects.get(pk=primary_key)
+#     except Supplier.DoesNotExist:
+#         raise Http404('Supplier does not exist')
+#
+#     return render(request, 'catalogue/supplier_detail.html', context={'supplier': supplier})
 
-    return render(request, 'catalogue/supplier_detail.html', context={'supplier': supplier})
+class TeamListView(generic.ListView):
+    model = Team
+
+class TeamDetailView(generic.DetailView):
+    model = Team
