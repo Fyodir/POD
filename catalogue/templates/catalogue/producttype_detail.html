@@ -1,9 +1,10 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Title: {{ producttype.name }}</h1>
+  <h1>Product: {{ producttype.name }}</h1>
 
-  <p><strong>Supplier:</strong> <a href="">{{ supplier.name }}</a></p> <!-- author detail link not yet defined -->
+  <!-- <p><strong>Supplier:</strong> <a href="">{{ supplier.name }}</a></p> <! author detail link not yet defined -->
+  <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
   <p><strong>Product Description:</strong> {{ producttype.description }}</p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price:</strong> {{ producttype.price }}</p>
@@ -16,9 +17,11 @@
       <hr>
       <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
       {% if copy.status != 'a' %}
-        <p><strong>Due to be returned:</strong> {{copy.due_back}}</p>
+        <p><strong>Team:</strong> {{copy.team}}</p>
+        <p><strong>Stored:</strong> {{copy.storage}}</p>
       {% endif %}
-      <p><strong>Imprint:</strong> {{copy.imprint}}</p>
+      <p><strong>Stock:</strong> {{copy.stock}}</p>
+      <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
     {% endfor %}
   </div>

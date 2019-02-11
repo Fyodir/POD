@@ -36,7 +36,7 @@ class OrderInline(admin.TabularInline):
 
 @admin.register(Requisition)
 class RequisitionAdmin(admin.ModelAdmin):
-    list_display = ('supplier', 'requisition_status', 'urgency', 'team', 'req_ref', 'date_created', 'date_sent', 'date_delivered')
+    list_display = ('req_ref', 'requisition_status', 'urgency', 'supplier', 'team', 'date_created', 'date_sent', 'date_delivered')
     inlines = [OrderInline]
 
 @admin.register(Team)

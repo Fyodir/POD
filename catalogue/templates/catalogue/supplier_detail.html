@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Supplier: {{ supplier.name }}</h1>
+
+  <!-- <p><strong>Supplier:</strong> <a href="">{{ supplier.name }}</a></p> <! author detail link not yet defined -->
+  <!-- <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p> -->
+  <p><strong>Phone Number:</strong> {{ supplier.phone }}</p>
+  <p><strong>Email:</strong> {{ supplier.email }}</p>
+  <p><strong>Agent:</strong> {{ supplier.agent }}</p>
+  <!-- <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>   -->
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Products</h4>
+
+    {% for copy in supplier.producttype.all %}
+      <hr>
+      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+      {% if copy.status != 'a' %}
+        <p><strong>Product:</strong> {{copy.name}}</p>
+        <p><strong>Description:</strong> {{copy.description}}</p>
+      {% endif %}
+      <p><strong>Price:</strong> {{copy.price}}</p>
+      <!-- <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p> -->
+      <!-- <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p> -->
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -30,7 +30,22 @@ def index(request):
 
 class ProductTypeView(generic.ListView):
     model = ProductType
+    paginate_by = 25
     # template_name = '/producttype.html'
 
 class ProductTypeDetailView(generic.DetailView):
     model = ProductType
+
+class SupplierView(generic.ListView):
+    model = Supplier
+
+# class SupplierDetailView(generic.DetailView):
+#     model = Supplier
+
+def supplier_detail_view(request, primary_key):
+    try:
+        supplier = Supplier.objects.get(pk=primary_key)
+    except Supplier.DoesNotExist:
+        raise Http404('Book does not exist')
+
+    return render(request, 'catalogue/supplier_detail.html', context={'supplier': supplier})

@@ -25,6 +25,10 @@ class Supplier(models.Model):
         """String for representing the Model object."""
         return self.name
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('supplier-detail', args=[str(self.id)])
+
 
 class ProductType(models.Model):
     """Model representing a type of product (but not a specific instance of a product)."""
