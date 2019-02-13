@@ -29,7 +29,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('product_type', 'quantity', 'requisition_id')
+    list_display = ('product_type', 'quantity', 'requisition_id', 'orderer')
 
 class OrderInline(admin.TabularInline):
     model = Order

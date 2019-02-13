@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Requisitions</h1>
+  {% if requisition_list %}
+  <ul>
+    {% for requisition in requisition_list %}
+      <li>
+        <a href="{{ requisition.get_absolute_url }}">{{ requisition.supplier }} - {{requisition.req_ref}}</a> ({{requisition.date_created}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no Requisitions.</p>
+  {% endif %}
+{% endblock %}

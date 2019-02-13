@@ -16,19 +16,18 @@
       {% block sidebar %}
         <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'producttype' %}">Product Types</a></li>
-          <li><a href="{% url 'supplier' %}">Suppliers</a></li>
           <li><a href="{% url 'team' %}">Teams</a></li>
-          <li><a href="">Requisitions</a></li>
-          <li><a href="{% url 'order' %}">Orders</a></li>
-          <li>-----------------</li>
-          <li><a href="">Create Requisition</a></li>
-          <li><a href="">Create Order</a></li>
+          <li><a href="{% url 'producttype' %}">All Product Types</a></li>
+          <li><a href="{% url 'supplier' %}">All Suppliers</a></li>
+          <li><a href="{% url 'order' %}">All Orders</a></li>
+          <li><a href="{% url 'requisition' %}">All Requisitions</a></li>
         </ul>
         <ul class="sidebar-nav">
-    ...
    {% if user.is_authenticated %}
      <li>User: {{ user.get_username }}</li>
+     <li><a href="">Create Requisition</a></li>
+     <li><a href="">Create Order</a></li>
+     <li><a href="{% url 'my-ordered' %}">My Orders</a></li>
      <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
    {% else %}
      <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>

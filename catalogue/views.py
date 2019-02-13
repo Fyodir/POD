@@ -63,3 +63,18 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
+
+class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
+    """Generic class-based view orders created by current user."""
+    model = Order
+    template_name ='catalog/orders_created_list_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Order.objects.filter(orderer=self.request.user).order_by('date_created')
+
+class RequisitionListView(LoginRequiredMixin, generic.ListView):
+    model = Requisition
+
+class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Requisition

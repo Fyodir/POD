@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Requisition: {{ requisition.supplier }}</h1>
+  <h2>Requisition EROS: {{ requisition.req_ref }}</h2>
+  <h2>Urgency : {{ requisition.urgency }}</h2>
+
+  <p><strong>Status:</strong> {{ requisition.requisition_status }}</p>
+  <p><strong>Date Created:</strong> {{ requisition.date_created }}</p>
+  <p><strong>Date Sent:</strong> {{ requisition.date_sent }}</p>
+  <p><strong>Date Delivered:</strong> {{ requisition.date_delivered }}</p>
+  <p><strong>Comments:</strong> {{ requisition.comments }}</p>
+
+
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Orders</h4>
+
+    {% for copy in requisition.order_set.all %}
+      <hr>
+      <p><strong>Product:</strong> {{copy.product_type.name}}</p>
+      <p><strong>Quantity:</strong> {{copy.quantity}}</p>
+      <p><strong>Orderer:</strong> {{copy.orderer}}</p>
+      <p><strong>Date Order Created:</strong> {{copy.date_created}}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

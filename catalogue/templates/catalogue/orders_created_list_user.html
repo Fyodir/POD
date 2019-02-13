@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>My Orders</h1>
+
+    {% if order_list %}
+    <ul>
+
+      {% for order in order_list %}
+      <li>
+        <a href="{% url 'product-type-detail' order.product_type.pk %}">{{order.product_type.name}}</a> ({{ order.date_created }})
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no orders created.</p>
+    {% endif %}
+{% endblock %}
