@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     """View function for home page of site."""
@@ -15,6 +16,9 @@ def index(request):
     num_req_awaiting = Requisition.objects.filter(requisition_status__exact='awaiting_auth').count()
     num_req_sent = Requisition.objects.filter(requisition_status__exact='sent').count()
 
+    # Number of visits to this view, as counted in the session variable.
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
 
     context = {
         'num_prod': num_prod,
@@ -23,6 +27,7 @@ def index(request):
         'num_req_awaiting': num_req_awaiting,
         'num_req_sent': num_req_sent,
         'num_suppliers': num_suppliers,
+        'num_visits': num_visits,
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -33,13 +38,13 @@ class ProductTypeView(generic.ListView):
     paginate_by = 25
     # template_name = '/producttype.html'
 
-class ProductTypeDetailView(generic.DetailView):
+class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType
 
 class SupplierListView(generic.ListView):
     model = Supplier
 
-class SupplierDetailView(generic.DetailView):
+class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
     model = Supplier
 
 # def supplier_detail_view(request, primary_key):
@@ -53,5 +58,8 @@ class SupplierDetailView(generic.DetailView):
 class TeamListView(generic.ListView):
     model = Team
 
-class TeamDetailView(generic.DetailView):
+class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
+
+class OrderListView(LoginRequiredMixin, generic.ListView):
+    model = Order

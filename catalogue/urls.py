@@ -13,4 +13,7 @@ urlpatterns = [
 
     path('team/', views.TeamListView.as_view(), name='team'),
     path('team/<int:pk>', views.TeamDetailView.as_view(), name='team-detail'),
+
+    path('order/', views.OrderListView.as_view(), name='order'),
+
 ]

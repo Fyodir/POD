@@ -100,6 +100,10 @@ class Order(models.Model):
         """String for representing the Model object."""
         return f'{self.product_type.name} ({self.id})'
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('order-detail', args=[str(self.id)])
+
 class Requisition(models.Model):
     """Model representing a collection of orders from a single supplier"""
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this requisition')

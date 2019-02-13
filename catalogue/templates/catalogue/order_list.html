@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Orders</h1>
+  {% if order_list %}
+  <ul>
+    {% for order in order_list %}
+      <li>
+        <a href="{{ order.requisition_id.get_absolute_url }}">{{ order.requisition_id }}</a> {{order.product_type}} ({{order.quantity}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no orders.</p>
+  {% endif %}
+{% endblock %}
