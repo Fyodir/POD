@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Storage: {{ storage.name }}</h1>
+
+  <p><strong>Location:</strong> {{ storage.location }}</p>
+  <p><strong>Temperature Range (°C):</strong> {{ storage.temp_range.minimum }} - {{storage.temp_range.maximum}}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Instances</h4>
+
+    {% for copy in storage.productinstance_set.all %}
+      <hr>
+      <p><strong>Product: </strong> {{copy.product_type}}</p>
+      <p><strong>Team: </strong> {{copy.team}}</p>
+      <p><strong>Stock: </strong> {{copy.stock}}</p>
+      <p><strong>Minimum Stock: </strong> {{copy.minimum_stock}}</p>
+      <p class="text-muted"><strong>Id: </strong> {{copy.id}}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

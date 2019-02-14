@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Product: {{ productinstance.product_type.name }}</h1>
+
+  <div style="margin-top:20px">
+
+  <p><strong>Team:</strong> <a href="{% url 'team-detail' productinstance.team.pk %}">{{ productinstance.team }}</a></p>
+  <p><strong>Storage:</strong> <a href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage }}</a></p>
+  <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' productinstance.product_type.supplier.pk %}">{{ productinstance.product_type.supplier }}</a></p>
+  <p><strong>Description:</strong> {{ productinstance.product_type.description }}</p>
+  <p><strong>Price:</strong> {{ productinstance.product_type.price }}</p>
+
+  <hr>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Stock</h4>
+
+      <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
+      <p><strong>Minimum Stock:</strong> {{productinstance.minimum_stock}}</p>
+      <a href="{% url 'productinstance-stock-update' productinstance.id %}">Update Stock</a>
+
+  </div>
+
+{% endblock %}

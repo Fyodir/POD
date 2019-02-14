@@ -2,21 +2,15 @@
 
 {% block content %}
   <h1>Order: {{ order.product_type.name }}</h1>
+  <div style="margin-top:20px">
 
-  <p><strong>Phone:</strong> {{ supplier.phone }}</p>
-  <p><strong>Email:</strong> {{ supplier.email }}</p>
-  <p><strong>Agent:</strong> {{ supplier.agent }}</p>
+  <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+  <p><strong>Price Per instance (£):</strong> {{ order.product_type.price }}</p>
+  <p><strong>Supplier:</strong> {{ order.product_type.supplier }}</p>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Products</h4>
-
-    {% for copy in supplier.producttype_set.all %}
-      <hr>
-      <!-- <p><strong>Product:</strong> <a href="% url r'^catalogues 'product-type-detail' supplier.producttype.pk %}">{{copy.name}}</a></p> -->
-      <p><strong>Product:</strong> <a href="% url 'product-type-detail' producttype.pk %}">{{copy.name}}</a></p> <!-- sort out link -->
-      <p><strong>Price:</strong> {{copy.price}}</p>
-      <p><strong>Description:</strong> {{copy.description}}</p>
-      <p class="text-muted"><strong>Product EROS:</strong> {{copy.product_EROS}}</p>
-    {% endfor %}
+  <div style="margin-top:20px">
+    <p><strong>Orderer:</strong> {{ order.orderer }}</p>
+    <p><strong>Date Created:</strong> {{ order.date_created }}</p>
+    <p><strong>Requisition ID:</strong> {{ order.requisition_id }}</p>
   </div>
 {% endblock %}

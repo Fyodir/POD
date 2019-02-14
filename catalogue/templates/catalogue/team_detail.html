@@ -8,14 +8,13 @@
 
     {% for copy in team.productinstance_set.all %}
       <hr>
-      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-      {% if copy.status != 'a' %}
+
       <p><strong>Product:</strong> {{copy.product_type}}</p>
-      <p><strong>Stored:</strong> {{copy.storage}}</p>
-      {% endif %}
-      <p><strong>Stock:</strong> {{copy.stock}}</p>
+      <p><strong>Stored:</strong> {{copy.storage}} ({{copy.storage.location}})</p>
+      <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+
     {% endfor %}
   </div>
 {% endblock %}

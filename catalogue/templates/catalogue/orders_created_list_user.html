@@ -8,12 +8,12 @@
 
       {% for order in order_list %}
       <li>
-        <a href="{% url 'product-type-detail' order.product_type.pk %}">{{order.product_type.name}}</a> ({{ order.date_created }})
+        <a href="{% url 'product-type-detail' order.product_type.pk %}">{{order.product_type.name}}</a> ({{ order.date_created }}) - {{order.requisition_id.req_ref}}
       </li>
       {% endfor %}
     </ul>
 
     {% else %}
-      <p>There are no orders created.</p>
+      <p>You have no orders.</p>
     {% endif %}
 {% endblock %}

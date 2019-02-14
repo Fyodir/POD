@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Storage Locations</h1>
+  {% if storage_list %}
+  <ul>
+    {% for storage in storage_list %}
+      <li>
+        <a href="{{ storage.get_absolute_url }}">{{ storage.name }}</a> ({{storage.location}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no storage locations available.</p>
+  {% endif %}
+{% endblock %}

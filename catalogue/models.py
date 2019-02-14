@@ -71,6 +71,10 @@ class Storage(models.Model):
         """String for representing the Model object."""
         return self.name
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('storage-detail', args=[str(self.id)])
+
 class ProductInstance(models.Model):
     """Model representing a specific instance of a product"""
     product_type = models.ForeignKey('ProductType', verbose_name='Product', on_delete=models.SET_NULL, null=True)
@@ -79,6 +83,7 @@ class ProductInstance(models.Model):
     storage = models.ForeignKey('Storage', on_delete=models.SET_NULL, null=True)
     stock = models.IntegerField('Current Stock', help_text='Enter current stock')
     minimum_stock = models.IntegerField('Minimum Stock')
+    stock_updater = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     # should a product instance be an updateable stock level? or a new instance for each delivery?
 
@@ -89,14 +94,25 @@ class ProductInstance(models.Model):
         """String for representing the Model object."""
         return self.product_type.name
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('product-instance-detail', args=[str(self.id)])
+
+    @property
+    def stock_is_low(self):
+        if self.stock < self.minimum_stock:
+            return True
+        return False
+
+
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     # Need to link a user account to an order
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
-    requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True)
+    requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
     date_created = models.DateTimeField(auto_now_add=True)
-    orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -138,7 +154,7 @@ class Requisition(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} - {self.supplier.name} - {self.urgency} - ({self.requisition_status})'
+        return f'{self.id} - {self.supplier.name}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""

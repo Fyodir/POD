@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Product Instances</h1>
+  {% if productinstance_list %}
+  <ul>
+    {% for productinstance in productinstance_list %}
+      <li>
+        <a href="{{ productinstance.get_absolute_url }}">{{ productinstance.product_type.name }}</a> ({{productinstance.team}}) - {{productinstance.id}}
+        <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}
+        <a href="{% url 'productinstance-stock-update' productinstance.id %}">Update Stock</a>
+        </p>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no product instances in the lab.</p>
+  {% endif %}
+{% endblock %}

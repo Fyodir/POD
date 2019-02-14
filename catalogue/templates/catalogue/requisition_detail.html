@@ -1,14 +1,17 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Requisition: {{ requisition.supplier }}</h1>
-  <h2>Requisition EROS: {{ requisition.req_ref }}</h2>
-  <h2>Urgency : {{ requisition.urgency }}</h2>
+  <h1>Requisition ID: {{ requisition.req.ref }}</h1>
+  <h2>Supplier: {{ requisition.supplier }}</h2>
+  <h2>Status: {{requisition.requisition_status}}</h2>
 
-  <p><strong>Status:</strong> {{ requisition.requisition_status }}</p>
-  <p><strong>Date Created:</strong> {{ requisition.date_created }}</p>
-  <p><strong>Date Sent:</strong> {{ requisition.date_sent }}</p>
-  <p><strong>Date Delivered:</strong> {{ requisition.date_delivered }}</p>
+  <div style="margin-top:30px">
+
+
+  <p><strong>Urgency:</strong> {{ requisition.urgency }}</p>
+  <p><strong>Date Requisition Created:</strong> {{ requisition.date_created }}</p>
+  <p><strong>Date Requisition Sent:</strong> {{ requisition.date_sent }}</p>
+  <p><strong>Date Received by Laboratory:</strong> {{ requisition.date_delivered }}</p>
   <p><strong>Comments:</strong> {{ requisition.comments }}</p>
 
 
