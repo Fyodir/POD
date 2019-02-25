@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 def index(request):
     """View function for home page of site."""
@@ -68,7 +69,6 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
 
-
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
 
@@ -88,6 +88,12 @@ class StorageListView(LoginRequiredMixin, generic.ListView):
 
 class StorageDetailView(LoginRequiredMixin, generic.DetailView):
     model = Storage
+
+class TemperatureListView(LoginRequiredMixin, generic.ListView):
+    model = Temperature
+
+class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Temperature
 
 # Views to display user specific pages
 
@@ -117,10 +123,11 @@ def productinstance_stock_update(request, pk):
             productinstance.stock = form.cleaned_data['stock_level']
             productinstance.save()
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('productinstance'))
+            return redirect(reverse('product-instance-detail', args=[str(pk)]))
+
     # If this is a GET (or any other method) create the default form.
     else:
-        default_stock = 0
+        default_stock = productinstance.stock
         form = UpdateProductInstanceStockForm(initial={'stock_level': default_stock})
 
     context = {
@@ -128,3 +135,162 @@ def productinstance_stock_update(request, pk):
         'productinstance': productinstance,
     }
     return render(request, 'catalogue/productinstance_stock_update.html', context)
+
+#######################################
+
+class SupplierCreate(PermissionRequiredMixin, CreateView):
+    model = Supplier
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_supplier'
+
+
+class SupplierUpdate(PermissionRequiredMixin, UpdateView):
+    model = Supplier
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_supplier'
+
+
+class SupplierDelete(PermissionRequiredMixin, DeleteView):
+    model = Supplier
+    permission_required = 'catalogue.can_delete_supplier'
+    success_url = reverse_lazy('supplier')
+
+##################################
+
+class ProductTypeCreate(PermissionRequiredMixin, CreateView):
+    model = ProductType
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_product_type'
+
+class ProductTypeUpdate(PermissionRequiredMixin, UpdateView):
+    model = ProductType
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_product_type'
+
+class ProductTypeDelete(PermissionRequiredMixin, DeleteView):
+    model = ProductType
+    permission_required = 'catalogue.can_delete_product_type'
+    success_url = reverse_lazy('producttype')
+
+##################################
+
+class RequisitionCreate(PermissionRequiredMixin, CreateView):
+    model = Requisition
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_requisition'
+
+class RequisitionUpdate(PermissionRequiredMixin, UpdateView):
+    model = Requisition
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_requisition'
+
+class RequisitionDelete(PermissionRequiredMixin, DeleteView):
+    model = Requisition
+    permission_required = 'catalogue.can_delete_requisition'
+    success_url = reverse_lazy('requisition')
+
+##################################
+
+class OrderCreate(PermissionRequiredMixin, CreateView):
+    model = Order
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_order'
+
+class OrderUpdate(PermissionRequiredMixin, UpdateView):
+    model = Order
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_order'
+
+class OrderDelete(PermissionRequiredMixin, DeleteView):
+    model = Order
+    permission_required = 'catalogue.can_delete_order'
+    success_url = reverse_lazy('order')
+
+################################
+
+class TeamCreate(PermissionRequiredMixin, CreateView):
+    model = Team
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_team'
+
+class TeamUpdate(PermissionRequiredMixin, UpdateView):
+    model = Team
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_team'
+
+class TeamDelete(PermissionRequiredMixin, DeleteView):
+    model = Team
+    permission_required = 'catalogue.can_delete_team'
+    success_url = reverse_lazy('team')
+
+################################
+
+class StorageCreate(PermissionRequiredMixin, CreateView):
+    model = Storage
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_storage'
+
+class StorageUpdate(PermissionRequiredMixin, UpdateView):
+    model = Storage
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_storage'
+
+class StorageDelete(PermissionRequiredMixin, DeleteView):
+    model = Storage
+    permission_required = 'catalogue.can_delete_storage'
+    success_url = reverse_lazy('storage')
+
+###############################
+
+class TemperatureCreate(PermissionRequiredMixin, CreateView):
+    model = Temperature
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_temperature'
+
+class TemperatureUpdate(PermissionRequiredMixin, UpdateView):
+    model = Temperature
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_temperature'
+
+class TemperatureDelete(PermissionRequiredMixin, DeleteView):
+    model = Temperature
+    permission_required = 'catalogue.can_delete_temperature'
+    success_url = reverse_lazy('index')
+
+##############################
+
+class ProductInstanceCreate(PermissionRequiredMixin, CreateView):
+    model = ProductInstance
+    fields = '__all__'
+    permission_required = 'catalogue.can_create_new_product_instance'
+
+class ProductInstanceUpdate(PermissionRequiredMixin, UpdateView):
+    model = ProductInstance
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_product_instance'
+
+class ProductInstanceDelete(PermissionRequiredMixin, DeleteView):
+    model = ProductInstance
+    permission_required = 'catalogue.can_delete_product_instance'
+    success_url = reverse_lazy('productinstance')
+#
+# def order_product(request, pk):
+#     order = get_object_or_404(Order, pk=pk)
+#     # If this is a POST request then process the Form data
+#     if request.method == 'POST':
+#         # Create a form instance and populate it with data from the request (binding):
+#         form = OrderForm(request.POST)
+#
+#         # redirect to a new URL:
+#         return redirect(reverse('order-instance-detail', args=[str(pk)]))
+#
+#     # If this is a GET (or any other method) create the default form.
+#     else:
+#         default_quantity = 0
+#         form = OrderForm(initial={'quantity': default_quantity})
+#
+#     context = {
+#         'form': form,
+#         'order': order,
+#     }
+#     return render(request, 'catalogue/order_form.html', context)

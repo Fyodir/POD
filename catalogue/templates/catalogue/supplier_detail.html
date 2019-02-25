@@ -6,17 +6,18 @@
   <p><strong>Phone:</strong> {{ supplier.phone }}</p>
   <p><strong>Email:</strong> {{ supplier.email }}</p>
   <p><strong>Agent:</strong> {{ supplier.agent }}</p>
+  <p><a href="{% url 'supplier_update' supplier.id %}">Update Supplier</a></p>
+  <p><a href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a></p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Products Supplied</h4>
 
     {% for copy in supplier.producttype_set.all %}
       <hr>
-      <!-- <p><strong>Product:</strong> <a href="% url r'^catalogues 'product-type-detail' supplier.producttype.pk %}">{{copy.name}}</a></p> -->
-      <p><strong>Product:</strong> <a href="% url 'product-type-detail' producttype.pk %}">{{copy.name}}</a></p> <!-- sort out link -->
+      <p><strong>Product:</strong> <a href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a> </p>
       <p><strong>Price:</strong> {{copy.price}}</p>
       <p><strong>Description:</strong> {{copy.description}}</p>
       <p class="text-muted"><strong>Product EROS:</strong> {{copy.product_EROS}}</p>
-    {% endfor %}
+      {% endfor %}
   </div>
 {% endblock %}

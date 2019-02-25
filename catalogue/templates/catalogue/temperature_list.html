@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Temperature Ranges (°C)</h1>
+  {% if temperature_list %}
+  <ul>
+    {% for temperature in temperature_list %}
+      <li>
+        <hr>
+        <p><a href="{{ temperature.get_absolute_url }}"> {{temperature.name}}</a> ({{temperature.minimum}} to {{temperature.maximum}})</p>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no temperature ranges.</p>
+  {% endif %}
+{% endblock %}

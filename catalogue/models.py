@@ -2,10 +2,15 @@ from django.db import models
 from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 import uuid # Required for unique product instances
 from django.contrib.auth.models import User
+import datetime
 
 class Team(models.Model):
     """Model representing a laboratory team."""
     name = models.CharField(max_length=200, help_text='Enter team name')
+
+    class Meta:
+        permissions = (("can_create_new_team", "Able to Create New Team" ), ("can_update_team", "Able to Update Team"), ("can_delete_team", "Able to Delete Team"),)
+
 
     def __str__(self):
         """String for representing the Model object."""
@@ -25,6 +30,7 @@ class Supplier(models.Model):
 
     class Meta:
         ordering = ['name']
+        permissions = (("can_create_new_supplier", "Able to Create New Supplier" ), ("can_update_supplier", "Able to Update Supplier"), ("can_delete_supplier", "Able to Delete Supplier"),)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -43,6 +49,9 @@ class ProductType(models.Model):
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
+    class Meta:
+        permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
+
     def __str__(self):
         """String for representing the Model object."""
         return self.name
@@ -57,9 +66,16 @@ class Temperature(models.Model):
     minimum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter minimum temperature (centigrade)')
     maximum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter amximum temperature (centigrade)')
 
+    class Meta:
+        permissions = (("can_create_new_temperature", "Able to Create New Temperature" ), ("can_update_temperature", "Able to Update Temoperature"), ("can_delete_temperature", "Able to Delete Temperature"),)
+
     def __str__(self):
         """String for representing the Model object."""
         return self.name
+
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this object."""
+        return reverse('temperature-detail', args=[str(self.id)])
 
 class Storage(models.Model):
     """Model representing storage locations of product instances"""
@@ -67,9 +83,14 @@ class Storage(models.Model):
     location = models.CharField(max_length=200, help_text="Enter location of storage facility (ie floor, room)")
     temp_range = models.ForeignKey('Temperature', on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        permissions = (("can_create_new_storage", "Able to Create New Storage" ), ("can_update_storage", "Able to Update Storage"), ("can_delete_storage", "Able to Delete Storage"),)
+
+
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
+        return f'{self.name} ({self.temp_range.minimum}°C to {self.temp_range.maximum}°C)'
+
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""
@@ -84,11 +105,13 @@ class ProductInstance(models.Model):
     stock = models.IntegerField('Current Stock', help_text='Enter current stock')
     minimum_stock = models.IntegerField('Minimum Stock')
     stock_updater = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
     # should a product instance be an updateable stock level? or a new instance for each delivery?
 
     class Meta:
         ordering = ['-stock']
+        permissions = (("can_create_new_product_instance", "Able to Create New Product Instance" ), ("can_update_product_instance", "Able to Update Product Instance"), ("can_delete_product_instance", "Able to Delete Product Instance"),)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -108,11 +131,15 @@ class ProductInstance(models.Model):
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     # Need to link a user account to an order
-    product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True, blank=True)
+    product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
     date_created = models.DateTimeField(auto_now_add=True)
     orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        permissions = (("can_create_new_order", "Able to Create New Order" ), ("can_update_order", "Able to Update Order"), ("can_delete_order", "Able to Delete Order"),)
+
 
     def __str__(self):
         """String for representing the Model object."""
@@ -151,10 +178,14 @@ class Requisition(models.Model):
     requisition_status = models.CharField(max_length=24, choices=STATUS, default='incomplete')
     comments = models.TextField(max_length=1000, help_text='Enter a comment if required', null=True, blank=True)
 
+    class Meta:
+        permissions = (("can_create_new_requisition", "Able to Create New Requisition" ), ("can_update_requisition", "Able to Update Requisition"), ("can_delete_requisition", "Able to Delete Requisition"),)
+
+
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} - {self.supplier.name}'
+        return f'({self.id}) {self.req_ref}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""

@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Requisition ID: {{ requisition.req.ref }}</h1>
+  <h1>Requisition ID: {{ requisition.req_ref }}</h1>
   <h2>Supplier: {{ requisition.supplier }}</h2>
   <h2>Status: {{requisition.requisition_status}}</h2>
 
@@ -14,6 +14,11 @@
   <p><strong>Date Received by Laboratory:</strong> {{ requisition.date_delivered }}</p>
   <p><strong>Comments:</strong> {{ requisition.comments }}</p>
 
+  <div style="margin-top:30px">
+
+  <p><a href="{% url 'requisition_update' requisition.id %}">Update Requisition</a></p>
+  <p><a href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a></p>
+
 
 
   <div style="margin-left:20px;margin-top:20px">
@@ -21,6 +26,7 @@
 
     {% for copy in requisition.order_set.all %}
       <hr>
+      <p><strong>Order ID:</strong> {{copy.id}}</p>
       <p><strong>Product:</strong> {{copy.product_type.name}}</p>
       <p><strong>Quantity:</strong> {{copy.quantity}}</p>
       <p><strong>Orderer:</strong> {{copy.orderer}}</p>

@@ -3,12 +3,12 @@
 {% block content %}
   <h1>Product: {{ producttype.name }}</h1>
 
-  <!-- <p><strong>Supplier:</strong> <a href="">{{ supplier.name }}</a></p> <! author detail link not yet defined -->
   <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
   <p><strong>Description:</strong> {{ producttype.description }}</p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price:</strong> {{ producttype.price }}</p>
-  <!-- <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>   -->
+  <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
+  <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Instances</h4>
@@ -17,8 +17,9 @@
       <hr>
       <p><strong>Team:</strong> {{copy.team}}</p>
       <p><strong>Stored:</strong> {{copy.storage}}</p>
-      <p><strong>Stock:</strong> {{copy.stock}}</p>
+      <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
+      <a href="{% url 'productinstance-stock-update' copy.id %}">Update Stock</a>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
     {% endfor %}
   </div>

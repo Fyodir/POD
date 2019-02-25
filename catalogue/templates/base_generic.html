@@ -16,20 +16,31 @@
       {% block sidebar %}
         <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'team' %}">Teams</a></li>
+          <div style="margin-top:20px"></div>
+          <li><a href="{% url 'team' %}">All Teams</a></li>
           <li><a href="{% url 'storage' %}">All Storage Locations</a></li>
-          <li><a href="{% url 'producttype' %}">All Product Types</a></li>
           <li><a href="{% url 'productinstance' %}">All Product Instances</a></li>
-          <li><a href="{% url 'supplier' %}">All Suppliers</a></li>
+          <li><a href="{% url 'producttype' %}"> All Product Types</a></li>
+          <li><a href="{% url 'supplier' %}"> All Suppliers</a></li>
           <li><a href="{% url 'order' %}">All Orders</a></li>
           <li><a href="{% url 'requisition' %}">All Requisitions</a></li>
+          <li><a href="{% url 'temperature' %}">All Temperature Ranges</a></li>
+
         </ul>
         <ul class="sidebar-nav">
    {% if user.is_authenticated %}
      <li>User: {{ user.get_username }}</li>
-     <li><a href="">Create Requisition</a></li>
-     <li><a href="">Create Order</a></li>
+     <li><a href="{% url 'requisition_create' %}">Create Requisition</a></li>
+     <li><a href="{% url 'order_create' %}">Create Order</a></li>
      <li><a href="{% url 'my-ordered' %}">My Orders</a></li>
+     <div style="margin-top:20px"></div>
+     <li><a href="{% url 'productinstance_create' %}">New Product Instance</a></li>
+     <li><a href="{% url 'team_create' %}">New Team</a></li>
+     <li><a href="{% url 'product_type_create' %}">New Product Type</a></li>
+     <li>  <a href="{% url 'supplier_create' %}">New Supplier</a></li>
+     <li>  <a href="{% url 'storage_create' %}">New Storage Location</a></li>
+     <li>  <a href="{% url 'temperature_create' %}">New Temperature Range</a></li>
+     <div style="margin-top:20px"></div>
      <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
    {% else %}
      <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>

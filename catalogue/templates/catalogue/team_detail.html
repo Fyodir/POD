@@ -2,6 +2,8 @@
 
 {% block content %}
   <h1>Team: {{ team.name }}</h1>
+  <p><a href="{% url 'team_update' team.id %}">Update Team</a></p>
+  <p><a href="{% url 'team_delete' team.id %}">Delete Team</a></p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Product Instances</h4>
@@ -10,9 +12,11 @@
       <hr>
 
       <p><strong>Product:</strong> {{copy.product_type}}</p>
-      <p><strong>Stored:</strong> {{copy.storage}} ({{copy.storage.location}})</p>
+      <p><strong>Stored:</strong> <a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}} </a> ({{copy.storage.location}})</p>
       <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
+      <a href="{% url 'productinstance-stock-update' copy.id %}">Update Stock</a>
+      <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
 
     {% endfor %}

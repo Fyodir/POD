@@ -8,7 +8,7 @@
 
       {% for order in order_list %}
       <li>
-        <a href="{% url 'product-type-detail' order.product_type.pk %}">{{order.product_type.name}}</a> ({{ order.date_created }}) - {{order.requisition_id.req_ref}}
+        <a href="{% url 'order-detail' order.pk %}">{{order.product_type.name}}</a> ({{ order.date_created }}) - {{order.requisition_id.req_ref}}
       </li>
       {% endfor %}
     </ul>

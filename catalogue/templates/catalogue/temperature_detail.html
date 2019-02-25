@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Temperature Name: {{temerature.name }}</h1>
+  <p><a href="{% url 'temperature_update' temperature.id %}">Update Temperature Range</a></p>
+  <p><a href="{% url 'temperature_delete' temperature.id %}">Delete Temperature Range</a></p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Minimum Temperature: {{temperature.minimum}}</h4>
+    <h4>Maximum Temperature: {{temperature.maximum}}</h4>
+
+  </div>
+{% endblock %}
