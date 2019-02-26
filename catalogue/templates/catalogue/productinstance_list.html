@@ -8,7 +8,6 @@
       <li>
         <a href="{{ productinstance.get_absolute_url }}">{{ productinstance.product_type.name }}</a> ({{productinstance.team}}) - {{productinstance.id}}
         <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}
-        <a href="{% url 'productinstance-stock-update' productinstance.id %}">Update Stock</a>
         </p>
       </li>
     {% endfor %}

@@ -12,6 +12,8 @@
   <p><strong>Price (£):</strong> {{ productinstance.product_type.price }}</p>
   <p class="text-muted"><strong>Instance ID:</strong> {{productinstance.id}}</p>
   <p><strong>Date Updated:</strong> {{productinstance.date_updated}}</p>
+  <p><a href="{% url 'productinstance_update' productinstance.id %}">Update Product Instance</a></p>
+  <p><a href="{% url 'productinstance_delete' productinstance.id %}">Delete Product Instance</a></p>
   <hr>
 
   <div style="margin-left:20px;margin-top:20px">
@@ -19,11 +21,7 @@
 
       <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{productinstance.minimum_stock}}</p>
-      <a href="{% url 'productinstance-stock-update' productinstance.id %}">Update Stock</a>
 
   </div>
-
-  <p><a href="{% url 'productinstance_update' productinstance.id %}">Update Product Instance</a></p>
-  <p><a href="{% url 'productinstance_delete' productinstance.id %}">Delete Product Instance</a></p>
 
 {% endblock %}

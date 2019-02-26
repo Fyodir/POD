@@ -123,7 +123,12 @@ def productinstance_stock_update(request, pk):
             productinstance.stock = form.cleaned_data['stock_level']
             productinstance.save()
             # redirect to a new URL:
-            return redirect(reverse('product-instance-detail', args=[str(pk)]))
+            # return redirect(reverse('index')) # redirects to home page
+            # return redirect(reverse('product-instance-detail', args=[str(pk)]))
+            next = request.POST.get('next', '/')
+            print(next)
+            return HttpResponseRedirect(next)
+
 
     # If this is a GET (or any other method) create the default form.
     else:

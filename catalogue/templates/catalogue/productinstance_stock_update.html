@@ -6,11 +6,12 @@
   <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
   <p><strong>Minimum Stock: </strong>{{ productinstance.minimum_stock }}</p>
 
-  <form action="" method="post">
+  <form action="" method="POST">
     {% csrf_token %}
     <table>
     {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit">
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    <button type="submit">Submit</button>
   </form>
 {% endblock %}

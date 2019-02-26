@@ -15,7 +15,7 @@
       <p><strong>Stored:</strong> <a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}} </a> ({{copy.storage.location}})</p>
       <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
-      <a href="{% url 'productinstance-stock-update' copy.id %}">Update Stock</a>
+      <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
       <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
 

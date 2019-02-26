@@ -16,8 +16,8 @@ urlpatterns = [
     path('productinstance/<uuid:pk>', views.ProductInstanceDetailView.as_view(), name='product-instance-detail'),
     path('producttype/<uuid:pk>/stock_update/', views.productinstance_stock_update, name='productinstance-stock-update'),
     path('productinstance/create/', views.ProductInstanceCreate.as_view(), name='productinstance_create'),
-    path('productinstance/<int:pk>/update/', views.ProductInstanceUpdate.as_view(), name='productinstance_update'),
-    path('productinstance/<int:pk>/delete/', views.ProductInstanceDelete.as_view(), name='productinstance_delete'),
+    path('productinstance/<uuid:pk>/update/', views.ProductInstanceUpdate.as_view(), name='productinstance_update'),
+    path('productinstance/<uuid:pk>/delete/', views.ProductInstanceDelete.as_view(), name='productinstance_delete'),
 
 
 
