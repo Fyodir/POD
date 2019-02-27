@@ -104,7 +104,7 @@ class ProductInstance(models.Model):
     storage = models.ForeignKey('Storage', on_delete=models.SET_NULL, null=True)
     stock = models.IntegerField('Current Stock', help_text='Enter current stock')
     minimum_stock = models.IntegerField('Minimum Stock')
-    stock_updater = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    stock_updater = models.ForeignKey(User, verbose_name='User', on_delete=models.SET_NULL, null=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True)
 
     # should a product instance be an updateable stock level? or a new instance for each delivery?
@@ -154,18 +154,20 @@ class Requisition(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this requisition')
     supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
-    req_ref = models.CharField('Requisition Reference EROS', max_length=20, help_text='Enter EROS reference number for requisition', null=True, blank=True)
-    date_created = models.DateField(auto_now_add=True)
-    date_sent = models.DateField(help_text='Enter date requisition was sent for order', null=True, blank=True)
-
     URGENCY = (
         ('urgent', 'URGENT'),
         ('non-urgent', 'NON-URGENT')
     )
 
     urgency = models.CharField(max_length=10, choices=URGENCY, default='non-urgent')
+    authoriser = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    req_ref = models.CharField('Requisition Reference EROS', max_length=20, help_text='Enter EROS reference number for requisition', null=True, blank=True)
+    date_created = models.DateField(auto_now_add=True)
+    date_sent = models.DateField(help_text='Enter date requisition was sent for order (YYYY-MM-DD)', null=True, blank=True)
 
-    date_delivered = models.DateField(help_text='Enter date requisition was received', null=True, blank=True)
+
+
+    date_delivered = models.DateField(help_text='Enter date requisition was received (YYYY-MM-DD)', null=True, blank=True)
 
     STATUS = (
         ('incomplete', 'INCOMPLETE'),

@@ -46,6 +46,7 @@ class ProductTypeView(LoginRequiredMixin, generic.ListView):
 
 class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType
+    paginate_by = 10
 
 
 class ProductInstanceListView(LoginRequiredMixin, generic.ListView):
@@ -54,46 +55,62 @@ class ProductInstanceListView(LoginRequiredMixin, generic.ListView):
 
 class ProductInstanceDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductInstance
+    paginate_by = 10
 
 
 class SupplierListView(LoginRequiredMixin, generic.ListView):
     model = Supplier
+    paginate_by = 25
 
 class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
     model = Supplier
+    paginate_by = 10
 
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
+    paginate_by = 25
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
+    paginate_by = 10
+
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
+    paginate_by = 25
 
 class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     model = Order
+    paginate_by = 10
 
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     model = Requisition
+    paginate_by = 25
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Requisition
+    paginate_by = 10
 
 
 class StorageListView(LoginRequiredMixin, generic.ListView):
     model = Storage
+    paginate_by = 25
 
 class StorageDetailView(LoginRequiredMixin, generic.DetailView):
     model = Storage
+    paginate_by = 10
+
 
 class TemperatureListView(LoginRequiredMixin, generic.ListView):
     model = Temperature
+    paginate_by = 25
 
 class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
     model = Temperature
+    paginate_by = 10
+
 
 # Views to display user specific pages
 
@@ -126,7 +143,6 @@ def productinstance_stock_update(request, pk):
             # return redirect(reverse('index')) # redirects to home page
             # return redirect(reverse('product-instance-detail', args=[str(pk)]))
             next = request.POST.get('next', '/')
-            print(next)
             return HttpResponseRedirect(next)
 
 
