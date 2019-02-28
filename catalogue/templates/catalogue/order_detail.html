@@ -12,8 +12,11 @@
   <div style="margin-top:20px">
     <p><strong>Orderer:</strong> {{ order.orderer }}</p>
     <p><strong>Date Created:</strong> {{ order.date_created }}</p>
-    <p><strong>Requisition ID:</strong> {{ order.requisition_id }}</p>
+    <p><strong>Requisition ID:</strong> <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id }}</a></p>
     <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
     <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
   </div>
 {% endblock %}
+
+
+<p><strong>Order ID:</strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a></p>

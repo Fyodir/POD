@@ -47,7 +47,7 @@ class ProductType(models.Model):
     supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=1000, null=True, help_text='Enter a brief description of the product_type')
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField('Price (£)', max_digits=8, decimal_places=2)
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
@@ -182,7 +182,6 @@ class Requisition(models.Model):
 
     class Meta:
         permissions = (("can_create_new_requisition", "Able to Create New Requisition" ), ("can_update_requisition", "Able to Update Requisition"), ("can_delete_requisition", "Able to Delete Requisition"),)
-
 
 
     def __str__(self):

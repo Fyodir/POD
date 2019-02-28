@@ -6,7 +6,7 @@
   <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
   <p><strong>Description:</strong> {{ producttype.description }}</p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
-  <p><strong>Price:</strong> {{ producttype.price }}</p>
+  <p><strong>Price (ExVAT):</strong> £{{ producttype.price }}</p>
   <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
   <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
 

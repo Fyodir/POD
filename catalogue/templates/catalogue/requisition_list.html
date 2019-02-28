@@ -7,8 +7,8 @@
     {% for requisition in requisition_list %}
       <li>
         <hr>
-        <a href="{{ requisition.get_absolute_url }}">(Requisition ID: {{ requisition.id }}) - {{requisition.req_ref}}</a>
-        <p> {{requisition.supplier}} ({{requisition.date_created}})</p>
+        <a href="{{ requisition.get_absolute_url }}">Requisition: ({{ requisition.id }}): {{requisition.req_ref}}</a>
+        <p> {{requisition.team}} - {{requisition.supplier}} ({{requisition.date_created}})</p>
       </li>
     {% endfor %}
   </ul>
