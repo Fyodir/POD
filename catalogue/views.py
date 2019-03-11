@@ -5,6 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from catalogue.forms import UpdateProductInstanceStockForm, OrderForm
+from django.contrib.auth.models import User
+
+
 
 def index(request):
     """View function for home page of site."""
@@ -42,7 +46,6 @@ def index(request):
 
 class ProductTypeView(LoginRequiredMixin, generic.ListView):
     model = ProductType
-    paginate_by = 25
 
 class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType
@@ -51,7 +54,6 @@ class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
 
 class ProductInstanceListView(LoginRequiredMixin, generic.ListView):
     model = ProductInstance
-    paginate_by = 25
 
 class ProductInstanceDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductInstance
@@ -60,7 +62,6 @@ class ProductInstanceDetailView(LoginRequiredMixin,generic.DetailView):
 
 class SupplierListView(LoginRequiredMixin, generic.ListView):
     model = Supplier
-    paginate_by = 25
 
 class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
     model = Supplier
@@ -69,7 +70,6 @@ class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
-    paginate_by = 25
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
@@ -78,7 +78,6 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
-    paginate_by = 25
 
 class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     model = Order
@@ -87,7 +86,6 @@ class OrderDetailView(LoginRequiredMixin, generic.DetailView):
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     model = Requisition
-    paginate_by = 25
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Requisition
@@ -96,7 +94,6 @@ class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
 
 class StorageListView(LoginRequiredMixin, generic.ListView):
     model = Storage
-    paginate_by = 25
 
 class StorageDetailView(LoginRequiredMixin, generic.DetailView):
     model = Storage
@@ -105,7 +102,6 @@ class StorageDetailView(LoginRequiredMixin, generic.DetailView):
 
 class TemperatureListView(LoginRequiredMixin, generic.ListView):
     model = Temperature
-    paginate_by = 25
 
 class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
     model = Temperature
@@ -124,8 +120,6 @@ class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
         return Order.objects.filter(orderer=self.request.user).order_by('date_created')
 
 # Views for database manipulation forms
-
-from catalogue.forms import UpdateProductInstanceStockForm
 
 # Update stock of a product instance  (via product instance only)
 def productinstance_stock_update(request, pk):
@@ -214,12 +208,20 @@ class RequisitionDelete(PermissionRequiredMixin, DeleteView):
 
 class OrderCreate(PermissionRequiredMixin, CreateView):
     model = Order
-    fields = '__all__'
+    form_class = OrderForm
     permission_required = 'catalogue.can_create_new_order'
+    success_url = reverse_lazy('order')
+    # success_url = reverse_lazy('requisition-detail', args=[str(model.id)])
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        order.orderer = User.objects.get(username=self.request.user)
+        order.save()
+        return HttpResponseRedirect(self.success_url)
 
 class OrderUpdate(PermissionRequiredMixin, UpdateView):
     model = Order
-    fields = '__all__'
+    form_class = OrderForm
     permission_required = 'catalogue.can_update_order'
 
 class OrderDelete(PermissionRequiredMixin, DeleteView):

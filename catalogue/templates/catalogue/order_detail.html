@@ -4,18 +4,20 @@
   <h1>Order: {{ order.product_type.name }}</h1>
   <div style="margin-top:20px">
 
-  <p><strong>Order ID:</strong> {{order.id}}</p>
-  <p><strong>Quantity:</strong> {{ order.quantity }}</p>
-  <p><strong>Price Per instance (£):</strong> {{ order.product_type.price }}</p>
-  <p><strong>Supplier:</strong> {{ order.product_type.supplier }}</p>
+  <p><strong>Order ID: </strong> {{order.id}}</p>
+  <p><strong>Supplier: </strong> {{ order.product_type.supplier }}</p>
+  <p><strong>Quantity: </strong> {{ order.quantity }}</p>
+  <p><strong>Price Per instance : </strong> £ {{ order.product_type.price }}</p>
+  <p><strong>Status: </strong> {{ order.order_status }}</p>
 
-  <div style="margin-top:20px">
-    <p><strong>Orderer:</strong> {{ order.orderer }}</p>
-    <p><strong>Date Created:</strong> {{ order.date_created }}</p>
-    <p><strong>Requisition ID:</strong> <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id }}</a></p>
-    <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
-    <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
+  <p><strong>Requisition ID: </strong> <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id }}</a></p>
+  <div style="margin-left:20px;margin-top:20px">
+    <p><strong>Comments: </strong> {{order.comments}}</p>
   </div>
+  <p class="text-muted"><strong>Owner: </strong> {{ order.orderer }}</p>
+  <p class="text-muted"><strong>Date Created: </strong> {{ order.date_created }}</p>
+  <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
+  <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
 {% endblock %}
 
 

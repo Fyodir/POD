@@ -131,15 +131,26 @@ class ProductInstance(models.Model):
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     # Need to link a user account to an order
-    requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True, blank=True)
+    requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
     date_created = models.DateTimeField(auto_now_add=True)
     orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    STATUS = (
+        ('Order Created', 'ORDER CREATED'),
+        ('Received', 'RECEIVED'),
+        ('Received Frozen', 'RECEIVED FROZEN'),
+        ('Delayed', 'ORDER DELAYED'),
+    )
+
+    order_status = models.CharField(max_length=24, choices=STATUS, default='order_created')
+
+    comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
+
     class Meta:
         permissions = (("can_create_new_order", "Able to Create New Order" ), ("can_update_order", "Able to Update Order"), ("can_delete_order", "Able to Delete Order"),)
-
+        ordering = ["-id"]
 
     def __str__(self):
         """String for representing the Model object."""
@@ -151,42 +162,37 @@ class Order(models.Model):
 
 class Requisition(models.Model):
     """Model representing a collection of orders from a single supplier"""
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this requisition')
-    supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
     URGENCY = (
-        ('urgent', 'URGENT'),
-        ('non-urgent', 'NON-URGENT')
+        ('Urgent', 'URGENT'),
+        ('Non-Urgent', 'NON-URGENT')
     )
 
-    urgency = models.CharField(max_length=10, choices=URGENCY, default='non-urgent')
-    authoriser = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    urgency = models.CharField(max_length=10, choices=URGENCY, default='Non-Urgent')
+    authoriser = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     req_ref = models.CharField('Requisition Reference EROS', max_length=20, help_text='Enter EROS reference number for requisition', null=True, blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_sent = models.DateField(help_text='Enter date requisition was sent for order (YYYY-MM-DD)', null=True, blank=True)
-
-
-
     date_delivered = models.DateField(help_text='Enter date requisition was received (YYYY-MM-DD)', null=True, blank=True)
 
     STATUS = (
-        ('incomplete', 'INCOMPLETE'),
-        ('awaiting_auth', 'AWAITING AUTHORIZATION'),
-        ('authorized', 'AUTHORIZED'),
-        ('sent', 'SENT'),
-        ('complete', 'COMPLETE')
+        ('Incomplete', 'INCOMPLETE'),
+        ('Awaiting Authorisation', 'AWAITING AUTHORISATION'),
+        ('Authorised', 'AUTHORISED'),
+        ('Sent', 'SENT'),
+        ('Complete', 'COMPLETE')
     )
 
     requisition_status = models.CharField(max_length=24, choices=STATUS, default='incomplete')
-    comments = models.TextField(max_length=1000, help_text='Enter a comment if required', null=True, blank=True)
+    comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
 
     class Meta:
         permissions = (("can_create_new_requisition", "Able to Create New Requisition" ), ("can_update_requisition", "Able to Update Requisition"), ("can_delete_requisition", "Able to Delete Requisition"),)
-
+        ordering=["-id"]
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'({self.id}) {self.req_ref}'
+        return f'({self.id}) {self.team} - {self.req_ref}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""

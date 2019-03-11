@@ -20,25 +20,7 @@ class UpdateProductInstanceStockForm(forms.Form):
         # Remember to always return the cleaned data.
         return data
 
-
-# IN PROGRESS - 2 versions of a form for creating orders for product instances
-
-# class OrderModelForm(ModelForm):
-#
-#     class Meta:
-#         model = Order
-#         fields = '__all__'
-#         labels = {
-#             'product_type': _('Product'),
-#             'requisition_id': _('Requisition ID'),
-#             'quantity': _('Quantity'),
-#             'date_created': _('Date order created'),
-#             'orderer': _('Orderer')
-#         }
-#
-# class OrderForm(forms.Form):
-#     product_type = forms.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
-#     requisition_id = forms.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True, blank=True)
-#     quantity = forms.IntegerField(help_text='Enter required quantity')
-#     date_created = forms.DateTimeField(auto_now_add=True)
-#     orderer = forms.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = ["orderer"]

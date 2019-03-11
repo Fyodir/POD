@@ -9,6 +9,7 @@
         <hr>
         <a href="{{ requisition.get_absolute_url }}">Requisition: ({{ requisition.id }}): {{requisition.req_ref}}</a>
         <p> {{requisition.team}} - {{requisition.supplier}} ({{requisition.date_created}})</p>
+        <p> Requisitions Status: {{requisition.requisition_status}}</p>
       </li>
     {% endfor %}
   </ul>

@@ -7,7 +7,7 @@
     {% for order in order_list %}
       <li>
         <hr>
-        <a href="{{ order.get_absolute_url }}">(Order ID :{{order.id}}) {{ order.product_type.supplier }}</a> --- ({{order.orderer}})
+        <a href="{{ order.get_absolute_url }}">(Order ID :{{order.id}}) {{ order.product_type.supplier }}</a>
         <p> {{order.quantity}} x {{order.product_type}}</p>
         <p>(Requisition #: {{order.requisition_id}})</p>
       </li>
