@@ -8,8 +8,10 @@ class Team(models.Model):
     """Model representing a laboratory team."""
     name = models.CharField(max_length=200, help_text='Enter team name')
 
+
     class Meta:
         permissions = (("can_create_new_team", "Able to Create New Team" ), ("can_update_team", "Able to Update Team"), ("can_delete_team", "Able to Delete Team"),)
+        ordering = ["name"]
 
 
     def __str__(self):
@@ -51,6 +53,7 @@ class ProductType(models.Model):
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
+        ordering =["name"]
 
     def __str__(self):
         """String for representing the Model object."""
@@ -85,6 +88,7 @@ class Storage(models.Model):
 
     class Meta:
         permissions = (("can_create_new_storage", "Able to Create New Storage" ), ("can_update_storage", "Able to Update Storage"), ("can_delete_storage", "Able to Delete Storage"),)
+        ordering = ["name"]
 
 
     def __str__(self):
@@ -110,7 +114,7 @@ class ProductInstance(models.Model):
     # should a product instance be an updateable stock level? or a new instance for each delivery?
 
     class Meta:
-        ordering = ['-stock']
+        ordering = ['stock']
         permissions = (("can_create_new_product_instance", "Able to Create New Product Instance" ), ("can_update_product_instance", "Able to Update Product Instance"), ("can_delete_product_instance", "Able to Delete Product Instance"),)
 
     def __str__(self):
@@ -122,7 +126,13 @@ class ProductInstance(models.Model):
         return reverse('product-instance-detail', args=[str(self.id)])
 
     @property
+    def stock_diff(self):
+        # returns a positive value if stock is below minimum_stock. Shows differene in stock levels
+        return self.minimum_stock - self.stock
+
+    @property
     def stock_is_low(self):
+        # Returns true if stock is below minimum stock value
         if self.stock < self.minimum_stock:
             return True
         return False
@@ -130,7 +140,6 @@ class ProductInstance(models.Model):
 
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
-    # Need to link a user account to an order
     requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
@@ -177,7 +186,6 @@ class Requisition(models.Model):
 
     STATUS = (
         ('Incomplete', 'INCOMPLETE'),
-        ('Awaiting Authorisation', 'AWAITING AUTHORISATION'),
         ('Authorised', 'AUTHORISED'),
         ('Sent', 'SENT'),
         ('Complete', 'COMPLETE')
@@ -187,7 +195,12 @@ class Requisition(models.Model):
     comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
 
     class Meta:
-        permissions = (("can_create_new_requisition", "Able to Create New Requisition" ), ("can_update_requisition", "Able to Update Requisition"), ("can_delete_requisition", "Able to Delete Requisition"),)
+        permissions = (
+            ("can_create_new_requisition", "Able to Create New Requisition" ),
+            ("can_update_requisition", "Able to Update Requisition"),
+            ("can_delete_requisition", "Able to Delete Requisition"),
+            ("can_update_requisition_authoriser", "Able to Update Requisition - Authoriser"),
+        )
         ordering=["-id"]
 
     def __str__(self):

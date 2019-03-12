@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from catalogue.models import Order
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
 
 
 # Updates product instance stock_level
@@ -21,6 +22,12 @@ class UpdateProductInstanceStockForm(forms.Form):
         return data
 
 class OrderForm(forms.ModelForm):
+
+    # Orders can only be placed on "Incomplete" Requisitions
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['requisition_id'].queryset = Requisition.objects.filter(requisition_status="Incomplete")
+
     class Meta:
         model = Order
         exclude = ["orderer"]

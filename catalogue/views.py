@@ -191,13 +191,18 @@ class ProductTypeDelete(PermissionRequiredMixin, DeleteView):
 
 class RequisitionCreate(PermissionRequiredMixin, CreateView):
     model = Requisition
-    fields = '__all__'
+    fields = ['team', 'urgency', 'req_ref', 'date_sent', 'date_delivered', 'requisition_status', 'comments']
     permission_required = 'catalogue.can_create_new_requisition'
 
 class RequisitionUpdate(PermissionRequiredMixin, UpdateView):
     model = Requisition
-    fields = '__all__'
+    fields = ['team', 'urgency', 'req_ref', 'date_sent', 'date_delivered', 'requisition_status', 'comments']
     permission_required = 'catalogue.can_update_requisition'
+
+class RequisitionUpdateAuthoriser(PermissionRequiredMixin, UpdateView):
+    model = Requisition
+    fields = '__all__'
+    permission_required = 'catalogue.can_update_requisition_authoriser'
 
 class RequisitionDelete(PermissionRequiredMixin, DeleteView):
     model = Requisition
@@ -284,36 +289,15 @@ class TemperatureDelete(PermissionRequiredMixin, DeleteView):
 
 class ProductInstanceCreate(PermissionRequiredMixin, CreateView):
     model = ProductInstance
-    fields = '__all__'
+    fields = ['product_type', 'id', 'team', 'storage', 'stock', 'minimum_stock']
     permission_required = 'catalogue.can_create_new_product_instance'
 
 class ProductInstanceUpdate(PermissionRequiredMixin, UpdateView):
     model = ProductInstance
-    fields = '__all__'
+    fields = ['product_type', 'id', 'team', 'storage', 'stock', 'minimum_stock']
     permission_required = 'catalogue.can_update_product_instance'
 
 class ProductInstanceDelete(PermissionRequiredMixin, DeleteView):
     model = ProductInstance
     permission_required = 'catalogue.can_delete_product_instance'
     success_url = reverse_lazy('productinstance')
-#
-# def order_product(request, pk):
-#     order = get_object_or_404(Order, pk=pk)
-#     # If this is a POST request then process the Form data
-#     if request.method == 'POST':
-#         # Create a form instance and populate it with data from the request (binding):
-#         form = OrderForm(request.POST)
-#
-#         # redirect to a new URL:
-#         return redirect(reverse('order-instance-detail', args=[str(pk)]))
-#
-#     # If this is a GET (or any other method) create the default form.
-#     else:
-#         default_quantity = 0
-#         form = OrderForm(initial={'quantity': default_quantity})
-#
-#     context = {
-#         'form': form,
-#         'order': order,
-#     }
-#     return render(request, 'catalogue/order_form.html', context)
