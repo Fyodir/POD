@@ -6,9 +6,9 @@
   {% if supplier_list %}
   <ul>
     {% for supplier in supplier_list %}
-      <li>
+      <ul>
         <a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a> ({{supplier.email}})
-      </li>
+      </ul>
     {% endfor %}
   </ul>
   {% else %}

@@ -5,9 +5,9 @@
   {% if team_list %}
   <ul>
     {% for team in team_list %}
-      <li>
+      <ul>
         <a href="{{ team.get_absolute_url }}">{{ team.name }}</a>
-      </li>
+      </ul>
     {% endfor %}
   </ul>
   {% else %}

@@ -9,7 +9,6 @@ from catalogue.forms import UpdateProductInstanceStockForm, OrderForm
 from django.contrib.auth.models import User
 
 
-
 def index(request):
     """View function for home page of site."""
 
@@ -19,10 +18,9 @@ def index(request):
     num_suppliers = Supplier.objects.count()
 
     # Requisitions
-    num_req_incomplete = Requisition.objects.filter(requisition_status__exact='incomplete').count()
-    num_req_awaiting = Requisition.objects.filter(requisition_status__exact='awaiting_auth').count()
-    num_req_sent = Requisition.objects.filter(requisition_status__exact='sent').count()
-    num_orders_no_req = Order.objects.filter(requisition_id__isnull=True).count()
+    num_req_incomplete = Requisition.objects.filter(requisition_status__exact='Incomplete').count()
+    num_req_authorised = Requisition.objects.filter(requisition_status__exact='Authorised').count()
+    num_req_sent = Requisition.objects.filter(requisition_status__exact='Sent').count()
 
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
@@ -32,11 +30,10 @@ def index(request):
         'num_prod': num_prod,
         'num_instances': num_instances,
         'num_req_incomplete': num_req_incomplete,
-        'num_req_awaiting': num_req_awaiting,
+        'num_req_authorised': num_req_authorised,
         'num_req_sent': num_req_sent,
         'num_suppliers': num_suppliers,
         'num_visits': num_visits,
-        'num_orders_no_req': num_orders_no_req,
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -46,62 +43,77 @@ def index(request):
 
 class ProductTypeView(LoginRequiredMixin, generic.ListView):
     model = ProductType
+    paginate_by = 25
 
 class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType
     paginate_by = 10
 
+#######################################
 
 class ProductInstanceListView(LoginRequiredMixin, generic.ListView):
     model = ProductInstance
+    paginate_by = 25
 
 class ProductInstanceDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductInstance
     paginate_by = 10
 
+#######################################
 
 class SupplierListView(LoginRequiredMixin, generic.ListView):
     model = Supplier
+    paginate_by = 25
 
 class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
     model = Supplier
     paginate_by = 10
 
+#######################################
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
+    paginate_by = 25
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     paginate_by = 10
 
+#######################################
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
+    paginate_by = 10
 
 class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     model = Order
     paginate_by = 10
 
+#######################################
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     model = Requisition
+    paginate_by = 10
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Requisition
     paginate_by = 10
 
+#######################################
 
 class StorageListView(LoginRequiredMixin, generic.ListView):
     model = Storage
+    paginate_by = 25
 
 class StorageDetailView(LoginRequiredMixin, generic.DetailView):
     model = Storage
     paginate_by = 10
 
+#######################################
 
 class TemperatureListView(LoginRequiredMixin, generic.ListView):
     model = Temperature
+    paginate_by = 25
 
 class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
     model = Temperature
@@ -170,7 +182,7 @@ class SupplierDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_supplier'
     success_url = reverse_lazy('supplier')
 
-##################################
+#######################################
 
 class ProductTypeCreate(PermissionRequiredMixin, CreateView):
     model = ProductType
@@ -187,7 +199,7 @@ class ProductTypeDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_product_type'
     success_url = reverse_lazy('producttype')
 
-##################################
+#######################################
 
 class RequisitionCreate(PermissionRequiredMixin, CreateView):
     model = Requisition
@@ -209,7 +221,7 @@ class RequisitionDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_requisition'
     success_url = reverse_lazy('requisition')
 
-##################################
+#######################################
 
 class OrderCreate(PermissionRequiredMixin, CreateView):
     model = Order
@@ -234,7 +246,7 @@ class OrderDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_order'
     success_url = reverse_lazy('order')
 
-################################
+#######################################
 
 class TeamCreate(PermissionRequiredMixin, CreateView):
     model = Team
@@ -251,7 +263,7 @@ class TeamDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_team'
     success_url = reverse_lazy('team')
 
-################################
+#######################################
 
 class StorageCreate(PermissionRequiredMixin, CreateView):
     model = Storage
@@ -268,7 +280,7 @@ class StorageDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_storage'
     success_url = reverse_lazy('storage')
 
-###############################
+#######################################
 
 class TemperatureCreate(PermissionRequiredMixin, CreateView):
     model = Temperature
@@ -285,7 +297,7 @@ class TemperatureDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalogue.can_delete_temperature'
     success_url = reverse_lazy('index')
 
-##############################
+#######################################
 
 class ProductInstanceCreate(PermissionRequiredMixin, CreateView):
     model = ProductInstance

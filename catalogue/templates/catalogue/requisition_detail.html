@@ -2,7 +2,12 @@
 
 {% block content %}
   <h1>Requisition ({{requisition.id}}): {{ requisition.req_ref }}</h1>
-  <h2>Status: {{requisition.requisition_status}}</h2>
+  <h2 {% if requisition.status_order %} class="text-muted",
+      {% elif requisition.status_incomplete %} class="text-danger",
+      {% elif requisition.status_auth %} class="text-info",
+      {% elif requisition.status_sent %} class="text-warning",
+      {% elif requisition.status_complete %} class="text-success"
+    {% endif %}>Status: {{requisition.requisition_status}}</h2>
 
   <div style="margin-top:30px">
 

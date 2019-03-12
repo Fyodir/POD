@@ -5,9 +5,9 @@
   {% if producttype_list %}
   <ul>
     {% for producttype in producttype_list %}
-      <li>
-        <a href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a> ({{producttype.supplier}})
-      </li>
+      <ul>
+        ({{producttype.supplier}}) <a href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a>
+      </ul>
     {% endfor %}
   </ul>
   {% else %}

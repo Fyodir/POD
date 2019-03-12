@@ -27,8 +27,8 @@ class Supplier(models.Model):
     """Model representing a product supplier."""
     name = models.CharField(max_length=200, help_text='Enter a supplier name')
     phone = models.CharField(max_length=200, help_text='Enter supplier contact telephone number')
-    email = models.EmailField(max_length=200, help_text='Enter supplier contact email')
-    agent = models.CharField(max_length=200, help_text='Enter agent name', blank=True)
+    email = models.EmailField(max_length=200, help_text='Enter supplier contact email', null=True, blank=True)
+    agent = models.CharField(max_length=200, help_text='Enter agent name', null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -53,11 +53,11 @@ class ProductType(models.Model):
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
-        ordering =["name"]
+        ordering =["supplier", "name"]
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
+        return f'{self.supplier} - {self.name}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""
@@ -185,14 +185,46 @@ class Requisition(models.Model):
     date_delivered = models.DateField(help_text='Enter date requisition was received (YYYY-MM-DD)', null=True, blank=True)
 
     STATUS = (
+        ('To Order', 'TO ORDER'),
         ('Incomplete', 'INCOMPLETE'),
         ('Authorised', 'AUTHORISED'),
         ('Sent', 'SENT'),
         ('Complete', 'COMPLETE')
     )
 
-    requisition_status = models.CharField(max_length=24, choices=STATUS, default='incomplete')
+    requisition_status = models.CharField(max_length=24, choices=STATUS, default='Incomplete')
     comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
+
+    @property
+    def status_order(self):
+        if self.requisition_status == "To Order":
+            return True
+        return False
+
+    @property
+    def status_incomplete(self):
+        if self.requisition_status == "Incomplete":
+            return True
+        return False
+
+    @property
+    def status_auth(self):
+        if self.requisition_status == "Authorised":
+            return True
+        return False
+
+    @property
+    def status_sent(self):
+        if self.requisition_status == "Sent":
+            return True
+        return False
+
+    @property
+    def status_complete(self):
+        if self.requisition_status == "Complete":
+            return True
+        return False
+
 
     class Meta:
         permissions = (
@@ -205,7 +237,7 @@ class Requisition(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'({self.id}) {self.team} - {self.req_ref}'
+        return f'({self.id}) {self.team} - {self.requisition_status}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""

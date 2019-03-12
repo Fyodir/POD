@@ -5,9 +5,9 @@
   {% if storage_list %}
   <ul>
     {% for storage in storage_list %}
-      <li>
+      <ul>
         <a href="{{ storage.get_absolute_url }}">{{ storage.name }}</a> ({{storage.location}})
-      </li>
+      </ul>
     {% endfor %}
   </ul>
   {% else %}
