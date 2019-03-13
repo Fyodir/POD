@@ -4,24 +4,22 @@
   <h1>Product: {{ productinstance.product_type.name }}</h1>
 
   <div style="margin-top:20px">
-
-  <p><strong>Team:</strong> <a href="{% url 'team-detail' productinstance.team.pk %}">{{ productinstance.team }}</a></p>
-  <p><strong>Storage:</strong> <a href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage }}</a></p>
-  <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' productinstance.product_type.supplier.pk %}">{{ productinstance.product_type.supplier }}</a></p>
-  <p><strong>Description:</strong> {{ productinstance.product_type.description }}</p>
-  <p><strong>Price (£):</strong> {{ productinstance.product_type.price }}</p>
-  <p class="text-muted"><strong>Instance ID:</strong> {{productinstance.id}}</p>
-  <p><strong>Date Updated:</strong> {{productinstance.date_updated}}</p>
-  <p><a href="{% url 'productinstance_update' productinstance.id %}">Update Product Instance</a></p>
-  <p><a href="{% url 'productinstance_delete' productinstance.id %}">Delete Product Instance</a></p>
-  <hr>
-
+    <p><strong>Team:</strong> <a href="{% url 'team-detail' productinstance.team.pk %}">{{ productinstance.team }}</a></p>
+    <p><strong>Storage:</strong> <a href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage }}</a></p>
+    <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' productinstance.product_type.supplier.pk %}">{{ productinstance.product_type.supplier }}</a></p>
+    <p><strong>Description:</strong> {{ productinstance.product_type.description }}</p>
+    <p><strong>Price (£):</strong> {{ productinstance.product_type.price }}</p>
+    <p class="text-muted"><strong>Instance ID:</strong> {{productinstance.id}}</p>
+    <p><strong>Date Updated:</strong> {{productinstance.date_updated}}</p>
+    <p><a href="{% url 'productinstance_update' productinstance.id %}">Update Product Instance</a></p>
+    <p><a href="{% url 'productinstance_delete' productinstance.id %}">Delete Product Instance</a></p>
+    <hr>
+  </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Stock</h4>
-
       <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{productinstance.minimum_stock}}</p>
-
+      <a href="{% url 'productinstance-stock-update' productinstance.id %}?next={{ request.path|urlencode }}">Update Stock</a>
   </div>
 
 {% endblock %}

@@ -4,9 +4,9 @@
   <h1>Product: {{ producttype.name }}</h1>
 
   <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
-  <p><strong>Description:</strong> {{ producttype.description }}</p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price (ExVAT):</strong> £{{ producttype.price }}</p>
+  <p><strong>Description:</strong> {{ producttype.description }}</p>
   <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
   <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
 
@@ -14,13 +14,16 @@
     <h4>Instances</h4>
 
     {% for copy in producttype.productinstance_set.all %}
-      <hr>
-      <p><strong>Team:</strong> {{copy.team}}</p>
-      <p><strong>Stored:</strong> {{copy.storage}}</p>
-      <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
+    <ul {% if copy.stock_is_low %} class="list-group-item list-group-item-danger",
+        {% else %} class = "list-group-item list-group-item-success"
+        {% endif %}>
+      <p><strong>Team:</strong><a href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a></p>
+      <p><strong>Stored:</strong><a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></p>
+      <p><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
       <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+    </ul>
     {% endfor %}
   </div>
 {% endblock %}

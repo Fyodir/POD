@@ -114,7 +114,7 @@ class ProductInstance(models.Model):
     # should a product instance be an updateable stock level? or a new instance for each delivery?
 
     class Meta:
-        ordering = ['stock']
+        ordering = ['product_type']
         permissions = (("can_create_new_product_instance", "Able to Create New Product Instance" ), ("can_update_product_instance", "Able to Update Product Instance"), ("can_delete_product_instance", "Able to Delete Product Instance"),)
 
     def __str__(self):
@@ -151,6 +151,7 @@ class Order(models.Model):
         ('Received', 'RECEIVED'),
         ('Received Frozen', 'RECEIVED FROZEN'),
         ('Delayed', 'ORDER DELAYED'),
+        ('Damaged', 'DAMAGED'),
     )
 
     order_status = models.CharField(max_length=24, choices=STATUS, default='order_created')

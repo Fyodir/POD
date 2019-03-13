@@ -9,17 +9,20 @@
   <p><a href="{% url 'storage_delete' storage.id %}">Delete Storage Location</a></p>
 
   <div style="margin-left:20px;margin-top:20px">
-    <h4>Instances</h4>
+    <h3>Instances</h3>
 
     {% for copy in storage.productinstance_set.all %}
-      <hr>
-      <p><strong>Product: </strong> {{copy.product_type}}</p>
-      <p><strong>Team: </strong>{{copy.team}}</a></p>
-      <p{% if copy.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ copy.stock }}</p>
+    <ul {% if copy.stock_is_low %} class="list-group-item list-group-item-danger",
+        {% else %} class = "list-group-item list-group-item-success"
+        {% endif %}>
+      <h4>{{copy.product_type}}</h4>
+      <p><strong>Team: </strong><a href ="{% url 'team-detail' copy.team.pk %}">{{copy.team}}</a></p>
+      <p><strong>Current Stock: </strong>{{ copy.stock }}</p>
       <p><strong>Minimum Stock: </strong> {{copy.minimum_stock}}</p>
       <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
       <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
       <p class="text-muted"><strong>Id: </strong> {{copy.id}}</p>
+    </ul>
     {% endfor %}
   </div>
 {% endblock %}

@@ -5,14 +5,13 @@
   {% if requisition_list %}
   <ul>
     {% for requisition in requisition_list %}
-      <ul>
-        <hr>
-        <p {% if requisition.status_order %} class="text-muted",
-            {% elif requisition.status_incomplete %} class="text-danger",
-            {% elif requisition.status_auth %} class="text-info",
-            {% elif requisition.status_sent %} class="text-warning",
-            {% elif requisition.status_complete %} class="text-success"
-          {% endif %}> <strong>{{requisition.requisition_status}}</strong></p>
+      <ul{% if requisition.status_order %} class="text-muted",
+          {% elif requisition.status_incomplete %} class="list-group-item list-group-item-danger",
+          {% elif requisition.status_auth %} class="list-group-item list-group-item-info",
+          {% elif requisition.status_sent %} class="list-group-item list-group-item-warning",
+          {% elif requisition.status_complete %} class="list-group-item list-group-item-success"
+        {% endif %}>
+        <p> <strong>{{requisition.requisition_status}}</strong></p>
         <p><a href="{{ requisition.get_absolute_url }}">{{requisition.team}}: ({{ requisition.id }}): {{requisition.req_ref}}</a></p>
         <p >({{requisition.date_created}}) - {{requisition.urgency}}</p>
       </ul>

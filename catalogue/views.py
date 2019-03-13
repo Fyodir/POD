@@ -43,7 +43,7 @@ def index(request):
 
 class ProductTypeView(LoginRequiredMixin, generic.ListView):
     model = ProductType
-    paginate_by = 25
+    paginate_by = 30
 
 class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType

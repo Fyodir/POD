@@ -8,32 +8,24 @@
       {% elif requisition.status_sent %} class="text-warning",
       {% elif requisition.status_complete %} class="text-success"
     {% endif %}>Status: {{requisition.requisition_status}}</h2>
-
-  <div style="margin-top:30px">
-
-
-  <p><strong>Urgency:</strong> {{ requisition.urgency }}</p>
-  <p><strong>Team:</strong> {{ requisition.team }}</p>
-  <hr>
-  <p><strong>Date Requisition Created:</strong> {{ requisition.date_created }}</p>
-  <p><strong>Date Requisition Sent:</strong> {{ requisition.date_sent }}</p>
-  <p><strong>Date Received by Laboratory:</strong> {{ requisition.date_delivered }}</p>
-  <hr>
   <p><strong>Authoriser: </strong> {{requisition.authoriser}}</p>
-  <p><strong>Comments:</strong> {{ requisition.comments }}</p>
-
+  <div style="margin-top:30px" >
+    <p><strong>Urgency:</strong> {{ requisition.urgency }}</p>
+    <p><strong>Team:</strong> {{ requisition.team }}</p>
+    <hr>
+    <p><strong>Date Requisition Created:</strong> {{ requisition.date_created }}</p>
+    <p><strong>Date Requisition Sent:</strong> {{ requisition.date_sent }}</p>
+    <p><strong>Date Received by Laboratory:</strong> {{ requisition.date_delivered }}</p>
+    <hr>
+    <p><strong>Comments:</strong> {{ requisition.comments }}</p>
+  </div>
   <div style="margin-top:30px">
-
-  <p><a href="{% url 'requisition_update' requisition.id %}">Update Requisition</a></p>
-  <p><a href="{% url 'requisition_update_authoriser' requisition.id %}">Update Requisition (Authoriser)</a></p>
-  <p><a href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a></p>
-
-
-
-
+    <p><a href="{% url 'requisition_update' requisition.id %}">Update Requisition</a></p>
+    <p><a href="{% url 'requisition_update_authoriser' requisition.id %}">Update Requisition (Authoriser)</a></p>
+    <p><a href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a></p>
+  </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Orders</h4>
-
     {% for copy in requisition.order_set.all %}
       <hr>
       <p><strong>Order ID: </strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a></p>

@@ -5,11 +5,13 @@
   {% if productinstance_list %}
   <ul>
     {% for productinstance in productinstance_list %}
-      <li>
+      <ul {% if productinstance.stock_is_low %} class="list-group-item list-group-item-danger",
+          {% else %} class = "list-group-item list-group-item-success"
+          {% endif %}>
         <a href="{{ productinstance.get_absolute_url }}">{{ productinstance.product_type.name }}</a> ({{productinstance.team}}) - {{productinstance.id}}
-        <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}
+        <p><strong>Current Stock: </strong>{{ productinstance.stock }}
         </p>
-      </li>
+      </ul>
     {% endfor %}
   </ul>
   {% else %}
