@@ -18,9 +18,9 @@ def index(request):
     num_suppliers = Supplier.objects.count()
 
     # Requisitions
-    num_req_incomplete = Requisition.objects.filter(requisition_status__exact='Incomplete').count()
-    num_req_authorised = Requisition.objects.filter(requisition_status__exact='Authorised').count()
-    num_req_sent = Requisition.objects.filter(requisition_status__exact='Sent').count()
+    num_order_incomplete = Order.objects.filter(order_status__exact='Order Created').count()
+    num_order_sent = Order.objects.filter(order_status__exact='Order Sent').count()
+    num_order_preceived = Order.objects.filter(order_status__exact='Part Received').count()
 
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
@@ -29,10 +29,10 @@ def index(request):
     context = {
         'num_prod': num_prod,
         'num_instances': num_instances,
-        'num_req_incomplete': num_req_incomplete,
-        'num_req_authorised': num_req_authorised,
-        'num_req_sent': num_req_sent,
         'num_suppliers': num_suppliers,
+        'num_order_incomplete': num_order_incomplete,
+        'num_order_sent': num_order_sent,
+        'num_order_preceived': num_order_preceived,
         'num_visits': num_visits,
     }
 
@@ -203,18 +203,15 @@ class ProductTypeDelete(PermissionRequiredMixin, DeleteView):
 
 class RequisitionCreate(PermissionRequiredMixin, CreateView):
     model = Requisition
-    fields = ['team', 'urgency', 'req_ref', 'date_sent', 'date_delivered', 'requisition_status', 'comments']
+    # fields = ['req_ref', 'date_sent', 'requisition_status', 'comments']
+    fields = '__all__'
     permission_required = 'catalogue.can_create_new_requisition'
 
 class RequisitionUpdate(PermissionRequiredMixin, UpdateView):
     model = Requisition
-    fields = ['team', 'urgency', 'req_ref', 'date_sent', 'date_delivered', 'requisition_status', 'comments']
-    permission_required = 'catalogue.can_update_requisition'
-
-class RequisitionUpdateAuthoriser(PermissionRequiredMixin, UpdateView):
-    model = Requisition
+    # fields = ['req_ref', 'date_sent', 'requisition_status', 'comments']
     fields = '__all__'
-    permission_required = 'catalogue.can_update_requisition_authoriser'
+    permission_required = 'catalogue.can_update_requisition'
 
 class RequisitionDelete(PermissionRequiredMixin, DeleteView):
     model = Requisition
@@ -238,7 +235,8 @@ class OrderCreate(PermissionRequiredMixin, CreateView):
 
 class OrderUpdate(PermissionRequiredMixin, UpdateView):
     model = Order
-    form_class = OrderForm
+    # form_class = OrderForm
+    fields='__all__'
     permission_required = 'catalogue.can_update_order'
 
 class OrderDelete(PermissionRequiredMixin, DeleteView):

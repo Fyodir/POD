@@ -26,8 +26,8 @@ class OrderForm(forms.ModelForm):
     # Orders can only be placed on Requisitions with a stustus of "Incomplete, To Order"
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.fields['requisition_id'].queryset = Requisition.objects.filter(requisition_status="Incomplete") | Requisition.objects.filter(requisition_status="To Order")
+        self.fields['requisition_id'].queryset = Requisition.objects.filter(requisition_status="To Order")
 
     class Meta:
         model = Order
-        exclude = ["orderer"]
+        exclude = ["orderer",]

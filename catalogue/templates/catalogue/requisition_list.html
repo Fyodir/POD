@@ -5,15 +5,11 @@
   {% if requisition_list %}
   <ul>
     {% for requisition in requisition_list %}
-      <ul{% if requisition.status_order %} class="text-muted",
-          {% elif requisition.status_incomplete %} class="list-group-item list-group-item-danger",
-          {% elif requisition.status_auth %} class="list-group-item list-group-item-info",
-          {% elif requisition.status_sent %} class="list-group-item list-group-item-warning",
-          {% elif requisition.status_complete %} class="list-group-item list-group-item-success"
+      <ul {% if requisition.req_order %} class="list-group-item list-group-item-warning",
+          {% elif requisition.req_sent %} class="list-group-item list-group-item-success",
         {% endif %}>
-        <p> <strong>{{requisition.requisition_status}}</strong></p>
-        <p><a href="{{ requisition.get_absolute_url }}">{{requisition.team}}: ({{ requisition.id }}): {{requisition.req_ref}}</a></p>
-        <p >({{requisition.date_created}}) - {{requisition.urgency}}</p>
+        <p><a href="{{ requisition.get_absolute_url }}">Requisition: {{ requisition.id }} ({{requisition.req_ref}})</a> - <strong>{{requisition.requisition_status}}</strong></p>
+        <p >Created: {{requisition.date_created}} | Requisitioned: {{requisition.date_sent}}</p>
       </ul>
     {% endfor %}
   </ul>
@@ -21,3 +17,5 @@
     <p>There are no Requisitions.</p>
   {% endif %}
 {% endblock %}
+
+<p> </p>

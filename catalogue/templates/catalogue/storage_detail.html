@@ -17,8 +17,7 @@
         {% endif %}>
       <h4>{{copy.product_type}}</h4>
       <p><strong>Team: </strong><a href ="{% url 'team-detail' copy.team.pk %}">{{copy.team}}</a></p>
-      <p><strong>Current Stock: </strong>{{ copy.stock }}</p>
-      <p><strong>Minimum Stock: </strong> {{copy.minimum_stock}}</p>
+      <p><strong>Current Stock: </strong>{{ copy.stock }} | <strong>Minimum Stock: </strong> {{copy.minimum_stock}}</p>
       <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
       <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
       <p class="text-muted"><strong>Id: </strong> {{copy.id}}</p>

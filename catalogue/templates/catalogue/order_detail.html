@@ -1,24 +1,46 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Order: {{ order.product_type.name }}</h1>
+  <h1>Order ({{order.id}}):
+    <i {% if order.urgency == "Urgent"%} class=" fa fa-exclamation-triangle",
+        {% elif order.urgency == "Non-Urgent" %},
+        {% endif %}>
+    </i> {{ order.product_type.name }}
+  </h1>
+  <h3 {% if order.order_created %} class="text-info",
+      {% elif order.order_sent %} class="text-warning",
+      {% elif order.order_preceived %} class="text-danger",
+      {% elif order.order_complete %} class="text-success",
+    {% endif %}>
+    <strong>{{order.order_status}}</strong>
+  </h3>
   <div style="margin-top:20px">
-
-  <p><strong>Order ID: </strong> {{order.id}}</p>
-  <p><strong>Supplier: </strong> {{ order.product_type.supplier }}</p>
-  <p><strong>Quantity: </strong> {{ order.quantity }}</p>
-  <p><strong>Price Per instance : </strong> £ {{ order.product_type.price }}</p>
-  <p><strong>Status: </strong> {{ order.order_status }}</p>
-
-  <p><strong>Requisition ID: </strong> <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id }}</a></p>
-  <div style="margin-left:20px;margin-top:20px">
-    <p><strong>Comments: </strong> {{order.comments}}</p>
+    <p><strong>Requisition: </strong>
+      <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a> -
+       <strong {% if order.requisition_id.req_order %} class="text-warning",
+                {% elif order.requisition_id.req_sent %} class="text-success",
+                {% endif %}>{{order.requisition_id.requisition_status}}</strong>
+     </p>
+    <p><strong>Quantity: </strong> {{order.quantity}} | <strong>Price per Instance: </strong> £ {{order.product_type.price}}</p>
+    <p><strong>Supplier: </strong> {{ order.product_type.supplier }}</p>
+    <div style="margin-left:20px">
+      <p><strong>Comments: </strong> {{order.comments}}</p>
+    </div>
+    <p class="text-muted"><strong>Orderer: </strong> {{ order.orderer }} | <strong>Team: </strong>{{order.team}}</p>
+    <hr>
+    <p class="text-muted"><strong>Date Created: </strong> {{ order.date_created }}</p>
+    <p class="text-muted"><strong>Date Requisitioned: </strong> {{ order.requisition_id.date_sent }} | <strong>Lead Time: </strong> {{order.product_type.lead_time}}</p>
+    <p class="text-muted"><strong>Date Completed: </strong> {{ order.date_delivered }}</p>
+    <hr>
   </div>
-  <p class="text-muted"><strong>Owner: </strong> {{ order.orderer }}</p>
-  <p class="text-muted"><strong>Date Created: </strong> {{ order.date_created }}</p>
-  <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
-  <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
+  <div class="list-group-item list-group-item-info">
+      <h4>QC Information</h4>
+      <p>QC Status: {{order.qc_status}}</p>
+      <p>Lot Number: {{order.lot_id}}</p>
+      <p>Expiry Date: {{order.expiry_date}}</p>
+  </div>
+  <div style="margin-top:20px">
+    <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
+    <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
+  </div>
 {% endblock %}
-
-
-<p><strong>Order ID:</strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a></p>

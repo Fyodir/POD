@@ -50,6 +50,7 @@ class ProductType(models.Model):
     description = models.TextField(max_length=1000, null=True, help_text='Enter a brief description of the product_type')
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
     price = models.DecimalField('Price (£)', max_digits=8, decimal_places=2)
+    lead_time = models.IntegerField('Lead time (Days)', help_text='Estimated delivery time required', blank=True, null=True)
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
@@ -140,23 +141,64 @@ class ProductInstance(models.Model):
 
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
+    team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
     requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
-    date_created = models.DateTimeField(auto_now_add=True)
+
+    URGENCY = (
+        ('Urgent', 'URGENT'),
+        ('Non-Urgent', 'NON-URGENT')
+    )
+    urgency = models.CharField(max_length=10, choices=URGENCY, default='Non-Urgent')
+
     orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     STATUS = (
-        ('Order Created', 'ORDER CREATED'),
-        ('Received', 'RECEIVED'),
-        ('Received Frozen', 'RECEIVED FROZEN'),
-        ('Delayed', 'ORDER DELAYED'),
-        ('Damaged', 'DAMAGED'),
+        ('Order Created', 'CREATED'),
+        ('Order Sent', 'SENT'),
+        ('Part Received', 'PART RECEIVED'),
+        ('Complete', 'COMPLETE'),
     )
-
     order_status = models.CharField(max_length=24, choices=STATUS, default='order_created')
 
     comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
+    date_created = models.DateField(auto_now_add=True)
+    date_delivered = models.DateField("Date Completed", help_text='Enter date requisition was received (YYYY-MM-DD)', null=True, blank=True)
+
+    CONDITION = (
+        ('N/a', 'N/A'),
+        ('Room Temp', 'ROOM TEMP'),
+        ('Dry Ice', 'DRY ICE'),
+        ('Cold Block', 'COLD BLOCK'),
+    )
+    qc_status = models.CharField(max_length=24, choices=CONDITION, default='N/a')
+    lot_id = models.CharField('LOT Number', max_length=20, help_text='Enter Lot Number of product upon delivery', null=True, blank=True)
+    expiry_date = models.DateField(help_text='Enter expiry date of Lot (YYYY-MM-DD)', null=True, blank=True)
+
+    @property
+    def order_created(self):
+        if self.order_status == "Order Created":
+            return True
+        return False
+
+    @property
+    def order_sent(self):
+        if self.order_status == "Order Sent":
+            return True
+        return False
+
+    @property
+    def order_preceived(self):
+        if self.order_status == "Part Received":
+            return True
+        return False
+
+    @property
+    def order_complete(self):
+        if self.order_status == "Complete":
+            return True
+        return False
 
     class Meta:
         permissions = (("can_create_new_order", "Able to Create New Order" ), ("can_update_order", "Able to Update Order"), ("can_delete_order", "Able to Delete Order"),)
@@ -172,60 +214,29 @@ class Order(models.Model):
 
 class Requisition(models.Model):
     """Model representing a collection of orders from a single supplier"""
-    team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
-    URGENCY = (
-        ('Urgent', 'URGENT'),
-        ('Non-Urgent', 'NON-URGENT')
-    )
-
-    urgency = models.CharField(max_length=10, choices=URGENCY, default='Non-Urgent')
-    authoriser = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     req_ref = models.CharField('Requisition Reference EROS', max_length=20, help_text='Enter EROS reference number for requisition', null=True, blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_sent = models.DateField(help_text='Enter date requisition was sent for order (YYYY-MM-DD)', null=True, blank=True)
-    date_delivered = models.DateField(help_text='Enter date requisition was received (YYYY-MM-DD)', null=True, blank=True)
 
     STATUS = (
         ('To Order', 'TO ORDER'),
-        ('Incomplete', 'INCOMPLETE'),
-        ('Authorised', 'AUTHORISED'),
         ('Sent', 'SENT'),
-        ('Complete', 'COMPLETE')
     )
+    requisition_status = models.CharField(max_length=24, choices=STATUS, default='To Order')
 
-    requisition_status = models.CharField(max_length=24, choices=STATUS, default='Incomplete')
     comments = models.TextField(max_length=1000, help_text='Enter comment if required', null=True, blank=True)
 
     @property
-    def status_order(self):
+    def req_order(self):
         if self.requisition_status == "To Order":
             return True
         return False
 
     @property
-    def status_incomplete(self):
-        if self.requisition_status == "Incomplete":
-            return True
-        return False
-
-    @property
-    def status_auth(self):
-        if self.requisition_status == "Authorised":
-            return True
-        return False
-
-    @property
-    def status_sent(self):
+    def req_sent(self):
         if self.requisition_status == "Sent":
             return True
         return False
-
-    @property
-    def status_complete(self):
-        if self.requisition_status == "Complete":
-            return True
-        return False
-
 
     class Meta:
         permissions = (
@@ -238,7 +249,8 @@ class Requisition(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'({self.id}) {self.team} - {self.requisition_status}'
+        # return f'({self.id}) {self.req_ref} - {self.requisition_status}'
+        return str(self.id)
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""

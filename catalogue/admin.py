@@ -29,14 +29,14 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('product_type', 'quantity', 'requisition_id', 'orderer')
+    list_display = ('id', 'product_type', 'quantity', 'team', 'requisition_id', 'urgency', 'order_status', 'date_created', 'date_delivered', 'orderer')
 
 class OrderInline(admin.TabularInline):
     model = Order
 
 @admin.register(Requisition)
 class RequisitionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'req_ref',  'urgency', 'team', 'requisition_status', 'authoriser', 'date_created', 'date_sent', 'date_delivered')
+    list_display = ('id', 'req_ref', 'requisition_status', 'date_created', 'date_sent',)
     inlines = [OrderInline]
 
 @admin.register(Team)

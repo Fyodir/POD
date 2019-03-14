@@ -6,6 +6,7 @@
   <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price (ExVAT):</strong> £{{ producttype.price }}</p>
+  <p><strong>Lead Time (Days):</strong> {{ producttype.lead_time }}</p>
   <p><strong>Description:</strong> {{ producttype.description }}</p>
   <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
   <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
@@ -19,9 +20,9 @@
         {% endif %}>
       <p><strong>Team:</strong><a href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a></p>
       <p><strong>Stored:</strong><a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></p>
-      <p><strong>Current Stock: </strong>{{ copy.stock }}</p>
-      <p><strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
+      <p><strong>Current Stock: </strong>{{ copy.stock }} | <strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
       <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+      <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
       <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
     </ul>
     {% endfor %}

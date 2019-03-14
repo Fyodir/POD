@@ -47,7 +47,7 @@ urlpatterns = [
     path('requisition/<int:pk>', views.RequisitionDetailView.as_view(), name='requisition-detail'),
     path('requisition/create/', views.RequisitionCreate.as_view(), name='requisition_create'),
     path('requisition/<int:pk>/update/', views.RequisitionUpdate.as_view(), name='requisition_update'),
-    path('requisition/<int:pk>/updatesenior/', views.RequisitionUpdateAuthoriser.as_view(), name='requisition_update_authoriser'),
+    # path('requisition/<int:pk>/updatesenior/', views.RequisitionUpdateAuthoriser.as_view(), name='requisition_update_authoriser'),
     path('requisition/<int:pk>/delete/', views.RequisitionDelete.as_view(), name='requisition_delete'),
 
 
