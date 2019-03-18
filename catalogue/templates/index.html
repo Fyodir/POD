@@ -1,22 +1,63 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Product Ordering Database (POD)</h1>
-  <p>Welcome to POD, a website developed by <em>Andrew Smith</em>!</p>
-  <h2 >Useful Statistics</h2>
-  <p>POD has the following record counts:</p>
-  <ul>
-    <li><strong>Product Types:</strong> {{ num_prod }}</li>
-    <li><strong>Product Instances:</strong> {{ num_instances }}</li>
-    <li><strong>Suppliers:</strong> {{ num_suppliers }}</li>
-  </ul>
-  <h2>Order Statistics</h2>
-  <ul>
-    <li><strong>Unassigned Orders:</strong> {{ num_order_incomplete }}</li>
-    <li><strong>Awaiting Orders:</strong> {{ num_order_sent }}</li>
-    <li><strong>Part Received Orders:</strong> {{ num_order_preceived }}</li>
-  </ul>
+  <blockquote class="blockquote text-center">
+    <h1>Product Ordering Database (POD)</h1>
+    <p>Welcome to POD, a website developed to monitor and maintain Laboratoy Stock, Orders and Requisitions at BGL</p>
+    <h2 >Useful Statistics</h2>
+    <p>POD has the following record counts:</p>
+    <div class="mx-auto" style="width: 50%;">
 
-  <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Product Types:</strong>
+          <span class="badge badge-dark badge-pill">{{ num_prod }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Product Instances:</strong>
+          <span class="badge badge-dark badge-pill">{{ num_instances }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Suppliers:</strong>
+          <span class="badge badge-dark badge-pill">{{ num_suppliers }}</span>
+        </li>
+      </ul>
+      <h2>Order Statistics</h2>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Unsent Requisitions:</strong>
+          <span {% if num_req_incomplete == 0 %} class="badge badge-dark badge-pill",
+                {% else %} class="badge badge-primary badge-pill" {% endif %}>{{ num_req_incomplete }}
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Unsent Orders:</strong>
+          <span {% if num_order_incomplete == 0 %} class="badge badge-dark badge-pill",
+              {% else %} class="badge badge-primary badge-pill" {% endif %}>{{ num_order_incomplete }}
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <strong>Awaiting Orders:</strong>
+          <span {% if num_order_sent == 0 %} class="badge badge-dark badge-pill",
+              {% else %} class="badge badge-warning badge-pill" {% endif %}>{{ num_order_sent }}
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <strong>Part Received Orders:</strong>
+          <span {% if num_order_preceived == 0 %} class="badge badge-dark badge-pill",
+              {% else %} class="badge badge-danger badge-pill" {% endif %}>{{ num_order_preceived }}
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <strong>Order Issues:</strong>
+          <span {% if num_order_issue == 0 %} class="badge badge-dark badge-pill",
+              {% else %} class="badge badge-danger badge-pill" {% endif %}>{{ num_order_issue }}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+  </blockquote>
 
 {% endblock %}

@@ -10,12 +10,15 @@
           {% elif order.order_preceived %} class="list-group-item list-group-item-danger",
           {% elif order.order_complete %} class="list-group-item list-group-item-success",
         {% endif %}>
-        <p><a href="{{ order.get_absolute_url }}">Order: {{order.id}}</a> - <strong>{{order.order_status}}</strong></p>
-        <p><i {% if order.urgency == "Urgent"%} class=" fa fa-exclamation-triangle",
-            {% elif order.urgency == "Non-Urgent" %},
+        <p><a href="{{ order.get_absolute_url }}">Order: {{order.id}}</a> - <strong>{{order.order_status}}</strong> | <a href="{% url 'requisition-detail' order.requisition_id.pk %}">Requisition: {{order.requisition_id}} ({{order.requisition_id.req_ref}})</a></p>
+        <p>
+          <i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
+            {% else %},
+            {% endif %}></i>
+          <i {% if order.order_issue == "Yes"%} class=" fas fa-dizzy",
+            {% else %},
             {% endif %}></i> {{order.quantity}} x {{order.product_type}}</p>
-        <p><strong>Requisition: </strong><a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{order.requisition_id}} ({{order.requisition_id.req_ref}})</a></p>
-        <p class = "text-muted">{{order.team}} | {{order.orderer}} | Requisitioned: {{order.requisition_id.date_sent}} | Completed: {{order.date_delivered}}</p>
+        <p class = "text-muted">{{order.team}} | {{order.orderer}} | Requisitioned: {{order.requisition_id.date_sent}} | Lead Time: {{order.product_type.lead_time}} | Completed: {{order.date_delivered}}</p>
       </ul>
     {% endfor %}
   </ul>

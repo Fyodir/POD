@@ -154,6 +154,12 @@ class Order(models.Model):
 
     orderer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    ISSUE = (
+        ('Yes', 'YES'),
+        ('No', 'NO')
+    )
+    order_issue = models.CharField(max_length=5, choices=ISSUE, default="No")
+    
     STATUS = (
         ('Order Created', 'CREATED'),
         ('Order Sent', 'SENT'),
@@ -172,7 +178,7 @@ class Order(models.Model):
         ('Dry Ice', 'DRY ICE'),
         ('Cold Block', 'COLD BLOCK'),
     )
-    qc_status = models.CharField(max_length=24, choices=CONDITION, default='N/a')
+    qc_status = models.CharField('Condition Received', max_length=24, choices=CONDITION, default='N/a')
     lot_id = models.CharField('LOT Number', max_length=20, help_text='Enter Lot Number of product upon delivery', null=True, blank=True)
     expiry_date = models.DateField(help_text='Enter expiry date of Lot (YYYY-MM-DD)', null=True, blank=True)
 

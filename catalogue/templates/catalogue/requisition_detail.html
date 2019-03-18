@@ -13,8 +13,13 @@
     <p><strong>Comments:</strong> {{ requisition.comments }}</p>
   </div>
   <div style="margin-top:30px">
-    <p><a href="{% url 'requisition_update' requisition.id %}">Update Requisition</a></p>
-    <p><a href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a></p>
+    <div style="margin-top:20px">
+      <form class="form-inline">
+        <a class="btn btn-dark" href="{% url 'requisition_update' requisition.id %}">Update Requisition</a>
+        <div style="margin-left:5px"></div>
+        <a class="btn btn-outline-danger"href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a>
+      </form>
+    </div>
   </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Orders</h4>
@@ -24,14 +29,32 @@
         {% elif copy.order_preceived %} class="list-group-item list-group-item-danger",
         {% elif copy.order_complete %} class="list-group-item list-group-item-success",
       {% endif %}>
-      <p><strong>Order ID: </strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a> - <strong>{{copy.order_status}}</strong></p>
-      <p><i {% if copy.urgency == "Urgent"%} class=" fa fa-exclamation-triangle",
-          {% elif copy.urgency == "Non-Urgent" %},
-          {% endif %}></i> {{copy.product_type.name}}</p>
-      <p><strong>Quantity: </strong> {{copy.quantity}} | <strong>Price per Instance: </strong> £ {{copy.product_type.price}}</p>
+      <p>
+        <strong>Order ID: </strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a> - <strong>{{copy.order_status}}</strong>
+      </p>
+      <p>
+        <i {% if copy.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
+          {% else %},
+          {% endif %}>
+        </i>
+        <i {% if copy.order_issue == "Yes"%} class=" fas fa-dizzy",
+          {% else %},
+          {% endif %}>
+        </i> {{copy.quantity}} x {{copy.product_type.name}}
+      </p>
+      <p><strong>Price per Instance: </strong> £ {{copy.product_type.price}}</p>
       <p><strong>Supplier: </strong> {{copy.product_type.supplier}}</p>
       <p class = "text-muted">{{copy.team}} | {{copy.orderer}} | Requisitioned: {{copy.requisition_id.date_sent}} | Completed: {{copy.date_delivered}}</p>
-      <p><a href="{% url 'order_update' copy.id %}">Update Order</a> | <a href="{% url 'order_delete' copy.id %}">Delete Order</a></p>
+
+      <div style="margin-top:20px">
+        <form class="form-inline">
+          <a class="btn btn-outline-primary" href="{% url 'order_update' copy.id %}">Update Order</a>
+          <div style="margin-left:5px"></div>
+          <a class ="btn btn-outline-danger" href="{% url 'order_delete' copy.id %}">Delete Order</a>
+        </form>
+      </div>
+
+
     </ul>
     {% endfor %}
   </div>

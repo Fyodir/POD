@@ -2,8 +2,14 @@
 
 {% block content %}
   <h1>Team: {{ team.name }}</h1>
-  <p><a href="{% url 'team_update' team.id %}">Update Team</a></p>
-  <p><a href="{% url 'team_delete' team.id %}">Delete Team</a></p>
+
+  <div style="margin-top:20px">
+    <form class="form-inline">
+      <a class="btn btn-dark" href="{% url 'team_update' team.id %}">Update Team</a>
+      <div style="margin-left:5px"></div>
+      <a class="btn btn-outline-danger"href="{% url 'team_delete' team.id %}">Delete Team</a>
+    </form>
+  </div>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Product Instances</h4>
@@ -14,10 +20,16 @@
         {% endif %}>
       <h4>{{copy.product_type}}</h4>
       <p><strong>Stored:</strong> <a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}} </a> ({{copy.storage.location}})</p>
-      <p><strong>Current Stock: </strong>{{ copy.stock }} | <strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
-      <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-      <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
-      <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+      <p>
+        <strong>Current Stock: </strong>{{ copy.stock }} |
+        <strong>Minimum Stock:</strong> {{copy.minimum_stock}}
+        <a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+
+      </p>
+      <p class="text-muted">
+        <strong>Last Updated:</strong> {{copy.date_updated}}
+        <strong>Id:</strong> {{copy.id}}
+      </p>
     </ul>
 
     {% endfor %}

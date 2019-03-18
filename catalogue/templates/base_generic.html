@@ -4,72 +4,96 @@
   {% block title %}<title>Product Ordering Database (POD)</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
-  <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-        <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <div style="margin-top:20px">
-            <li><a href="{% url 'team' %}">All Teams</a></li>
-            <li><a href="{% url 'storage' %}">All Storage Locations</a></li>
-            <li><a href="{% url 'producttype' %}"> All Product Types</a></li>
-            <li><a href="{% url 'productinstance' %}">All Product Instances</a></li>
-            <li><a href="{% url 'supplier' %}"> All Suppliers</a></li>
-            <li><a href="{% url 'order' %}">All Orders</a></li>
-            <li><a href="{% url 'requisition' %}">All Requisitions</a></li>
-          </div>
-        </ul>
-  <ul class="sidebar-nav">
-   {% if user.is_authenticated %}
-    <div style="margin-top:20px"></div>
-      <li>User: {{ user.get_username }}</li>
-      <li><a href="{% url 'requisition_create' %}">Create Requisition</a></li>
-      <li><a href="{% url 'order_create' %}">Create Order</a></li>
-      <li><a href="{% url 'my-ordered' %}">My Orders</a></li>
-     <div style="margin-top:20px"></div>
-       <li><a href="{% url 'productinstance_create' %}">New Product Instance</a></li>
-       <li><a href="{% url 'team_create' %}">New Team</a></li>
-       <li><a href="{% url 'product_type_create' %}">New Product Type</a></li>
-       <li><a href="{% url 'supplier_create' %}">New Supplier</a></li>
-       <li><a href="{% url 'storage_create' %}">New Storage Location</a></li>
-       <li><a href="{% url 'temperature_create' %}">New Temperature Range</a></li>
-       <li><a href="{% url 'temperature' %}">All Temperature Ranges</a></li>
-     <div style="margin-top:20px"></div>
-     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-   {% else %}
-     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-   {% endif %}
-
-  </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">{% block content %}{% endblock %}
-        {% block pagination %}
-          {% if is_paginated %}
-            <div class="pagination">
-              <span class="page-links">
-                {% if page_obj.has_previous %}
-                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                  <p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</p>
-                </span>
-                {% if page_obj.has_next %}
-                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-              </span>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">POD</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'order_create' %}">Create Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'requisition_create' %}">Create Requisition</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              List
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'team' %}">Teams</a>
+              <a class="dropdown-item" href="{% url 'storage' %}">Storage Locations</a>
+              <a class="dropdown-item" href="{% url 'producttype' %}">Product Types</a>
+              <a class="dropdown-item" href="{% url 'productinstance' %}">Product Instances</a>
+              <a class="dropdown-item" href="{% url 'supplier' %}">Suppliers</a>
+              <a class="dropdown-item" href="{% url 'order' %}">Orders</a>
+              <a class="dropdown-item" href="{% url 'requisition' %}">Requisitions</a>
+              <a class="dropdown-item" href="{% url 'temperature' %}">Temperature Ranges</a>
             </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              New
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'productinstance_create' %}">Product Instance</a>
+              <a class="dropdown-item" href="{% url 'product_type_create' %}">Product Type</a>
+              <a class="dropdown-item" href="{% url 'supplier_create' %}">Supplier</a>
+              <a class="dropdown-item" href="{% url 'storage_create' %}">Storage Location</a>
+              <a class="dropdown-item" href="{% url 'temperature_create' %}">Temperature Range</a>
+              <a class="dropdown-item" href="{% url 'team_create' %}">Team</a>
+            </div>
+          </li>
+          <ul class="navbar-nav ml-auto"
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link btn btn-outline-danger" href="{% url 'logout'%}?next={{request.path}}">Logout | {{user.get_username}}</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link btn btn-outline-success" href="{% url 'login'%}?next={{request.path}}">Login</a>
+            </li>
           {% endif %}
-        {% endblock %} </div>
+          </ul>
+        </ul>
+      </div>
     </div>
-  </div>
+  </nav>
+
+  <div class="container-fluid">{% block content %}{% endblock %}
+
+
+
+  {% block pagination %}
+    {% if is_paginated %}
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+          {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  {% endblock %}
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

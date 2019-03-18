@@ -11,6 +11,14 @@
   <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
   <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
 
+  <div style="margin-top:20px">
+    <form class="form-inline">
+      <a class="btn btn-dark" href="{% url 'product_type_update' producttype.id %}">Update Product Type</a>
+      <div style="margin-left:5px"></div>
+      <a class="btn btn-outline-danger"href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a>
+    </form>
+  </div>
+
   <div style="margin-left:20px;margin-top:20px">
     <h4>Instances</h4>
 
@@ -18,12 +26,16 @@
     <ul {% if copy.stock_is_low %} class="list-group-item list-group-item-danger",
         {% else %} class = "list-group-item list-group-item-success"
         {% endif %}>
-      <p><strong>Team:</strong><a href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a></p>
-      <p><strong>Stored:</strong><a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></p>
-      <p><strong>Current Stock: </strong>{{ copy.stock }} | <strong>Minimum Stock:</strong> {{copy.minimum_stock}}</p>
-      <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-      <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
-      <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+      <p><strong>Team:</strong><a href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a> | <strong>Stored:</strong><a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></p>
+      <p>
+        <strong>Current Stock: </strong>{{ copy.stock }} |
+        <strong>Minimum Stock:</strong> {{copy.minimum_stock}}
+        <a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+      </p>
+      <p class="text-muted">
+        <strong>Last Updated:</strong> {{copy.date_updated}} |
+        <strong>Id:</strong> {{copy.id}}
+      </p>
     </ul>
     {% endfor %}
   </div>

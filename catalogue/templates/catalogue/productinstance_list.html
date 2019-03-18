@@ -9,7 +9,7 @@
           {% else %} class = "list-group-item list-group-item-success"
           {% endif %}>
         <a href="{{ productinstance.get_absolute_url }}">{{ productinstance.product_type.name }}</a> ({{productinstance.team}}) - {{productinstance.id}}
-        <p><strong>Current Stock: </strong>{{ productinstance.stock }}
+        <p><strong>Current Stock: </strong>{{ productinstance.stock }} | <strong>Minimum Stock: </strong> {{productinstance.minimum_stock}}
         </p>
       </ul>
     {% endfor %}

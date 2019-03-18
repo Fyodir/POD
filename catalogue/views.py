@@ -17,10 +17,12 @@ def index(request):
     num_instances = ProductInstance.objects.all().count()
     num_suppliers = Supplier.objects.count()
 
-    # Requisitions
+    # Orders/Requisitions
+    num_req_incomplete = Requisition.objects.filter(requisition_status__exact='To Order').count()
     num_order_incomplete = Order.objects.filter(order_status__exact='Order Created').count()
     num_order_sent = Order.objects.filter(order_status__exact='Order Sent').count()
     num_order_preceived = Order.objects.filter(order_status__exact='Part Received').count()
+    num_order_issue = Order.objects.filter(order_issue__exact='Yes').count()
 
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
@@ -30,9 +32,11 @@ def index(request):
         'num_prod': num_prod,
         'num_instances': num_instances,
         'num_suppliers': num_suppliers,
+        'num_req_incomplete': num_req_incomplete,
         'num_order_incomplete': num_order_incomplete,
         'num_order_sent': num_order_sent,
         'num_order_preceived': num_order_preceived,
+        'num_order_issue': num_order_issue,
         'num_visits': num_visits,
     }
 
@@ -93,7 +97,7 @@ class OrderDetailView(LoginRequiredMixin, generic.DetailView):
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     model = Requisition
-    paginate_by = 10
+    paginate_by = 20
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Requisition
@@ -236,7 +240,20 @@ class OrderCreate(PermissionRequiredMixin, CreateView):
 class OrderUpdate(PermissionRequiredMixin, UpdateView):
     model = Order
     # form_class = OrderForm
-    fields='__all__'
+    fields=[
+        'team',
+        'requisition_id',
+        'product_type',
+        'quantity',
+        'urgency',
+        'order_issue',
+        'order_status',
+        'comments',
+        'date_delivered',
+        'qc_status',
+        'lot_id',
+        'expiry_date'
+    ]
     permission_required = 'catalogue.can_update_order'
 
 class OrderDelete(PermissionRequiredMixin, DeleteView):

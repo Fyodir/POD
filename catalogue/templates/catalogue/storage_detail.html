@@ -5,8 +5,14 @@
 
   <p><strong>Location:</strong> {{ storage.location }}</p>
   <p><strong>Temperature Range (°C):</strong> {{ storage.temp_range.minimum }} - {{storage.temp_range.maximum}}</p>
-  <p><a href="{% url 'storage_update' storage.id %}">Update Storage Location</a></p>
-  <p><a href="{% url 'storage_delete' storage.id %}">Delete Storage Location</a></p>
+
+  <div style="margin-top:20px">
+    <form class="form-inline">
+      <a class="btn btn-dark" href="{% url 'storage_update' storage.id %}">Update Storage Location</a>
+      <div style="margin-left:5px"></div>
+      <a class="btn btn-outline-danger"href="{% url 'storage_delete' storage.id %}">Delete Storage Location</a>
+    </form>
+  </div>
 
   <div style="margin-left:20px;margin-top:20px">
     <h3>Instances</h3>
@@ -17,10 +23,15 @@
         {% endif %}>
       <h4>{{copy.product_type}}</h4>
       <p><strong>Team: </strong><a href ="{% url 'team-detail' copy.team.pk %}">{{copy.team}}</a></p>
-      <p><strong>Current Stock: </strong>{{ copy.stock }} | <strong>Minimum Stock: </strong> {{copy.minimum_stock}}</p>
-      <a href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-      <p class="text-muted"><strong>Last Updated:</strong> {{copy.date_updated}}</p>
-      <p class="text-muted"><strong>Id: </strong> {{copy.id}}</p>
+      <p>
+        <strong>Current Stock: </strong>{{ copy.stock }} |
+        <strong>Minimum Stock: </strong> {{copy.minimum_stock}}
+        <a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+      </p>
+      <p class="text-muted">
+        <strong>Last Updated:</strong> {{copy.date_updated}} |
+        <strong>Id: </strong> {{copy.id}}
+      </p>
     </ul>
     {% endfor %}
   </div>

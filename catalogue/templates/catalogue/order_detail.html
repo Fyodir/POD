@@ -2,10 +2,13 @@
 
 {% block content %}
   <h1>Order ({{order.id}}):
-    <i {% if order.urgency == "Urgent"%} class=" fa fa-exclamation-triangle",
+    <i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
         {% elif order.urgency == "Non-Urgent" %},
         {% endif %}>
-    </i> {{ order.product_type.name }}
+    </i>
+    <i {% if order.order_issue == "Yes"%} class=" fas fa-dizzy",
+      {% else %},
+      {% endif %}></i> {{ order.product_type.name }}
   </h1>
   <h3 {% if order.order_created %} class="text-info",
       {% elif order.order_sent %} class="text-warning",
@@ -29,18 +32,21 @@
     <p class="text-muted"><strong>Orderer: </strong> {{ order.orderer }} | <strong>Team: </strong>{{order.team}}</p>
     <hr>
     <p class="text-muted"><strong>Date Created: </strong> {{ order.date_created }}</p>
-    <p class="text-muted"><strong>Date Requisitioned: </strong> {{ order.requisition_id.date_sent }} | <strong>Lead Time: </strong> {{order.product_type.lead_time}}</p>
+    <p class="text-muted"><strong>Date Requisitioned: </strong> {{ order.requisition_id.date_sent }} | <strong>Lead Time (Days): </strong> {{order.product_type.lead_time}}</p>
     <p class="text-muted"><strong>Date Completed: </strong> {{ order.date_delivered }}</p>
     <hr>
   </div>
   <div class="list-group-item list-group-item-info">
       <h4>QC Information</h4>
-      <p>QC Status: {{order.qc_status}}</p>
-      <p>Lot Number: {{order.lot_id}}</p>
-      <p>Expiry Date: {{order.expiry_date}}</p>
+      <p><strong>QC Status: </strong>{{order.qc_status}}</p>
+      <p><strong>Lot Number: </strong>{{order.lot_id}}</p>
+      <p><strong>Expiry Date: </strong>{{order.expiry_date}}</p>
   </div>
   <div style="margin-top:20px">
-    <p><a href="{% url 'order_update' order.id %}">Update Order</a></p>
-    <p><a href="{% url 'order_delete' order.id %}">Delete Order</a></p>
+    <form class="form-inline">
+      <a class="btn btn-dark" href="{% url 'order_update' order.id %}">Update Order</a>
+      <div style="margin-left:5px"
+      <a class="btn btn-outline-danger"href="{% url 'order_delete' order.id %}">Delete Order</a>
+    </form>
   </div>
 {% endblock %}
