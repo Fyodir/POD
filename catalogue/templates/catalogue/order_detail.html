@@ -6,7 +6,7 @@
         {% elif order.urgency == "Non-Urgent" %},
         {% endif %}>
     </i>
-    <i {% if order.order_issue == "Yes"%} class=" fas fa-dizzy",
+    <i {% if order.order_issue == "Yes"%} class="fab fa-rebel",
       {% else %},
       {% endif %}></i> {{ order.product_type.name }}
   </h1>
@@ -19,7 +19,7 @@
   </h3>
   <div style="margin-top:20px">
     <p><strong>Requisition: </strong>
-      <a href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a> -
+      <a class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a> -
        <strong {% if order.requisition_id.req_order %} class="text-warning",
                 {% elif order.requisition_id.req_sent %} class="text-success",
                 {% endif %}>{{order.requisition_id.requisition_status}}</strong>
@@ -45,7 +45,7 @@
   <div style="margin-top:20px">
     <form class="form-inline">
       <a class="btn btn-dark" href="{% url 'order_update' order.id %}">Update Order</a>
-      <div style="margin-left:5px"
+      <div style="margin-left:5px"></div>
       <a class="btn btn-outline-danger"href="{% url 'order_delete' order.id %}">Delete Order</a>
     </form>
   </div>

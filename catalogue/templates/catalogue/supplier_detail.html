@@ -6,18 +6,36 @@
   <p><strong>Phone:</strong> {{ supplier.phone }}</p>
   <p><strong>Email:</strong> {{ supplier.email }}</p>
   <p><strong>Agent:</strong> {{ supplier.agent }}</p>
-  <p><a href="{% url 'supplier_update' supplier.id %}">Update Supplier</a></p>
-  <p><a href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a></p>
+
+  <div style="margin-top:20px">
+    <form class="form-inline">
+      <a class="btn btn-dark" href="{% url 'supplier_update' supplier.id %}">Update Supplier</a>
+      <div style="margin-left:5px"></div>
+      <a class="btn btn-outline-danger"href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a>
+    </form>
+  </div>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Products Supplied</h4>
-
-    {% for copy in supplier.producttype_set.all %}
-      <hr>
-      <p><strong>Product:</strong> <a href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a> </p>
-      <p><strong>Price:</strong> {{copy.price}}</p>
-      <p><strong>Description:</strong> {{copy.description}}</p>
-      <p class="text-muted"><strong>Product EROS:</strong> {{copy.product_EROS}}</p>
-      {% endfor %}
+    <table class="table table-hover table-sm table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">EROS</th>
+          <th scope="col">Price</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for copy in supplier.producttype_set.all %}
+        <tr>
+          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a></td>
+          <td>{{copy.product_EROS}}</td>
+          <td>{{copy.price}}</td>
+          <td>{{copy.description}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 {% endblock %}

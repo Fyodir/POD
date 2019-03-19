@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
+from catalogue.models import *
 
 @admin.register(Supplier)
 class SupplierAdmin(admin.ModelAdmin):

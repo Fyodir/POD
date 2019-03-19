@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
+from catalogue.models import *
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -51,77 +51,77 @@ class ProductTypeView(LoginRequiredMixin, generic.ListView):
 
 class ProductTypeDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductType
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class ProductInstanceListView(LoginRequiredMixin, generic.ListView):
     model = ProductInstance
-    paginate_by = 25
+    paginate_by = 30
 
 class ProductInstanceDetailView(LoginRequiredMixin,generic.DetailView):
     model = ProductInstance
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class SupplierListView(LoginRequiredMixin, generic.ListView):
     model = Supplier
-    paginate_by = 25
+    paginate_by = 30
 
 class SupplierDetailView(LoginRequiredMixin,generic.DetailView):
     model = Supplier
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
-    paginate_by = 25
+    paginate_by = 30
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
-    paginate_by = 10
+    paginate_by = 30
 
 class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     model = Order
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     model = Requisition
-    paginate_by = 20
+    paginate_by = 30
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Requisition
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class StorageListView(LoginRequiredMixin, generic.ListView):
     model = Storage
-    paginate_by = 25
+    paginate_by = 30
 
 class StorageDetailView(LoginRequiredMixin, generic.DetailView):
     model = Storage
-    paginate_by = 10
+    paginate_by = 30
 
 #######################################
 
 class TemperatureListView(LoginRequiredMixin, generic.ListView):
     model = Temperature
-    paginate_by = 25
+    paginate_by = 30
 
 class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
     model = Temperature
-    paginate_by = 10
+    paginate_by = 30
 
 
 # Views to display user specific pages
@@ -130,7 +130,7 @@ class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view orders created by current user."""
     model = Order
     template_name ='catalogue/orders_created_list_user.html'
-    paginate_by = 10
+    paginate_by = 30
 
     def get_queryset(self):
         return Order.objects.filter(orderer=self.request.user).order_by('date_created')

@@ -23,39 +23,50 @@
   </div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Orders</h4>
-    {% for copy in requisition.order_set.all %}
-    <ul {% if copy.order_created %} class="list-group-item list-group-item-info",
-        {% elif copy.order_sent %} class="list-group-item list-group-item-warning",
-        {% elif copy.order_preceived %} class="list-group-item list-group-item-danger",
-        {% elif copy.order_complete %} class="list-group-item list-group-item-success",
-      {% endif %}>
-      <p>
-        <strong>Order ID: </strong> <a href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a> - <strong>{{copy.order_status}}</strong>
-      </p>
-      <p>
-        <i {% if copy.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
-          {% else %},
+    <table class="table table-hover table-sm table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Order ID</th>
+          <th scope="col">Flags</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price Per Instance (£)</th>
+          <th scope="col">Supplier</th>
+          <th scope="col">User</th>
+          <th scope="col">Team</th>
+          <th scope="col">Lead Time</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for copy in requisition.order_set.all %}
+        <tr  {% if copy.order_created %} class="table-info",
+            {% elif copy.order_sent %} class="table-warning",
+            {% elif copy.order_preceived %} class="table-danger",
+            {% elif copy.order_complete %} class="table-success",
           {% endif %}>
-        </i>
-        <i {% if copy.order_issue == "Yes"%} class=" fas fa-dizzy",
-          {% else %},
-          {% endif %}>
-        </i> {{copy.quantity}} x {{copy.product_type.name}}
-      </p>
-      <p><strong>Price per Instance: </strong> £ {{copy.product_type.price}}</p>
-      <p><strong>Supplier: </strong> {{copy.product_type.supplier}}</p>
-      <p class = "text-muted">{{copy.team}} | {{copy.orderer}} | Requisitioned: {{copy.requisition_id.date_sent}} | Completed: {{copy.date_delivered}}</p>
-
-      <div style="margin-top:20px">
-        <form class="form-inline">
-          <a class="btn btn-outline-primary" href="{% url 'order_update' copy.id %}">Update Order</a>
-          <div style="margin-left:5px"></div>
-          <a class ="btn btn-outline-danger" href="{% url 'order_delete' copy.id %}">Delete Order</a>
-        </form>
-      </div>
-
-
-    </ul>
-    {% endfor %}
+          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a></td>
+          <td>
+            <i {% if copy.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
+            {% else %},
+            {% endif %}>
+            </i>
+            <i {% if copy.order_issue == "Yes"%} class="fab fa-rebel",
+            {% else %},
+            {% endif %}>
+            </i>
+          </td>
+          <td>{{copy.quantity}}</td>
+          <td>{{copy.product_type.name}}</td>
+          <td>{{copy.product_type.price}}</td>
+          <td>{{copy.product_type.supplier}}</td>
+          <td>{{copy.orderer}}</td>
+          <td>{{copy.team}}</td>
+          <td>{{copy.product_type.lead_time}}</td>
+          <td>{{copy.order_status}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 {% endblock %}

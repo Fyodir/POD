@@ -3,26 +3,48 @@
 {% block content %}
   <h1>Orders</h1>
   {% if order_list %}
-  <ul>
-    {% for order in order_list %}
-      <ul {% if order.order_created %} class="list-group-item list-group-item-info",
-          {% elif order.order_sent %} class="list-group-item list-group-item-warning",
-          {% elif order.order_preceived %} class="list-group-item list-group-item-danger",
-          {% elif order.order_complete %} class="list-group-item list-group-item-success",
+  <table class="table table-hover table-sm table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Flags</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Product</th>
+        <th scope="col">User</th>
+        <th scope="col">Team</th>
+        <th scope="col">Requisition</th>
+        <th scope="col">Date Requisitioned</th>
+        <th scope="col">Lead Time (Days)</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in order_list %}
+      <tr {% if order.order_created %} class="table-info",
+          {% elif order.order_sent %} class="table-warning",
+          {% elif order.order_preceived %} class="table-danger",
+          {% elif order.order_complete %} class="table-success",
         {% endif %}>
-        <p><a href="{{ order.get_absolute_url }}">Order: {{order.id}}</a> - <strong>{{order.order_status}}</strong> | <a href="{% url 'requisition-detail' order.requisition_id.pk %}">Requisition: {{order.requisition_id}} ({{order.requisition_id.req_ref}})</a></p>
-        <p>
-          <i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
-            {% else %},
-            {% endif %}></i>
-          <i {% if order.order_issue == "Yes"%} class=" fas fa-dizzy",
-            {% else %},
-            {% endif %}></i> {{order.quantity}} x {{order.product_type}}</p>
-        <p class = "text-muted">{{order.team}} | {{order.orderer}} | Requisitioned: {{order.requisition_id.date_sent}} | Lead Time: {{order.product_type.lead_time}} | Completed: {{order.date_delivered}}</p>
-      </ul>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no orders.</p>
-  {% endif %}
+        <td><a class="btn btn-outline-dark btn-sm" href="{{ order.get_absolute_url }}">{{order.id}}</a></td>
+        <td><i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
+          {% else %},
+          {% endif %}></i>
+        <i {% if order.order_issue == "Yes"%} class="fab fa-rebel",
+          {% else %},
+          {% endif %}></i></td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.product_type.name}}</td>
+        <td>{{order.orderer}}</td>
+        <td>{{order.team}}</td>
+        <td><a class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a></td>
+        <td>{{order.requisition_id.date_sent}}</td>
+        <td>{{order.product_type.lead_time}}</td>
+        <td>{{order.order_status}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    {% else %}
+      <p>There are no orders.</p>
+    {% endif %}
 {% endblock %}

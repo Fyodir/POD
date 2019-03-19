@@ -3,15 +3,25 @@
 {% block content %}
   <h1>Temperature Ranges (°C)</h1>
   {% if temperature_list %}
-  <ul>
-    {% for temperature in temperature_list %}
-      <li>
-        <hr>
-        <p><a href="{{ temperature.get_absolute_url }}"> {{temperature.name}}</a> ({{temperature.minimum}} to {{temperature.maximum}})</p>
-      </li>
-    {% endfor %}
-  </ul>
+  <table class="table table-hover table-sm table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Minimum (°C)</th>
+        <th scope="col">Maximum (°C)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for temperature in temperature_list %}
+      <tr>
+        <td><a class="btn btn-outline-dark btn-sm" href="{{ temperature.get_absolute_url }}"> {{temperature.name}}</a></td>
+        <td>{{temperature.minimum}}</td>
+        <td>{{temperature.maximum}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   {% else %}
-    <p>There are no temperature ranges.</p>
+  <p>There are no temperature ranges.</p>
   {% endif %}
 {% endblock %}

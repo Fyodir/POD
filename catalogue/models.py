@@ -26,8 +26,8 @@ class Team(models.Model):
 class Supplier(models.Model):
     """Model representing a product supplier."""
     name = models.CharField(max_length=200, help_text='Enter a supplier name')
-    phone = models.CharField(max_length=200, help_text='Enter supplier contact telephone number')
-    email = models.EmailField(max_length=200, help_text='Enter supplier contact email', null=True, blank=True)
+    phone = models.CharField(max_length=50, help_text='Enter supplier contact telephone number')
+    email = models.EmailField(max_length=50, help_text='Enter supplier contact email', null=True, blank=True)
     agent = models.CharField(max_length=200, help_text='Enter agent name', null=True, blank=True)
 
     class Meta:
@@ -94,7 +94,7 @@ class Storage(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.name} ({self.temp_range.minimum}°C to {self.temp_range.maximum}°C)'
+        return f'{self.name} ({self.location})'
 
 
     def get_absolute_url(self):
@@ -142,7 +142,7 @@ class ProductInstance(models.Model):
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
-    requisition_id = models.ForeignKey('Requisition', on_delete=models.SET_NULL, null=True)
+    requisition_id = models.ForeignKey('Requisition', on_delete=models.PROTECT, null=True)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
 
@@ -159,7 +159,7 @@ class Order(models.Model):
         ('No', 'NO')
     )
     order_issue = models.CharField(max_length=5, choices=ISSUE, default="No")
-    
+
     STATUS = (
         ('Order Created', 'CREATED'),
         ('Order Sent', 'SENT'),

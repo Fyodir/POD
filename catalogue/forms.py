@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from catalogue.models import Order
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from catalogue.models import Team, Supplier, ProductType, Temperature, Storage, ProductInstance, Order, Requisition
+from catalogue.models import *
 
 
 # Updates product instance stock_level

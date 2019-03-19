@@ -20,7 +20,6 @@ urlpatterns = [
     path('productinstance/<uuid:pk>/delete/', views.ProductInstanceDelete.as_view(), name='productinstance_delete'),
 
 
-
     path('supplier/', views.SupplierListView.as_view(), name='supplier'),
     path('supplier/<int:pk>', views.SupplierDetailView.as_view(), name='supplier-detail'),
     path('supplier/create/', views.SupplierCreate.as_view(), name='supplier_create'),

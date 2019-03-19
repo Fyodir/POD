@@ -2,20 +2,34 @@
 
 {% block content %}
   <h1>Requisitions</h1>
+
   {% if requisition_list %}
-  <ul>
-    {% for requisition in requisition_list %}
-      <ul {% if requisition.req_order %} class="list-group-item list-group-item-warning",
-          {% elif requisition.req_sent %} class="list-group-item list-group-item-success",
+  <table class="table table-hover table-sm table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">EROS</th>
+        <th scope="col">Requisitioned</th>
+        <th scope="col">Created</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for requisition in requisition_list %}
+      <tr {% if requisition.req_order %} class="table-warning",
+          {% else %} class="table-success",
         {% endif %}>
-        <p><a href="{{ requisition.get_absolute_url }}">Requisition: {{ requisition.id }} ({{requisition.req_ref}})</a> - <strong>{{requisition.requisition_status}}</strong></p>
-        <p >Created: {{requisition.date_created}} | Requisitioned: {{requisition.date_sent}}</p>
-      </ul>
-    {% endfor %}
-  </ul>
+        <td><a class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{ requisition.id }}</a></td>
+        <td><a class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{requisition.req_ref}}</td>
+        <td>{{requisition.date_sent}}</td>
+        <td>{{requisition.date_created}}</td>
+        <td>{{requisition.requisition_status}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   {% else %}
     <p>There are no Requisitions.</p>
   {% endif %}
-{% endblock %}
 
-<p> </p>
+{% endblock %}

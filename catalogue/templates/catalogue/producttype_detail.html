@@ -3,13 +3,11 @@
 {% block content %}
   <h1>Product: {{ producttype.name }}</h1>
 
-  <p><strong>Supplier:</strong> <a href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
+  <p><strong>Supplier:</strong> <a class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price (ExVAT):</strong> £{{ producttype.price }}</p>
   <p><strong>Lead Time (Days):</strong> {{ producttype.lead_time }}</p>
   <p><strong>Description:</strong> {{ producttype.description }}</p>
-  <p><a href="{% url 'product_type_update' producttype.id %}">Update Product Type</a></p>
-  <p><a href="{% url 'product_type_delete' producttype.id %}">Delete Product Type</a></p>
 
   <div style="margin-top:20px">
     <form class="form-inline">
@@ -21,22 +19,33 @@
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Instances</h4>
-
-    {% for copy in producttype.productinstance_set.all %}
-    <ul {% if copy.stock_is_low %} class="list-group-item list-group-item-danger",
-        {% else %} class = "list-group-item list-group-item-success"
-        {% endif %}>
-      <p><strong>Team:</strong><a href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a> | <strong>Stored:</strong><a href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></p>
-      <p>
-        <strong>Current Stock: </strong>{{ copy.stock }} |
-        <strong>Minimum Stock:</strong> {{copy.minimum_stock}}
-        <a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-      </p>
-      <p class="text-muted">
-        <strong>Last Updated:</strong> {{copy.date_updated}} |
-        <strong>Id:</strong> {{copy.id}}
-      </p>
-    </ul>
-    {% endfor %}
+    <table class="table table-hover table-sm table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Current Stock</th>
+          <th scope="col">Minimum Stock</th>
+          <th scope="col">Team</th>
+          <th scope="col">Storage Location</th>
+          <th scope="col">Last Updated</th>
+          <th scope="col">ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for copy in producttype.productinstance_set.all %}
+        <tr  {% if copy.stock_is_low %} class="table-danger",
+            {% else %} class = "table-success"
+            {% endif %}>
+          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a></td>
+          <td>{{copy.stock}}</td>
+          <td>{{copy.minimum_stock}}</td>
+          <td><a class="btn btn-outline-dark btn-sm" href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a></td>
+          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></td>
+          <td>{{copy.date_updated}}</td>
+          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 {% endblock %}
