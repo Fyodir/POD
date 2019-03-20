@@ -19,8 +19,12 @@
       <tr {% if requisition.req_order %} class="table-warning",
           {% else %} class="table-success",
         {% endif %}>
-        <td><a class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{ requisition.id }}</a></td>
-        <td><a class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{requisition.req_ref}}</td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{ requisition.id }}</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{requisition.req_ref}}</a>
+        </td>
         <td>{{requisition.date_sent}}</td>
         <td>{{requisition.date_created}}</td>
         <td>{{requisition.requisition_status}}</td>

@@ -135,9 +135,8 @@ class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
     def get_queryset(self):
         return Order.objects.filter(orderer=self.request.user).order_by('date_created')
 
-# Views for database manipulation forms
 
-# Update stock of a product instance  (via product instance only)
+# Update stock of a product instance  (via product instance)
 def productinstance_stock_update(request, pk):
     productinstance = get_object_or_404(ProductInstance, pk=pk)
     # If this is a POST request then process the Form data
@@ -150,12 +149,8 @@ def productinstance_stock_update(request, pk):
             productinstance.stock = form.cleaned_data['stock_level']
             productinstance.save()
             # redirect to a new URL:
-            # return redirect(reverse('index')) # redirects to home page
-            # return redirect(reverse('product-instance-detail', args=[str(pk)]))
             next = request.POST.get('next', '/')
             return HttpResponseRedirect(next)
-
-
     # If this is a GET (or any other method) create the default form.
     else:
         default_stock = productinstance.stock

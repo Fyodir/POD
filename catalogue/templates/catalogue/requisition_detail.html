@@ -15,9 +15,9 @@
   <div style="margin-top:30px">
     <div style="margin-top:20px">
       <form class="form-inline">
-        <a class="btn btn-dark" href="{% url 'requisition_update' requisition.id %}">Update Requisition</a>
+        <a role="button" class="btn btn-dark" href="{% url 'requisition_update' requisition.id %}">Update Requisition</a>
         <div style="margin-left:5px"></div>
-        <a class="btn btn-outline-danger"href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a>
+        <a role="button" class="btn btn-outline-danger"href="{% url 'requisition_delete' requisition.id %}">Delete Requisition</a>
       </form>
     </div>
   </div>
@@ -45,7 +45,9 @@
             {% elif copy.order_preceived %} class="table-danger",
             {% elif copy.order_complete %} class="table-success",
           {% endif %}>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'order-detail' copy.pk %}"> {{copy.id}}</a>
+          </td>
           <td>
             <i {% if copy.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
             {% else %},

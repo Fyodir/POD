@@ -25,18 +25,26 @@
           {% elif order.order_preceived %} class="table-danger",
           {% elif order.order_complete %} class="table-success",
         {% endif %}>
-        <td><a class="btn btn-outline-dark btn-sm" href="{{ order.get_absolute_url }}">{{order.id}}</a></td>
-        <td><i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ order.get_absolute_url }}">{{order.id}}</a>
+        </td>
+        <td>
+          <i {% if order.urgency == "Urgent"%} class=" fas fa-exclamation-triangle",
           {% else %},
-          {% endif %}></i>
-        <i {% if order.order_issue == "Yes"%} class="fab fa-rebel",
+          {% endif %}>
+          </i>
+          <i {% if order.order_issue == "Yes"%} class="fab fa-rebel",
           {% else %},
-          {% endif %}></i></td>
+          {% endif %}>
+          </i>
+        </td>
         <td>{{order.quantity}}</td>
         <td>{{order.product_type.name}}</td>
         <td>{{order.orderer}}</td>
         <td>{{order.team}}</td>
-        <td><a class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a></td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a>
+        </td>
         <td>{{order.requisition_id.date_sent}}</td>
         <td>{{order.product_type.lead_time}}</td>
         <td>{{order.order_status}}</td>

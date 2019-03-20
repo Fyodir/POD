@@ -5,9 +5,9 @@
 
   <div style="margin-top:20px">
     <form class="form-inline">
-      <a class="btn btn-dark" href="{% url 'team_update' team.id %}">Update Team</a>
+      <a role="button" class="btn btn-dark" href="{% url 'team_update' team.id %}">Update Team</a>
       <div style="margin-left:5px"></div>
-      <a class="btn btn-outline-danger"href="{% url 'team_delete' team.id %}">Delete Team</a>
+      <a role="button" class="btn btn-outline-danger"href="{% url 'team_delete' team.id %}">Delete Team</a>
     </form>
   </div>
 
@@ -30,13 +30,21 @@
         <tr  {% if copy.stock_is_low %} class="table-danger",
             {% else %} class = "table-success"
             {% endif %}>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a></td>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'product-type-detail' copy.product_type.pk %}">{{ copy.product_type.name }}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+          </td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' copy.product_type.pk %}">{{ copy.product_type.name }}</a>
+          </td>
           <td>{{copy.stock}}</td>
           <td>{{copy.minimum_stock}}</td>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'storage-detail' copy.storage.pk %}">{{copy.storage}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' copy.storage.pk %}">{{copy.storage}}</a>
+          </td>
           <td>{{copy.date_updated}}</td>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

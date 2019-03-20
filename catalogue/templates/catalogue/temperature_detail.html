@@ -4,9 +4,9 @@
   <h1>Temperature Name: {{temerature.name }}</h1>
   <div style="margin-top:20px">
     <form class="form-inline">
-      <a class="btn btn-dark" href="{% url 'temperature_update' temperature.id %}">Update Range</a>
+      <a role="button" class="btn btn-dark" href="{% url 'temperature_update' temperature.id %}">Update Range</a>
       <div style="margin-left:5px"></div>
-      <a class="btn btn-outline-danger"href="{% url 'temperature_delete' temperature.id %}">Delete Range</a>
+      <a role="button" class="btn btn-outline-danger"href="{% url 'temperature_delete' temperature.id %}">Delete Range</a>
     </form>
   </div>
   <div style="margin-left:20px;margin-top:20px">

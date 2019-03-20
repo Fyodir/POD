@@ -1,13 +1,10 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
+.fa-exclamation-triangle {
+    color: red;
 }
 
-h1 {
-  color: :red;
-}
-
-li {
-  list-style: none;
-}
+/* .home-list {
+  @extend .list-group-item;
+  @extend .d-flex.;
+  @extend .justify-content-between;
+  @extend .align-items-center;
+} */

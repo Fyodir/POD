@@ -18,35 +18,59 @@
     <strong>{{order.order_status}}</strong>
   </h3>
   <div style="margin-top:20px">
-    <p><strong>Requisition: </strong>
-      <a class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a> -
+    <p>
+      <strong>Requisition: </strong>
+      <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'requisition-detail' order.requisition_id.pk %}">{{ order.requisition_id.id}} ({{order.requisition_id.req_ref}})</a> -
        <strong {% if order.requisition_id.req_order %} class="text-warning",
                 {% elif order.requisition_id.req_sent %} class="text-success",
-                {% endif %}>{{order.requisition_id.requisition_status}}</strong>
+                {% endif %}>{{order.requisition_id.requisition_status}}
+       </strong>
      </p>
-    <p><strong>Quantity: </strong> {{order.quantity}} | <strong>Price per Instance: </strong> £ {{order.product_type.price}}</p>
-    <p><strong>Supplier: </strong> {{ order.product_type.supplier }}</p>
+    <p>
+      <strong>Quantity: </strong> {{order.quantity}} | <strong>Price per Instance: </strong> £ {{order.product_type.price}}
+    </p>
+    <p>
+      <strong>Supplier: </strong> {{ order.product_type.supplier }}
+    </p>
     <div style="margin-left:20px">
-      <p><strong>Comments: </strong> {{order.comments}}</p>
+      <p>
+        <strong>Comments: </strong> {{order.comments}}
+      </p>
     </div>
-    <p class="text-muted"><strong>Orderer: </strong> {{ order.orderer }} | <strong>Team: </strong>{{order.team}}</p>
+    <p class="text-muted">
+      <strong>Orderer: </strong> {{ order.orderer }} |
+      <strong>Team: </strong>{{order.team}}
+    </p>
     <hr>
-    <p class="text-muted"><strong>Date Created: </strong> {{ order.date_created }}</p>
-    <p class="text-muted"><strong>Date Requisitioned: </strong> {{ order.requisition_id.date_sent }} | <strong>Lead Time (Days): </strong> {{order.product_type.lead_time}}</p>
-    <p class="text-muted"><strong>Date Completed: </strong> {{ order.date_delivered }}</p>
+    <p class="text-muted">
+      <strong>Date Created: </strong> {{ order.date_created }}
+    </p>
+    <p class="text-muted">
+      <strong>Date Requisitioned: </strong> {{ order.requisition_id.date_sent }} |
+      <strong>Lead Time (Days): </strong> {{order.product_type.lead_time}}
+    </p>
+    <p class="text-muted">
+      <strong>Date Completed: </strong> {{ order.date_delivered }}
+    </p>
     <hr>
   </div>
   <div class="list-group-item list-group-item-info">
       <h4>QC Information</h4>
-      <p><strong>QC Status: </strong>{{order.qc_status}}</p>
-      <p><strong>Lot Number: </strong>{{order.lot_id}}</p>
-      <p><strong>Expiry Date: </strong>{{order.expiry_date}}</p>
+      <p>
+        <strong>QC Status: </strong>{{order.qc_status}}
+      </p>
+      <p>
+        <strong>Lot Number: </strong>{{order.lot_id}}
+      </p>
+      <p>
+        <strong>Expiry Date: </strong>{{order.expiry_date}}
+      </p>
   </div>
   <div style="margin-top:20px">
     <form class="form-inline">
-      <a class="btn btn-dark" href="{% url 'order_update' order.id %}">Update Order</a>
+      <a role="button" class="btn btn-dark" href="{% url 'order_update' order.id %}">Update Order</a>
       <div style="margin-left:5px"></div>
-      <a class="btn btn-outline-danger"href="{% url 'order_delete' order.id %}">Delete Order</a>
+      <a role="button" class="btn btn-outline-danger"href="{% url 'order_delete' order.id %}">Delete Order</a>
     </form>
   </div>
 {% endblock %}

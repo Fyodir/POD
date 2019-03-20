@@ -16,8 +16,12 @@
     <tbody>
       {% for producttype in producttype_list %}
       <tr>
-        <td><a class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></td>
-        <td><a class="btn btn-outline-dark btn-sm" href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a></td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a>
+        </td>
         <td>{{producttype.product_EROS}}</td>
         <td>{{producttype.price}}</td>
         <td>{{producttype.lead_time}}</td>

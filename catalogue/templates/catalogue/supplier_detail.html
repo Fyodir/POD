@@ -9,9 +9,9 @@
 
   <div style="margin-top:20px">
     <form class="form-inline">
-      <a class="btn btn-dark" href="{% url 'supplier_update' supplier.id %}">Update Supplier</a>
+      <a role="button" class="btn btn-dark" href="{% url 'supplier_update' supplier.id %}">Update Supplier</a>
       <div style="margin-left:5px"></div>
-      <a class="btn btn-outline-danger"href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a>
+      <a role="button" class="btn btn-outline-danger"href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a>
     </form>
   </div>
 
@@ -29,7 +29,9 @@
       <tbody>
         {% for copy in supplier.producttype_set.all %}
         <tr>
-          <td><a class="btn btn-outline-dark btn-sm" href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a>
+          </td>
           <td>{{copy.product_EROS}}</td>
           <td>{{copy.price}}</td>
           <td>{{copy.description}}</td>

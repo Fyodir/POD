@@ -15,7 +15,9 @@
     <tbody>
       {% for supplier in supplier_list %}
       <tr>
-        <td><a class="btn btn-outline-dark btn-sm" href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a></td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
+        </td>
         <td>{{supplier.phone}}</td>
         <td>{{supplier.email}}</td>
       </tr>
