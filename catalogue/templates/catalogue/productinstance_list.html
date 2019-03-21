@@ -20,13 +20,23 @@
       <tr {% if productinstance.stock_is_low %} class="table-danger",
           {% else %} class = "table-success"
           {% endif %}>
-        <td><a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' productinstance.id %}?next={{ request.path|urlencode }}">Update Stock</a></td>
-        <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'team-detail' productinstance.team.pk %}">{{productinstance.team}}</a></td>
-        <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' productinstance.product_type.pk %}">{{ productinstance.product_type.name }}</a></td>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' productinstance.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'team-detail' productinstance.team.pk %}">{{productinstance.team}}</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' productinstance.product_type.pk %}">{{ productinstance.product_type.name }}</a>
+        </td>
         <td>{{productinstance.stock}}</td>
         <td>{{productinstance.minimum_stock}}</td>
-        <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage.name }} ({{productinstance.storage.location}})</a></td>
-        <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a></td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage.name }} ({{productinstance.storage.location}})</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

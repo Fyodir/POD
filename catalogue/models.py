@@ -47,7 +47,7 @@ class ProductType(models.Model):
     """Model representing a type of product (but not a specific instance of a product)."""
     name = models.CharField(max_length=200)
     supplier = models.ForeignKey('Supplier', on_delete=models.SET_NULL, null=True)
-    description = models.TextField(max_length=1000, null=True, help_text='Enter a brief description of the product_type')
+    description = models.TextField(max_length=1000, help_text='Enter a brief description of the product_type', blank=True, null=True)
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
     price = models.DecimalField('Price (£)', max_digits=8, decimal_places=2)
     lead_time = models.IntegerField('Lead time (Days)', help_text='Estimated delivery time required', blank=True, null=True)

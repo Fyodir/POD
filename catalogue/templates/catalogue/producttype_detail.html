@@ -3,7 +3,10 @@
 {% block content %}
   <h1>Product: {{ producttype.name }}</h1>
 
-  <p><strong>Supplier:</strong> <a class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a></p>
+  <p>
+    <strong>Supplier:</strong>
+    <a class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a>
+  </p>
   <p><strong>EROS:</strong> {{ producttype.product_EROS }}</p>
   <p><strong>Price (ExVAT):</strong> £{{ producttype.price }}</p>
   <p><strong>Lead Time (Days):</strong> {{ producttype.lead_time }}</p>
@@ -36,13 +39,21 @@
         <tr  {% if copy.stock_is_low %} class="table-danger",
             {% else %} class = "table-success"
             {% endif %}>
-          <td><a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+          </td>
           <td>{{copy.stock}}</td>
           <td>{{copy.minimum_stock}}</td>
-          <td><a role="button" class="btn btn-outline-link btn-sm" href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a></td>
-          <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href ="{% url 'team-detail' copy.team.pk %}"> {{copy.team}}</a>
+          </td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' copy.storage.pk %}"> {{copy.storage}}</a>
+          </td>
           <td>{{copy.date_updated}}</td>
-          <td><a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a></td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
