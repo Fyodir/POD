@@ -28,7 +28,9 @@ class Supplier(models.Model):
     name = models.CharField(max_length=200, help_text='Enter a supplier name')
     phone = models.CharField(max_length=50, help_text='Enter supplier contact telephone number')
     email = models.EmailField(max_length=50, help_text='Enter supplier contact email', null=True, blank=True)
-    agent = models.CharField(max_length=200, help_text='Enter agent name', null=True, blank=True)
+    address = models.TextField(max_length=200, help_text='Enter an address for the supplier', blank=True)
+    comments = models.TextField(max_length=200, blank=True)
+    # agent = models.CharField(max_length=200, help_text='Enter agent name', null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -50,7 +52,7 @@ class ProductType(models.Model):
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the product_type', blank=True, null=True)
     product_EROS = models.CharField('Product EROS', max_length=20, help_text='Enter the products unique EROS number')
     price = models.DecimalField('Price (£)', max_digits=8, decimal_places=2)
-    lead_time = models.IntegerField('Lead time (Days)', help_text='Estimated delivery time required', blank=True, null=True)
+    lead_time = models.IntegerField('Lead Time (Days)', help_text='Estimated delivery time required', blank=True, null=True)
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
@@ -66,11 +68,12 @@ class ProductType(models.Model):
 
 class Temperature(models.Model):
     """Model representing a temperature ranges for storage locations."""
-    name = models.CharField(max_length=200, help_text='Enter name for temp range', blank=True)
-    minimum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter minimum temperature (centigrade)')
-    maximum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter amximum temperature (centigrade)')
+    name = models.CharField(max_length=200, help_text='Enter name for temperature range')
+    minimum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter minimum temperature (°C)')
+    maximum = models.DecimalField(max_digits=6, decimal_places=2, help_text='Enter maximum temperature (°C)')
 
     class Meta:
+        ordering =["name"]
         permissions = (("can_create_new_temperature", "Able to Create New Temperature" ), ("can_update_temperature", "Able to Update Temoperature"), ("can_delete_temperature", "Able to Delete Temperature"),)
 
     def __str__(self):
@@ -81,11 +84,12 @@ class Temperature(models.Model):
         """Returns the url to access a detail record for this object."""
         return reverse('temperature-detail', args=[str(self.id)])
 
+
 class Storage(models.Model):
     """Model representing storage locations of product instances"""
     name = models.CharField(max_length=200, help_text="Enter name of storage facility (ie Fridge A)")
     location = models.CharField(max_length=200, help_text="Enter location of storage facility (ie floor, room)")
-    temp_range = models.ForeignKey('Temperature', on_delete=models.SET_NULL, null=True)
+    temp_range = models.ForeignKey('Temperature', on_delete=models.CASCADE, null=True)
 
     class Meta:
         permissions = (("can_create_new_storage", "Able to Create New Storage" ), ("can_update_storage", "Able to Update Storage"), ("can_delete_storage", "Able to Delete Storage"),)

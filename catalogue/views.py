@@ -124,16 +124,16 @@ class TemperatureDetailView(LoginRequiredMixin, generic.DetailView):
     paginate_by = 30
 
 
-# Views to display user specific pages
-
-class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
-    """Generic class-based view orders created by current user."""
-    model = Order
-    template_name ='catalogue/orders_created_list_user.html'
-    paginate_by = 30
-
-    def get_queryset(self):
-        return Order.objects.filter(orderer=self.request.user).order_by('date_created')
+# # Views to display user specific pages
+#
+# class OrdersCreatedByUserListView(LoginRequiredMixin,generic.ListView):
+#     """Generic class-based view orders created by current user."""
+#     model = Order
+#     template_name ='catalogue/orders_created_list_user.html'
+#     paginate_by = 30
+#
+#     def get_queryset(self):
+#         return Order.objects.filter(orderer=self.request.user).order_by('date_created')
 
 
 # Update stock of a product instance  (via product instance)

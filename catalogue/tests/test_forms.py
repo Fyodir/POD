@@ -18,3 +18,9 @@ class UpdateProductInstanceStockFormTest(TestCase):
         level = -1
         form = UpdateProductInstanceStockForm(data={'stock_level': level})
         self.assertFalse(form.is_valid())
+
+####################################################################
+
+# class OrderFormTest(TestCase):
+
+####################################################################
