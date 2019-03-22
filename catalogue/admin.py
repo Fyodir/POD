@@ -24,7 +24,7 @@ class ProductInstanceInline(admin.TabularInline):
 
 @admin.register(ProductType)
 class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'supplier', 'price', 'product_EROS')
+    list_display = ('name', 'supplier', 'price', 'lead_time', 'product_EROS')
     # inlines = [ProductInstanceInline]
 
 @admin.register(Order)

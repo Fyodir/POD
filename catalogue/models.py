@@ -58,6 +58,18 @@ class ProductType(models.Model):
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
         ordering =["supplier", "name"]
 
+    def save(self, *args, **kwargs):
+        if(self.lead_time > 0):
+            super(ProductType, self).save(*args, **kwargs)
+        else:
+            raise Exception("Lead Time cannot be less than 0 days")
+
+    def save(self, *args, **kwargs):
+        if(self.price > 0):
+            super(ProductType, self).save(*args, **kwargs)
+        else:
+            raise Exception("Price cannot be less than £0")
+
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.supplier} - {self.name}'
@@ -75,6 +87,12 @@ class Temperature(models.Model):
     class Meta:
         ordering =["name"]
         permissions = (("can_create_new_temperature", "Able to Create New Temperature" ), ("can_update_temperature", "Able to Update Temoperature"), ("can_delete_temperature", "Able to Delete Temperature"),)
+
+    def save(self, *args, **kwargs):
+        if(self.maximum > self.minimum):
+            super(Temperature, self).save(*args, **kwargs)
+        else:
+            raise Exception("Maximum temperature cannot be below Minimum temperature")
 
     def __str__(self):
         """String for representing the Model object."""
@@ -95,11 +113,9 @@ class Storage(models.Model):
         permissions = (("can_create_new_storage", "Able to Create New Storage" ), ("can_update_storage", "Able to Update Storage"), ("can_delete_storage", "Able to Delete Storage"),)
         ordering = ["name"]
 
-
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.name} ({self.location})'
-
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""
@@ -121,6 +137,18 @@ class ProductInstance(models.Model):
     class Meta:
         ordering = ['product_type']
         permissions = (("can_create_new_product_instance", "Able to Create New Product Instance" ), ("can_update_product_instance", "Able to Update Product Instance"), ("can_delete_product_instance", "Able to Delete Product Instance"),)
+
+    def save(self, *args, **kwargs):
+        if(self.stock >= 0):
+            super(ProductInstance, self).save(*args, **kwargs)
+        else:
+            raise Exception("Stock cannot be less than 0")
+
+    def save(self, *args, **kwargs):
+        if(self.minimum_stock > 0):
+            super(ProductInstance, self).save(*args, **kwargs)
+        else:
+            raise Exception("Minimum stock cannot be less than 1")
 
     def __str__(self):
         """String for representing the Model object."""
@@ -146,7 +174,7 @@ class ProductInstance(models.Model):
 class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
-    requisition_id = models.ForeignKey('Requisition', on_delete=models.PROTECT, null=True)
+    requisition_id = models.ForeignKey('Requisition', verbose_name="Requisition ID", on_delete=models.PROTECT, null=True)
     product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
 
@@ -183,7 +211,7 @@ class Order(models.Model):
         ('Cold Block', 'COLD BLOCK'),
     )
     qc_status = models.CharField('Condition Received', max_length=24, choices=CONDITION, default='N/a')
-    lot_id = models.CharField('LOT Number', max_length=20, help_text='Enter Lot Number of product upon delivery', null=True, blank=True)
+    lot_id = models.CharField('Lot Number', max_length=20, help_text='Enter Lot Number of product upon delivery', null=True, blank=True)
     expiry_date = models.DateField(help_text='Enter expiry date of Lot (YYYY-MM-DD)', null=True, blank=True)
 
     @property
@@ -214,9 +242,15 @@ class Order(models.Model):
         permissions = (("can_create_new_order", "Able to Create New Order" ), ("can_update_order", "Able to Update Order"), ("can_delete_order", "Able to Delete Order"),)
         ordering = ["-id"]
 
+    def save(self, *args, **kwargs):
+        if(self.quantity > 0):
+            super(Order, self).save(*args, **kwargs)
+        else:
+            raise Exception("An order cannot be created for less than 1 product")
+
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.product_type.name} ({self.id})'
+        return f'({self.id}) {self.product_type.name}'
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""
