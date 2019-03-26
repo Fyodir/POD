@@ -4,7 +4,7 @@
   <h1>Storage: {{ storage.name }}</h1>
 
   <p><strong>Location:</strong> {{ storage.location }}</p>
-  <p><strong>Temperature Range (°C):</strong> {{ storage.temp_range.minimum }} - {{storage.temp_range.maximum}}</p>
+  <p><strong>Temperature Range (°C):</strong> {{ storage.temp_range.minimum }} to {{storage.temp_range.maximum}}</p>
 
   <div style="margin-top:20px">
     <form class="form-inline">
@@ -21,6 +21,7 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Product</th>
+          <th scope="col">EROS</th>
           <th scope="col">Current Stock</th>
           <th scope="col">Minimum Stock</th>
           <th scope="col">Team</th>
@@ -39,6 +40,7 @@
           <td>
             <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' copy.product_type.pk %}">{{ copy.product_type.name }}</a>
           </td>
+          <td>{{copy.product_type.product_EROS}}</td>
           <td>{{copy.stock}}</td>
           <td>{{copy.minimum_stock}}</td>
           <td>

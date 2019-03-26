@@ -30,6 +30,7 @@
           <th scope="col">Flags</th>
           <th scope="col">Quantity</th>
           <th scope="col">Product</th>
+          <th scope="col">EROS</th>
           <th scope="col">Price Per Instance (£)</th>
           <th scope="col">Supplier</th>
           <th scope="col">User</th>
@@ -59,11 +60,18 @@
             </i>
           </td>
           <td>{{copy.quantity}}</td>
-          <td>{{copy.product_type.name}}</td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' copy.product_type.id %}">{{copy.product_type.name}}</a>
+          </td>
+          <td>{{copy.product_type.product_EROS}}</td>
           <td>{{copy.product_type.price}}</td>
-          <td>{{copy.product_type.supplier}}</td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm"  href="{% url 'supplier-detail' copy.product_type.supplier.pk %}">{{ copy.product_type.supplier.name }}</a>
+          </td>
           <td>{{copy.orderer}}</td>
-          <td>{{copy.team}}</td>
+          <td>
+            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'team-detail' copy.team.pk %}">{{copy.team}}</a>
+          </td>
           <td>{{copy.product_type.lead_time}}</td>
           <td>{{copy.order_status}}</td>
         </tr>

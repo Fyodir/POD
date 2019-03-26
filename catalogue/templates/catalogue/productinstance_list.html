@@ -9,6 +9,7 @@
         <th scope="col"></th>
         <th scope="col">Team</th>
         <th scope="col">Product</th>
+        <th scope="col">EROS</th>
         <th scope="col">Current Stock</th>
         <th scope="col">Minimum Stock</th>
         <th scope="col">Storage Location</th>
@@ -29,6 +30,7 @@
         <td>
           <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' productinstance.product_type.pk %}">{{ productinstance.product_type.name }}</a>
         </td>
+        <td>{{productinstance.product_type.product_EROS}}</td>
         <td>{{productinstance.stock}}</td>
         <td>{{productinstance.minimum_stock}}</td>
         <td>

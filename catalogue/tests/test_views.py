@@ -29,8 +29,8 @@ class ProductTypeViewTest(TestCase):
                 supplier= Supplier.objects.create(name='Illumina {producttype_id}'),
                 description=f'blah blah blah here is a description.com {producttype_id}',
                 product_EROS=f'56F7D8S76F76H {producttype_id}',
-                price=f'34.00',
-                lead_time=f'21',
+                price=34.00,
+                lead_time=21,
             )
 
     def test_redirect_if_not_logged_in(self):
@@ -106,13 +106,13 @@ class ProductTypeViewTest(TestCase):
 #         number_of_productinstances = 33
 #         for productinstance_id in range(number_of_productinstances):
 #             ProductInstance.objects.create(
-#                 product_type=ProductType.objects.create(name='Test Product', price='34.00'),
+#                 product_type=ProductType.objects.create(name='Test Product', price=34.00),
 #                 id=f'90ec5d20-13a2-481e-8e76-ed3675bfce40',
 #                 team= Team.objects.create(name='Lab Team Alpha {productinstance_id}'),
 #                 storage= Storage.objects.create(name='Freezer Beta {productinstance_id}'),
-#                 stock=f'12',
-#                 minimum_stock=f'20',
-#                 stock_updater= User.objects.create(authuser.username='test_user1'),
+#                 stock=12,
+#                 minimum_stock=20,
+#                 stock_updater= User.objects.create(username='testuser1', password='1X<ISRUkw+tuK'),
 #                 date_updated=f'2019-01-01',
 #             )
 #

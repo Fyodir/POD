@@ -161,7 +161,7 @@ class ProductTypeModelTest(TestCase):
 
     def test_object_name(self):
         productype = ProductType.objects.get(id=1)
-        expected_object_name = f'{productype.supplier} - {productype.name}'
+        expected_object_name = f'{productype.name}'
         self.assertEquals(expected_object_name, str(productype))
 
     def test_get_absolute_url(self):
@@ -375,7 +375,7 @@ class OrderModelTest(TestCase):
     def test_product_type_label(self):
         order = Order.objects.get(id=1)
         field_label = order._meta.get_field('product_type').verbose_name
-        self.assertEquals(field_label, 'product type')
+        self.assertEquals(field_label, 'Product Type')
 
     def test_quantity_label(self):
         order = Order.objects.get(id=1)
@@ -430,7 +430,7 @@ class OrderModelTest(TestCase):
     def test_expiry_date_label(self):
         order = Order.objects.get(id=1)
         field_label = order._meta.get_field('expiry_date').verbose_name
-        self.assertEquals(field_label, 'expiry date')
+        self.assertEquals(field_label, 'Expiry Date')
 
         # team is a ForeignKey therefore is already tested in the TeamModelTest
 

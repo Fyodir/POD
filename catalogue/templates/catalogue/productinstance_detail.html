@@ -23,7 +23,9 @@
     </p>
     <p>
       <strong>Price (£):</strong>
-      {{ productinstance.product_type.price }}
+      {{ productinstance.product_type.price }} |
+      <strong>EROS: </strong>
+      {{productinstance.product_type.product_EROS}}
     </p>
     <p class="text-muted"><strong>Instance ID:</strong> {{productinstance.id}}</p>
     <p class="text-muted"><strong>Date Updated:</strong> {{productinstance.date_updated}}</p>
@@ -38,9 +40,12 @@
 
     <hr>
   </div>
-  <div style="margin-left:20px;margin-top:20px">
+  <div style="margin-left:20px;margin-top:20px"
+    {% if productinstance.stock_is_low %} class="list-group-item list-group-item-danger",
+    {% else %} class="list-group-item list-group-item-success",
+    {% endif %}>
     <h4>Stock</h4>
-      <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
+      <p><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
       <p>
         <strong>Minimum Stock:</strong> {{productinstance.minimum_stock}}
       </p>

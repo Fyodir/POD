@@ -56,7 +56,7 @@ class ProductType(models.Model):
 
     class Meta:
         permissions = (("can_create_new_product_type", "Able to Create New Product Type" ), ("can_update_product_type", "Able to Update Product Type"), ("can_delete_product_type", "Able to Delete Product Type"),)
-        ordering =["supplier", "name"]
+        ordering =["name"]
 
     def save(self, *args, **kwargs):
         if(self.lead_time > 0):
@@ -65,14 +65,14 @@ class ProductType(models.Model):
             raise Exception("Lead Time cannot be less than 0 days")
 
     def save(self, *args, **kwargs):
-        if(self.price > 0):
+        if(self.price >= 0):
             super(ProductType, self).save(*args, **kwargs)
         else:
             raise Exception("Price cannot be less than £0")
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.supplier} - {self.name}'
+        return self.name
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this object."""
@@ -175,7 +175,7 @@ class Order(models.Model):
     """Model representing individual orders for an instance of a product type"""
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True)
     requisition_id = models.ForeignKey('Requisition', verbose_name="Requisition ID", on_delete=models.PROTECT, null=True)
-    product_type = models.ForeignKey('ProductType', on_delete=models.SET_NULL, null=True)
+    product_type = models.ForeignKey('ProductType', verbose_name="Product Type", on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(help_text='Enter required quantity')
 
     URGENCY = (
@@ -207,12 +207,12 @@ class Order(models.Model):
     CONDITION = (
         ('N/a', 'N/A'),
         ('Room Temp', 'ROOM TEMP'),
-        ('Dry Ice', 'DRY ICE'),
+        ('Frozen', 'FROZEN'),
         ('Cold Block', 'COLD BLOCK'),
     )
     qc_status = models.CharField('Condition Received', max_length=24, choices=CONDITION, default='N/a')
     lot_id = models.CharField('Lot Number', max_length=20, help_text='Enter Lot Number of product upon delivery', null=True, blank=True)
-    expiry_date = models.DateField(help_text='Enter expiry date of Lot (YYYY-MM-DD)', null=True, blank=True)
+    expiry_date = models.DateField('Expiry Date', help_text='Enter expiry date of Lot (YYYY-MM-DD)', null=True, blank=True)
 
     @property
     def order_created(self):
@@ -290,6 +290,7 @@ class Requisition(models.Model):
             ("can_update_requisition_authoriser", "Able to Update Requisition - Authoriser"),
         )
         ordering=["-id"]
+
 
     def __str__(self):
         """String for representing the Model object."""
