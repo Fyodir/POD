@@ -14,7 +14,6 @@ Available at: https://github.com/Fyodir/POD
 - Modules
   - Django (2.1.5)
 
----
 
 ## User Administration
 Before a prospective user can interact with the POD system they will require an authorised account to access any other page apart from the application home page. Therefore users must first be created before data can be be entered or viewed through the HTML browser.
@@ -25,9 +24,8 @@ Staff must contact an individual with administrator rights to the POD system. Th
 ### Forgotten Passwords
 If a user has forgotten their password to the system they must contact the individual with administrator rights. The administrator will then be able to reset the password of the user in question
 
-*n.b. currently no function exists to email the user with a link to reset their password*
+>*n.b. currently no function exists to email the user with a link to reset their password*
 
----
 
 ## Access Privileges
 ### Laboratory Staff
@@ -56,7 +54,6 @@ More senior levels of staff will possess further access to that given to general
 - Update any of the data currently held within the database regarding products, storage location, orders, and requisitions
 - Delete any of the data currently held within the database regarding products, storage location, orders, and requisitions
 
----
 
 ## Navigation Bar
 All users are required to login to their account via the ```Login``` button before they unlock access to navigate the EROS POD system.
@@ -75,7 +72,6 @@ All users are required to login to their account via the ```Login``` button befo
   - General Laboratory staff will possess limited access to this section
 - Login/Logout{User}
 
----
 
 ## Home page
 This page is set up to display a collection of potentially useful information for the user. Among containing the title and application description a number of useful statistics are displayed.
@@ -95,7 +91,6 @@ Counters for "Order Statistics" are designed to display colours to highlight the
 **Note**
 "Order Statistics" counters show ```BLACK``` if their counts are ZERO
 
----
 
 ## Create Requisition
 A requisition is used to group together multiple orders. A Requisition with a current status of "To Order" is required to create orders. Once Requisition status is changed to "Sent", orders can no longer be attached to the requisition.
@@ -108,7 +103,6 @@ To Create a Requisition please follow these steps:
 
 *n.b. Once the requisition has been sent via the EROS ordering system a user is required to fill in these fields via the ```Update Requisition``` button (See Requisitions)*
 
----
 
 ## Create Order
 It must be reminded that a ```Requisition``` with a status of "To Order" must be present before a new order can be made. If this is not the case, please refer to ```Create Requisition``` before carrying on with this section. This is because ONLY requisitions with a status of "To Order" will be displayed to add an order to on the ```Create Order``` screen. Requisitions that have been sent can no longer be added to.
@@ -130,6 +124,23 @@ To Create an order please follow these steps:
 
 *n.b. the remaining fields on the Create Order page are completed upon receipt of the order*
 
----
 
 ## Orders
+Accessible via the Navigation Bar ```/Lists/Orders```, this page shows a list of the most recent orders created (ordered by internal order number).
+
+Each column defines the following:
+- #
+  - Internal Order identification number
+  - auto-increments on the creation of a new order
+- Flags
+  - displays given Flags
+  -   <i class="fab fa-rebel"></i>
+- Quantity
+- Product
+- EROS
+- User
+- Team
+- Requisition
+- Date Requisitioned
+- Lead Time
+- Status
