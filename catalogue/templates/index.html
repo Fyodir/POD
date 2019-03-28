@@ -4,7 +4,7 @@
   <blockquote class="blockquote text-center">
     <h1>Product Ordering Database (POD)</h1>
     <p>Welcome to POD, a website developed to monitor and maintain Laboratoy Stock, Orders and Requisitions at BGL</p>
-    <h2 >Useful Statistics</h2>
+    <h2 >General Statistics</h2>
     <p class="test">POD has the following record counts:</p>
     <div class="mx-auto" style="width: 50%;">
 
@@ -43,7 +43,7 @@
           </span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-        <strong>Part Received Orders:</strong>
+        <strong>Part-Received Orders:</strong>
           <span {% if num_order_preceived == 0 %} class="badge badge-dark badge-pill",
               {% else %} class="badge badge-danger badge-pill" {% endif %}>{{ num_order_preceived }}
           </span>
