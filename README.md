@@ -158,13 +158,10 @@ Each column defines the following:
   - Current status of the orders
 
 The colours of each row are linked the current status of the orders themselves as to allow better visualisation
-
-Colour  |  Status
-      --|--
-BLUE    |  Order Created
-YELLOW  |  Order Sent (Out For Delivery)
-RED     |  Order Part-Received
-GREEN   |  Order Completed & Received
+- ```BLUE```- Order Created
+- ```YELLOW``` - Order Sent (Out for delivery)
+- ```RED``` - Order Part Received
+- ```GREEN``` - Order Completed and Received
 
 Clicking upon the Order or Requisition number will take the user pages with greater details regarding each
 
