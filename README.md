@@ -137,11 +137,37 @@ Each column defines the following:
     - Triangle Flag - Urgent orders
     - Circular Flag - Orders with Issues
 - Quantity
+  - Amount of the product requested for order
 - Product
+  - Name of the Product on order
 - EROS
+  - Unique identification number provided for the item on the external EROS system (not this application)
 - User
+  - User who requested the order
 - Team
+  - Team in which this order was assigned to
 - Requisition
+  - Requisition in which this order is associated with
+  - syntax = ```Internal_Req_Number(Requisition_EROS_number)```
 - Date Requisitioned
+  - Date which the associated requisition was sent for order
 - Lead Time
+  - estimated time until receipt of delivery
+  - based upon previous experience and known times
 - Status
+  - Current status of the orders
+
+The colours of each row are linked the current status of the orders themselves as to allow better visualisation
+
+Colour  |  Status
+      --|--
+BLUE    |  Order Created
+YELLOW  |  Order Sent (Out For Delivery)
+RED     |  Order Part-Received
+GREEN   |  Order Completed & Received
+
+Clicking upon the Order or Requisition number will take the user pages with greater details regarding each
+
+*n.b. Each field for "Product" and "Team" also provide links to greater detail and stock management for those areas*
+
+## Requisitions
