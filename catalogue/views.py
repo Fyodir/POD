@@ -311,12 +311,12 @@ class TemperatureDelete(PermissionRequiredMixin, DeleteView):
 
 class ProductInstanceCreate(PermissionRequiredMixin, CreateView):
     model = ProductInstance
-    fields = ['product_type', 'id', 'team', 'storage', 'stock', 'minimum_stock']
+    fields = ['product_type', 'team', 'storage', 'stock', 'minimum_stock']
     permission_required = 'catalogue.can_create_new_product_instance'
 
 class ProductInstanceUpdate(PermissionRequiredMixin, UpdateView):
     model = ProductInstance
-    fields = ['product_type', 'id', 'team', 'storage', 'stock', 'minimum_stock']
+    fields = ['product_type', 'team', 'storage', 'stock', 'minimum_stock']
     permission_required = 'catalogue.can_update_product_instance'
 
 class ProductInstanceDelete(PermissionRequiredMixin, DeleteView):

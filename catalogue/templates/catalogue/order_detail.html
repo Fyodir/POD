@@ -30,7 +30,8 @@
       <strong>Quantity: </strong> {{order.quantity}} | <strong>Price per Instance: </strong> £ {{order.product_type.price}}
     </p>
     <p>
-      <strong>Supplier: </strong> {{ order.product_type.supplier }}
+      <strong>Supplier: </strong>
+      <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'supplier-detail' order.product_type.supplier.pk %}">{{ order.product_type.supplier }}</a>
     </p>
     <div style="margin-left:20px">
       <p>
