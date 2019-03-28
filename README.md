@@ -129,12 +129,13 @@ To Create an order please follow these steps:
 Accessible via the Navigation Bar ```/Lists/Orders```, this page shows a list of the most recent orders created (ordered by internal order number).
 
 Each column defines the following:
-- #
-  - Internal Order identification number
-  - auto-increments on the creation of a new order
+- "#"
+  - Internal order identification number
+  - Auto-increments on the creation of a new order
 - Flags
-  - displays given Flags
-  -   <i class="fab fa-rebel"></i>
+  - Displays flags
+    - Triangle Flag - Urgent orders
+    - Circular Flag - Orders with Issues
 - Quantity
 - Product
 - EROS
