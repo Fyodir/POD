@@ -6,10 +6,10 @@ Development start date: 1st February 2019
 
 Last Updated: 29th March 2019
 
+Available at: https://github.com/Fyodir/POD
+
 ## Author
 - **Andrew Smith**
-
-Available at: https://github.com/Fyodir/POD
 
 ## Prerequisites
 - Python (3.6.x)
