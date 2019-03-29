@@ -52,7 +52,7 @@ More senior levels of staff will possess further access to that given to general
 - View all Lists
 - Create any of the entries available under the ```New``` navigation bar drop down
 - Update any of the data currently held within the database regarding products, storage location, orders, and requisitions
-- Delete any of the data currently held within the database regarding products, storage location, orders, and requisitions
+- Delete data currently held within the database regarding products, storage location, orders, and requisitions
 
 
 ## Navigation Bar
@@ -91,6 +91,32 @@ Counters for "Order Statistics" are designed to display colours to highlight the
 **Note**
 "Order Statistics" counters show ```BLACK``` if their counts are ZERO
 
+## Differences between Product Types & Product Instances
+**Product Type**
+contains the meta data concerning a specific product. This includes details such as:
+- Product Name
+- Suppliers
+- Product EROS
+- Price (£)
+- Lead Time Days)
+
+*it does NOT contain information regarding the existence of a product within the laboratory*
+
+**Product Instance**
+contains information regarding the physical existence of a product within the laboratory. "Product Instance" pulls data from "Product Type", however adds extra data to link an "instance" of this product type with a laboratory team/location.
+Extra data included in product Instance include:
+- Associated Team
+- Associated Storage Location
+- Instance ID
+- Date updated
+- Current stock
+- Minimum Stock
+
+*n.b. Multiple "product instances" of the same "product type" can exist at any one time.*
+
+---
+## Stock Update
+
 
 ## Create Requisition
 A requisition is used to group together multiple orders. A Requisition with a current status of "To Order" is required to create orders. Once Requisition status is changed to "Sent", orders can no longer be attached to the requisition.
@@ -124,6 +150,41 @@ To Create an order please follow these steps:
 
 *n.b. the remaining fields on the Create Order page are completed upon receipt of the order*
 
+---
+
+## Requisitions
+Accessible via the Navigation Bar `/Lists/Requisitions`, this page displays a list of requisitions. This appears in a descending order using internal requisition numbers. Similar to the "Orders" page the "Requisitions" page is also ordered by the internal ID (#).
+- "#"
+  - Internal Requisition ID
+  - Autoincrements on creation of a new Requisition
+- EROS
+  - Requisition EROS assigned to a requisition upon submission of orders via the EROS ordering system
+  - NOT TO BE CONFUSED WITH PRODUCT EROS NUMBERS
+- Requisitioned
+  - Date orders held within this requisition were submitted via the EROS ordering system
+- Created
+  - Date Requisition was created
+- Status
+  - Current status of the Requisition
+
+Colours of each row are linked to the status of the requisition
+- `To Order` - Requisition created and currently available for orders to be attached
+- `Sent` - Requisition has been submitted via the EROS ordering system
+  - Orders can NO LONGER be added to requisitions with this Status
+
+### Requisition - Detail (Update Requisition)
+This page displays the chosen requisition in greater detail. It displays:
+- Requisition internal ID
+- Assigned Requisition EROS number
+- Requisition Status (Coloured Text)
+- Comments
+- Orders assigned to the requisition
+  - similar format to the Orders list page
+  - please refer to `Orders` for information regarding the orders displayed here
+- `Update Requisition`
+  - used to update requisition with associated comments and date sent
+
+*n.b. Associated `Product types`, `Suppliers` and `Teams` can be navigated to via clicking on the associated names within the "Orders" table*
 
 ## Orders
 Accessible via the Navigation Bar ```/Lists/Orders```, this page shows a list of the most recent orders created (ordered by internal order number).
@@ -163,8 +224,78 @@ The colours of each row are linked the current status of the orders themselves a
 - ```RED``` - Order Part Received
 - ```GREEN``` - Order Completed and Received
 
-Clicking upon the Order or Requisition number will take the user pages with greater details regarding each
+Clicking upon the Order or Requisition number will take the user pages with greater details regarding either
 
-*n.b. Each field for "Product" and "Team" also provide links to greater detail and stock management for those areas*
+*n.b. Fields for "Product" and "Team" also provide links regarding current stock for those areas*
 
-## Requisitions
+### Orders - Detail (Update Order)
+Accessed primarily via selecting the internal order ID number available on the "Orders List" Page. Similar to the previous page, this page  shows details pertaining to the order in question.
+
+This page however shows further useful details such as "QC information" (blue), along with various useful dates to enable tracking of various stages of the order.
+
+Orders can be updated on this page via the `Update Order` button. Selecting this option brings up the same form as that used to create the order. Further details or updates can then be added/made to the order such as:
+- Updated order status
+- Date Order completed
+- QC information
+  - Condition Received
+  - Lot number
+  - Expiry Date
+
+*n.b. "associated requisition" can be accessed from this page via the `Requisition` link button.
+Other products available from this supplier can also be viewed by the `Supplier` link button*
+
+## Teams
+Primarily accessible via the `/List/Teams` drop down menu option. This option brings up a list of current teams present within the application
+
+### Team - Detail
+This page displays all of the `Product Instances` which belong to the chosen team. Associated Product instances are displayed in a tabulature format. The table is organised alphabetically by product name.
+
+Each row is colour coded according to the relationship between current/minimum stock levels.
+- `RED` - Current stock is BELOW Minimum stock
+- `GREEN` - Current stock is ABOVE Minimum stock
+
+`Update Stock` please refer to the "Stock update" section of this guide
+
+`Update Team` can be accessed from this page (Senior Laboratory Staff Access)
+
+*n.b. `Product Types`, `Storage Location`, `ID` can be used as links to direct the user to further detail pages*
+
+## Storage Locations
+Primarily accessible via the `/List/Storage_Locations` drop down menu option. This option brings up a list of current storage locations present within the application. The list displays:
+- Names of storage Locations
+- Location of Storage
+- Temperature range of Storage
+
+### Storage Location - Detail
+This page displays all of the `Product Instances` that are present in the chosen storage location. Associated Product instances are displayed in a tabulature format. The table is organised alphabetically by product name.
+
+Each row is colour coded according to the relationship between current/minimum stock levels.
+- `RED` - Current stock is BELOW Minimum stock
+- `GREEN` - Current stock is ABOVE Minimum stock
+
+`Update Stock` please refer to the "Stock update" section of this guide
+
+`Update Storage Location` can be accessed from this page (Senior Laboratory Staff Access)
+
+*n.b. `Product Types`, `Team`, `ID` can be used as links to direct the user to further detail pages*
+
+## Product Types
+This page displays a list of all "Product Types" held within the application organised alphabetically by product name. This includes various meta data surrounding the product such as:
+- Suppliers (links to supplier detail page)
+- Product Names
+- Product EROS
+- Price Per instance
+- Estimated Lead Time (Days)
+
+### Product Types - Detail
+This page displays the product type meta data mentioned above, along with all of the instances of this product type. This is organised into a tabulature format and ordered alphabetically according to associated teams.
+
+Each row is colour coded according to the relationship between current/minimum stock levels.
+- `RED` - Current stock is BELOW Minimum stock
+- `GREEN` - Current stock is ABOVE Minimum stock
+
+`Update Stock` please refer to the "Stock update" section of this guide
+
+`Update Product Type` can be accessed from this page (Senior Laboratory Staff Access)
+
+*n.b. `Team`, `Storage Location`, `ID` can be used as links to direct the user to further detail pages*

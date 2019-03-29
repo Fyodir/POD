@@ -135,7 +135,7 @@ class ProductInstance(models.Model):
     # should a product instance be an updateable stock level? or a new instance for each delivery?
 
     class Meta:
-        ordering = ['product_type']
+        ordering = ['product_type', 'team']
         permissions = (("can_create_new_product_instance", "Able to Create New Product Instance" ), ("can_update_product_instance", "Able to Update Product Instance"), ("can_delete_product_instance", "Able to Delete Product Instance"),)
 
     def save(self, *args, **kwargs):
