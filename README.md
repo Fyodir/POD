@@ -2,11 +2,12 @@
 
 A Django application developed to manage and keep track of current stock, product orders,  and requisitions at Bristol Genetics Laboratory. This was developed as part of the Clinical Scientist (Bioinformatics Genomics) HCPC Registration portfolio, module "Computing for Clinical Scientists (SBI101)"
 
+Development start date: 1st February 2019
+
+Last Updated: 29th March 2019
+
 ## Author
 - **Andrew Smith**
-
-Development start date: 1st February 2019
-Last Updated: 29th March 2019
 
 Available at: https://github.com/Fyodir/POD
 
