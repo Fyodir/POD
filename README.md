@@ -6,6 +6,7 @@ A Django application developed to manage and keep track of current stock, produc
 - **Andrew Smith**
 
 Development start date: 1st February 2019
+Last Updated: 29th March 2019
 
 Available at: https://github.com/Fyodir/POD
 
@@ -14,6 +15,7 @@ Available at: https://github.com/Fyodir/POD
 - Modules
   - Django (2.1.5)
 
+---
 
 ## User Administration
 Before a prospective user can interact with the POD system they will require an authorised account to access any other page apart from the application home page. Therefore users must first be created before data can be be entered or viewed through the HTML browser.
@@ -24,7 +26,7 @@ Staff must contact an individual with administrator rights to the POD system. Th
 ### Forgotten Passwords
 If a user has forgotten their password to the system they must contact the individual with administrator rights. The administrator will then be able to reset the password of the user in question
 
->*n.b. currently no function exists to email the user with a link to reset their password*
+*n.b. currently no function exists to email the user with a link to reset their password*
 
 
 ## Access Privileges
@@ -54,6 +56,7 @@ More senior levels of staff will possess further access to that given to general
 - Update any of the data currently held within the database regarding products, storage location, orders, and requisitions
 - Delete data currently held within the database regarding products, storage location, orders, and requisitions
 
+---
 
 ## Navigation Bar
 All users are required to login to their account via the ```Login``` button before they unlock access to navigate the EROS POD system.
@@ -93,7 +96,7 @@ Counters for "Order Statistics" are designed to display colours to highlight the
 
 ## Differences between Product Types & Product Instances
 **Product Type**
-contains the meta data concerning a specific product. This includes details such as:
+contains the meta data concerning a product. This includes details such as:
 - Product Name
 - Suppliers
 - Product EROS
@@ -115,17 +118,24 @@ Extra data included in product Instance include:
 *n.b. Multiple "product instances" of the same "product type" can exist at any one time.*
 
 ---
-## Stock Update
 
+## Stock Update
+Accesed via the various `Update Stock` links scattered around the EROD POD application. Clinking on these links redirects the user to a form to update the current stock levels of a specified "Product Instance".
+
+To Update stock please follow these steps:
+1. Select `Update Stock`
+2. Check Product Instance details
+3. Update current "Stock Level"
+4. Select `Submit`
 
 ## Create Requisition
 A requisition is used to group together multiple orders. A Requisition with a current status of "To Order" is required to create orders. Once Requisition status is changed to "Sent", orders can no longer be attached to the requisition.
 
 To Create a Requisition please follow these steps:
-1. Click ```Create Requisition```
+1. Select ```Create Requisition```
 2. None of the fields are mandatory to complete on creation of a Requisition
   1. Requisition status (Default = To Order")
-3. Click ```Submit```
+3. Select ```Submit```
 
 *n.b. Once the requisition has been sent via the EROS ordering system a user is required to fill in these fields via the ```Update Requisition``` button (See Requisitions)*
 
@@ -134,7 +144,7 @@ To Create a Requisition please follow these steps:
 It must be reminded that a ```Requisition``` with a status of "To Order" must be present before a new order can be made. If this is not the case, please refer to ```Create Requisition``` before carrying on with this section. This is because ONLY requisitions with a status of "To Order" will be displayed to add an order to on the ```Create Order``` screen. Requisitions that have been sent can no longer be added to.
 
 To Create an order please follow these steps:
-1. Click ```Create Order```
+1. Seelct ```Create Order```
 2. Complete the Required Fields
   1. Team
   2. Requisition ID
@@ -146,19 +156,24 @@ To Create an order please follow these steps:
   2. Order Status (Default = Created)
   3. Comments
 4. Check entered fields are correct
-5. Click ```Submit```
+5. Select ```Submit```
 
 *n.b. the remaining fields on the Create Order page are completed upon receipt of the order*
 
 ---
 
+# Lists
+
 ## Requisitions
-Accessible via the Navigation Bar `/Lists/Requisitions`, this page displays a list of requisitions. This appears in a descending order using internal requisition numbers. Similar to the "Orders" page the "Requisitions" page is also ordered by the internal ID (#).
+Accessible via the Navigation Bar `/Lists/Requisitions`, this page displays a list of requisitions. This appears in a descending order using internal requisition numbers. The "Requisitions" page is ordered by the internal ID (#).
 - "#"
   - Internal Requisition ID
   - Autoincrements on creation of a new Requisition
+  - Provides link to "Requisitions detail" page
 - EROS
-  - Requisition EROS assigned to a requisition upon submission of orders via the EROS ordering system
+  - Requisition EROS assigned to a requisition upon submission of orders via the EROS
+  - Provides link to "Requisitions detail" page
+- ordering system
   - NOT TO BE CONFUSED WITH PRODUCT EROS NUMBERS
 - Requisitioned
   - Date orders held within this requisition were submitted via the EROS ordering system
@@ -193,6 +208,7 @@ Each column defines the following:
 - "#"
   - Internal order identification number
   - Auto-increments on the creation of a new order
+  - Provides link to "Order - Detail" page
 - Flags
   - Displays flags
     - Triangle Flag - Urgent orders
@@ -210,6 +226,7 @@ Each column defines the following:
 - Requisition
   - Requisition in which this order is associated with
   - syntax = ```Internal_Req_Number(Requisition_EROS_number)```
+  - provides a link to associated requisition
 - Date Requisitioned
   - Date which the associated requisition was sent for order
 - Lead Time
@@ -233,7 +250,8 @@ Accessed primarily via selecting the internal order ID number available on the "
 
 This page however shows further useful details such as "QC information" (blue), along with various useful dates to enable tracking of various stages of the order.
 
-Orders can be updated on this page via the `Update Order` button. Selecting this option brings up the same form as that used to create the order. Further details or updates can then be added/made to the order such as:
+Orders can be updated on th  - Provides link to "Requisitions detail" page
+is page via the `Update Order` button. Selecting this option brings up the same form as that used to create the order. Further details or updates can then be added/made to the order such as:
 - Updated order status
 - Date Order completed
 - QC information
@@ -258,10 +276,10 @@ Each row is colour coded according to the relationship between current/minimum s
 
 `Update Team` can be accessed from this page (Senior Laboratory Staff Access)
 
-*n.b. `Product Types`, `Storage Location`, `ID` can be used as links to direct the user to further detail pages*
+*n.b. Product Types, Storage Location, ID can be used as hyperlinks to direct the user to further detail pages*
 
 ## Storage Locations
-Primarily accessible via the `/List/Storage_Locations` drop down menu option. This option brings up a list of current storage locations present within the application. The list displays:
+Primarily accessible via the `/List/Storage_Locations` drop down navigation bar menu option. This option brings up a list of current storage locations present within the application. The list displays:
 - Names of storage Locations
 - Location of Storage
 - Temperature range of Storage
@@ -277,10 +295,10 @@ Each row is colour coded according to the relationship between current/minimum s
 
 `Update Storage Location` can be accessed from this page (Senior Laboratory Staff Access)
 
-*n.b. `Product Types`, `Team`, `ID` can be used as links to direct the user to further detail pages*
+*n.b. Product Types, Team, ID sections can be used as hyperlinks to direct the user to further detail pages*
 
 ## Product Types
-This page displays a list of all "Product Types" held within the application organised alphabetically by product name. This includes various meta data surrounding the product such as:
+Primarily accessible via the `/List/Product_Types` drop down navigation bar menu option. This page displays a list of all "Product Types" held within the application organised alphabetically by product name. This includes various meta data surrounding the product such as:
 - Suppliers (links to supplier detail page)
 - Product Names
 - Product EROS
@@ -288,7 +306,7 @@ This page displays a list of all "Product Types" held within the application org
 - Estimated Lead Time (Days)
 
 ### Product Types - Detail
-This page displays the product type meta data mentioned above, along with all of the instances of this product type. This is organised into a tabulature format and ordered alphabetically according to associated teams.
+This page displays the product type meta data mentioned under "Product Type", along with listing available instances of this product type. This is organised into a tabulature format and ordered alphabetically according to associated teams.
 
 Each row is colour coded according to the relationship between current/minimum stock levels.
 - `RED` - Current stock is BELOW Minimum stock
@@ -298,4 +316,53 @@ Each row is colour coded according to the relationship between current/minimum s
 
 `Update Product Type` can be accessed from this page (Senior Laboratory Staff Access)
 
-*n.b. `Team`, `Storage Location`, `ID` can be used as links to direct the user to further detail pages*
+*n.b. Team, Storage Location, ID can be used as hyperlinks to direct the user to further detail pages*
+
+## Product Instances
+Primarily accessible via the `/List/Product_Instances` drop down navigation bar menu option. This page displays a list of each and every "Product Instance" recorded within the EROS POD application. These are organised alphabetically by Product name in tabulature format.
+
+Each row is colour coded according to the relationship between current/minimum stock levels.
+- `RED` - Current stock is BELOW Minimum stock
+- `GREEN` - Current stock is ABOVE Minimum stock
+
+`Update Stock` please refer to the "Stock update" section of this guide
+
+### Product Instance - Detail
+This section is predominantly accessible via selecting the appropriate "Product Instance ID" on the Product Instance list page.
+
+Information regarding a specific "Product Instance" can be viewed on this page.  Various links are also available to direct the user to other locations in the application in which it is located.
+
+Similar to the table rows, the stock section is colour coded according to the relationship between current/minimum stock levels.
+- `RED` - Current stock is BELOW Minimum stock
+- `GREEN` - Current stock is ABOVE Minimum stock
+
+`Update Product Instance` can be accessed from this page (Senior Laboratory Staff Access)
+
+## Suppliers
+Accessible via `List/Suppliers`. This page displays a list of current suppliers recorded within the database, along with some key information.
+
+### Supplier - Detail
+Accessed primarily via selecting the desired supplier in the supplier list page. This page displays all of the available meta data regarding the supplier in question.
+
+A list of the `Product Types` provided by the supplier is also displayed along with appropriate information regarding each. Links are provided to "Product Type - Detail" pages for each of these Products (See Product Type - Detail)
+
+`Update Supplier` can be accessed from this page (Senior Laboratory Staff Access)
+
+## Temperature ranges
+Accessible via `List/Temperature_Ranges`. This page displays the current temperature ranges available for use by storage locations. This section is primarily for the use of Senior Laboratory staff in the management of storage Locations
+
+A detailed page is accessible via selecting the name of the chosen temperature range. Ranges can then be updated or removed from this page.
+
+---
+
+# New
+
+This section of the application is utilised in the creation of new entries into the database. New instances of the following can be entered into the database:
+- Product Type
+- Product Instance
+- Supplier
+- Storage Location
+- Temperature Range
+- Team
+
+Users with "Laboratory staff" access can only access the `New Product Instance` creation tool. Those with "Senior Laboratory Staff" access can access all of them.

@@ -37,7 +37,7 @@
           <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage.name }} ({{productinstance.storage.location}})</a>
         </td>
         <td>
-          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a>
+          <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a>
         </td>
       </tr>
       {% endfor %}

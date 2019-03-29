@@ -1,10 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1><strong>Product Stock Update: </strong>{{ productinstance.product_type.name }}</h1>
-  <p><strong>Team: </strong>{{ productinstance.team.name }}</p>
-  <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}><strong>Current Stock: </strong>{{ productinstance.stock }}</p>
-  <p><strong>Minimum Stock: </strong>{{ productinstance.minimum_stock }}</p>
+  <h1>
+    <strong>Product Stock Update: </strong>{{ productinstance.product_type.name }}
+  </h1>
+  <p>
+    <strong>Team: </strong>{{ productinstance.team.name }}
+  </p>
+  <p>
+    <strong>Storage Location: </strong>{{productinstance.storage}}
+  </p>
+  <p>
+    <strong>Instance ID: </strong>{{productinstance.id}}
+  </p>
+  <p{% if productinstance.stock_is_low %} class="text-danger"{% endif %}>
+    <strong>Current Stock: </strong>{{ productinstance.stock }}
+  </p>
+  <p>
+    <strong>Minimum Stock: </strong>{{ productinstance.minimum_stock }}
+  </p>
 
   <form action="" method="POST">
     {% csrf_token %}
