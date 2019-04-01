@@ -1,35 +1,37 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Product Types</h1>
-  {% if producttype_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Supplier</th>
-        <th scope="col">Product</th>
-        <th scope="col">EROS</th>
-        <th scope="col">Price</th>
-        <th scope="col">Lead Time (Days)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for producttype in producttype_list %}
-      <tr>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm"  href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a>
-        </td>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a>
-        </td>
-        <td>{{producttype.product_EROS}}</td>
-        <td>{{producttype.price}}</td>
-        <td>{{producttype.lead_time}}</td>
+<h1>Product Types</h1>
+{% if producttype_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Supplier</th>
+      <th scope="col">Product</th>
+      <th scope="col">EROS</th>
+      <th scope="col">Price</th>
+      <th scope="col">Lead Time (Days)</th>
     </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    {% else %}
-    <p>There are no product types.</p>
-  {% endif %}
+  </thead>
+  <tbody>
+    {% for producttype in producttype_list %}
+    <tr>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{% url 'supplier-detail' producttype.supplier.pk %}">{{ producttype.supplier }}</a>
+      </td>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{{ producttype.get_absolute_url }}">{{ producttype.name }}</a>
+      </td>
+      <td>{{producttype.product_EROS}}</td>
+      <td>{{producttype.price}}</td>
+      <td>{{producttype.lead_time}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no product types.</p>
+{% endif %}
 {% endblock %}

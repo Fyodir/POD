@@ -1,49 +1,54 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Product Instances</h1>
-  {% if productinstance_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Team</th>
-        <th scope="col">Product</th>
-        <th scope="col">EROS</th>
-        <th scope="col">Current Stock</th>
-        <th scope="col">Minimum Stock</th>
-        <th scope="col">Storage Location</th>
-        <th scope="col">ID</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for productinstance in productinstance_list %}
-      <tr {% if productinstance.stock_is_low %} class="table-danger",
-          {% else %} class = "table-success"
-          {% endif %}>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' productinstance.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-        </td>
-        <td>
-          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'team-detail' productinstance.team.pk %}">{{productinstance.team}}</a>
-        </td>
-        <td>
-          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' productinstance.product_type.pk %}">{{ productinstance.product_type.name }}</a>
-        </td>
-        <td>{{productinstance.product_type.product_EROS}}</td>
-        <td>{{productinstance.stock}}</td>
-        <td>{{productinstance.minimum_stock}}</td>
-        <td>
-          <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage.name }} ({{productinstance.storage.location}})</a>
-        </td>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    {% else %}
-    <p>There are no product instances.</p>
-  {% endif %}
+<h1>Product Instances</h1>
+{% if productinstance_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Team</th>
+      <th scope="col">Product</th>
+      <th scope="col">EROS</th>
+      <th scope="col">Current Stock</th>
+      <th scope="col">Minimum Stock</th>
+      <th scope="col">Storage Location</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for productinstance in productinstance_list %}
+    <tr {% if productinstance.stock_is_low %} class="table-danger" , {% else %} class="table-success" {% endif %}>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{% url 'productinstance-stock-update' productinstance.id %}?next={{ request.path|urlencode }}">Update
+          Stock</a>
+      </td>
+      <td>
+        <a role="button" class="btn btn-outline-link btn-sm"
+          href="{% url 'team-detail' productinstance.team.pk %}">{{productinstance.team}}</a>
+      </td>
+      <td>
+        <a role="button" class="btn btn-outline-link btn-sm"
+          href="{% url 'product-type-detail' productinstance.product_type.pk %}">{{ productinstance.product_type.name }}</a>
+      </td>
+      <td>{{productinstance.product_type.product_EROS}}</td>
+      <td>{{productinstance.stock}}</td>
+      <td>{{productinstance.minimum_stock}}</td>
+      <td>
+        <a role="button" class="btn btn-outline-link btn-sm"
+          href="{% url 'storage-detail' productinstance.storage.pk %}">{{ productinstance.storage.name }}
+          ({{productinstance.storage.location}})</a>
+      </td>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{% url 'product-instance-detail' productinstance.id %}?next={{ request.path|urlencode }}">{{productinstance.id}}</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no product instances.</p>
+{% endif %}
 {% endblock %}

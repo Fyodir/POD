@@ -1,44 +1,45 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Supplier: {{ supplier.name }}</h1>
+<h1>Supplier: {{ supplier.name }}</h1>
 
-  <p><strong>Phone:</strong> {{ supplier.phone }}</p>
-  <p><strong>Email:</strong> {{ supplier.email }}</p>
-  <p><strong>Address:</strong> {{ supplier.address }}</p>
-  <p><strong>Comments:</strong> {{ supplier.comments }}</p>
+<p><strong>Phone:</strong> {{ supplier.phone }}</p>
+<p><strong>Email:</strong> {{ supplier.email }}</p>
+<p><strong>Address:</strong> {{ supplier.address }}</p>
+<p><strong>Comments:</strong> {{ supplier.comments }}</p>
 
-  <div style="margin-top:20px">
-    <form class="form-inline">
-      <a role="button" class="btn btn-dark" href="{% url 'supplier_update' supplier.id %}">Update Supplier</a>
-      <div style="margin-left:5px"></div>
-      <a role="button" class="btn btn-outline-danger"href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a>
-    </form>
-  </div>
+<div style="margin-top:20px">
+  <form class="form-inline">
+    <a role="button" class="btn btn-dark" href="{% url 'supplier_update' supplier.id %}">Update Supplier</a>
+    <div style="margin-left:5px"></div>
+    <a role="button" class="btn btn-outline-danger" href="{% url 'supplier_delete' supplier.id %}">Delete Supplier</a>
+  </form>
+</div>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Products Supplied</h4>
-    <table class="table table-hover table-sm table-bordered">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Product</th>
-          <th scope="col">EROS</th>
-          <th scope="col">Price</th>
-          <th scope="col">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for copy in supplier.producttype_set.all %}
-        <tr>
-          <td>
-            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a>
-          </td>
-          <td>{{copy.product_EROS}}</td>
-          <td>{{copy.price}}</td>
-          <td>{{copy.description}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<div style="margin-left:20px;margin-top:20px">
+  <h4>Products Supplied</h4>
+  <table class="table table-hover table-sm table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">EROS</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for copy in supplier.producttype_set.all %}
+      <tr>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm"
+            href="{% url 'product-type-detail' copy.id %}">{{copy.name}}</a>
+        </td>
+        <td>{{copy.product_EROS}}</td>
+        <td>{{copy.price}}</td>
+        <td>{{copy.description}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

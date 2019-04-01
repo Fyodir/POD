@@ -1,25 +1,25 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Teams</h1>
-  {% if team_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Team</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for team in team_list %}
-      <tr>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ team.get_absolute_url }}">{{ team.name }}</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <p>There are no Teams.</p>
-  {% endif %}
+<h1>Teams</h1>
+{% if team_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for team in team_list %}
+    <tr>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm" href="{{ team.get_absolute_url }}">{{ team.name }}</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no Teams.</p>
+{% endif %}
 {% endblock %}

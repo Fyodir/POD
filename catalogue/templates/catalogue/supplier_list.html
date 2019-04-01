@@ -1,32 +1,33 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Suppliers</h1>
+<h1>Suppliers</h1>
 
-  {% if supplier_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Supplier</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Email</th>
-        <th scope="col">Address</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for supplier in supplier_list %}
-      <tr>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
-        </td>
-        <td>{{supplier.phone}}</td>
-        <td>{{supplier.email}}</td>
-        <td>{{supplier.address}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    {% else %}
-    <p>There are no suppliers listed in the database.</p>
-  {% endif %}
+{% if supplier_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Supplier</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for supplier in supplier_list %}
+    <tr>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
+      </td>
+      <td>{{supplier.phone}}</td>
+      <td>{{supplier.email}}</td>
+      <td>{{supplier.address}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no suppliers listed in the database.</p>
+{% endif %}
 {% endblock %}

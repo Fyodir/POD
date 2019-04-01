@@ -1,55 +1,57 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Team: {{ team.name }}</h1>
+<h1>Team: {{ team.name }}</h1>
 
-  <div style="margin-top:20px">
-    <form class="form-inline">
-      <a role="button" class="btn btn-dark" href="{% url 'team_update' team.id %}">Update Team</a>
-      <div style="margin-left:5px"></div>
-      <a role="button" class="btn btn-outline-danger"href="{% url 'team_delete' team.id %}">Delete Team</a>
-    </form>
-  </div>
+<div style="margin-top:20px">
+  <form class="form-inline">
+    <a role="button" class="btn btn-dark" href="{% url 'team_update' team.id %}">Update Team</a>
+    <div style="margin-left:5px"></div>
+    <a role="button" class="btn btn-outline-danger" href="{% url 'team_delete' team.id %}">Delete Team</a>
+  </form>
+</div>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Product Instances</h4>
-    <table class="table table-hover table-sm table-bordered">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Product</th>
-          <th scope="col">EROS</th>
-          <th scope="col">Current Stock</th>
-          <th scope="col">Minimum Stock</th>
-          <th scope="col">Storage Location</th>
-          <th scope="col">Last Updated</th>
-          <th scope="col">ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for copy in team.productinstance_set.all %}
-        <tr  {% if copy.stock_is_low %} class="table-danger",
-            {% else %} class = "table-success"
-            {% endif %}>
-          <td>
-            <a role="button" class="btn btn-outline-dark btn-sm" href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
-          </td>
-          <td>
-            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-type-detail' copy.product_type.pk %}">{{ copy.product_type.name }}</a>
-          </td>
-          <td>{{copy.product_type.product_EROS}}</td>
-          <td>{{copy.stock}}</td>
-          <td>{{copy.minimum_stock}}</td>
-          <td>
-            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'storage-detail' copy.storage.pk %}">{{copy.storage}}</a>
-          </td>
-          <td>{{copy.date_updated}}</td>
-          <td>
-            <a role="button" class="btn btn-outline-link btn-sm" href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<div style="margin-left:20px;margin-top:20px">
+  <h4>Product Instances</h4>
+  <table class="table table-hover table-sm table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Product</th>
+        <th scope="col">EROS</th>
+        <th scope="col">Current Stock</th>
+        <th scope="col">Minimum Stock</th>
+        <th scope="col">Storage Location</th>
+        <th scope="col">Last Updated</th>
+        <th scope="col">ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for copy in team.productinstance_set.all %}
+      <tr {% if copy.stock_is_low %} class="table-danger" , {% else %} class="table-success" {% endif %}>
+        <td>
+          <a role="button" class="btn btn-outline-dark btn-sm"
+            href="{% url 'productinstance-stock-update' copy.id %}?next={{ request.path|urlencode }}">Update Stock</a>
+        </td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm"
+            href="{% url 'product-type-detail' copy.product_type.pk %}">{{ copy.product_type.name }}</a>
+        </td>
+        <td>{{copy.product_type.product_EROS}}</td>
+        <td>{{copy.stock}}</td>
+        <td>{{copy.minimum_stock}}</td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm"
+            href="{% url 'storage-detail' copy.storage.pk %}">{{copy.storage}}</a>
+        </td>
+        <td>{{copy.date_updated}}</td>
+        <td>
+          <a role="button" class="btn btn-outline-link btn-sm"
+            href="{% url 'product-instance-detail' copy.id %}?next={{ request.path|urlencode }}">{{copy.id}}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

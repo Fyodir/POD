@@ -1,17 +1,18 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Temperature Name: {{temperature.name }}</h1>
-  <div style="margin-top:20px">
-    <form class="form-inline">
-      <a role="button" class="btn btn-dark" href="{% url 'temperature_update' temperature.id %}">Update Range</a>
-      <div style="margin-left:5px"></div>
-      <a role="button" class="btn btn-outline-danger"href="{% url 'temperature_delete' temperature.id %}">Delete Range</a>
-    </form>
-  </div>
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Minimum Temperature: {{temperature.minimum}}</h4>
-    <h4>Maximum Temperature: {{temperature.maximum}}</h4>
+<h1>Temperature Name: {{temperature.name }}</h1>
+<div style="margin-top:20px">
+  <form class="form-inline">
+    <a role="button" class="btn btn-dark" href="{% url 'temperature_update' temperature.id %}">Update Range</a>
+    <div style="margin-left:5px"></div>
+    <a role="button" class="btn btn-outline-danger" href="{% url 'temperature_delete' temperature.id %}">Delete
+      Range</a>
+  </form>
+</div>
+<div style="margin-left:20px;margin-top:20px">
+  <h4>Minimum Temperature: {{temperature.minimum}}</h4>
+  <h4>Maximum Temperature: {{temperature.maximum}}</h4>
 
-  </div>
+</div>
 {% endblock %}

@@ -1,39 +1,39 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Requisitions</h1>
+<h1>Requisitions</h1>
 
-  {% if requisition_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">EROS</th>
-        <th scope="col">Requisitioned</th>
-        <th scope="col">Created</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for requisition in requisition_list %}
-      <tr {% if requisition.req_order %} class="table-warning",
-          {% else %} class="table-success",
-        {% endif %}>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{ requisition.id }}</a>
-        </td>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ requisition.get_absolute_url }}">{{requisition.req_ref}}</a>
-        </td>
-        <td>{{requisition.date_sent}}</td>
-        <td>{{requisition.date_created}}</td>
-        <td>{{requisition.requisition_status}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <p>There are no Requisitions.</p>
-  {% endif %}
+{% if requisition_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">EROS</th>
+      <th scope="col">Requisitioned</th>
+      <th scope="col">Created</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for requisition in requisition_list %}
+    <tr {% if requisition.req_order %} class="table-warning" , {% else %} class="table-success" , {% endif %}>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{{ requisition.get_absolute_url }}">{{ requisition.id }}</a>
+      </td>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{{ requisition.get_absolute_url }}">{{requisition.req_ref}}</a>
+      </td>
+      <td>{{requisition.date_sent}}</td>
+      <td>{{requisition.date_created}}</td>
+      <td>{{requisition.requisition_status}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no Requisitions.</p>
+{% endif %}
 
 {% endblock %}

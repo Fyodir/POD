@@ -1,29 +1,30 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Storage Locations</h1>
-  {% if storage_list %}
-  <table class="table table-hover table-sm table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Location</th>
-        <th scope="col">Temperature Range (°C)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for storage in storage_list %}
-      <tr>
-        <td>
-          <a role="button" class="btn btn-outline-dark btn-sm" href="{{ storage.get_absolute_url }}">{{ storage.name }}</a>
-        </td>
-        <td>{{storage.location}}</td>
-        <td>{{storage.temp_range.minimum}} to {{storage.temp_range.maximum}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <p>There are no Storage Locations.</p>
-  {% endif %}
+<h1>Storage Locations</h1>
+{% if storage_list %}
+<table class="table table-hover table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Temperature Range (°C)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for storage in storage_list %}
+    <tr>
+      <td>
+        <a role="button" class="btn btn-outline-dark btn-sm"
+          href="{{ storage.get_absolute_url }}">{{ storage.name }}</a>
+      </td>
+      <td>{{storage.location}}</td>
+      <td>{{storage.temp_range.minimum}} to {{storage.temp_range.maximum}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no Storage Locations.</p>
+{% endif %}
 {% endblock %}
