@@ -4,7 +4,7 @@ A Django application developed to manage and keep track of current stock, produc
 
 Development start date: 1st February 2019
 
-Last Updated: 29th March 2019
+Last Updated: 1st April 2019
 
 Available at: https://github.com/Fyodir/POD
 
